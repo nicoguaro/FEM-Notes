@@ -1,0 +1,174 @@
+%Chapter "Elemental Matrices"
+%
+\chapter{Elemental Matrices-The Continuum Mechanics Analogy}
+
+\section{Statement of the Problem}
+In the incremental equilibrium equations (22) we need to perform integration over the reference element domain $V_0(\vec{x})$ corresponding to originally arbitrarily shaped sub-domains as created during the meshing process.  In order to proceed with this integration it is useful to consider the following continuum mechanics analogy.
+
+First assume that the actual physical domain $V_0(\vec{x})$ is the result of a deformation process imparted upon the natural domain as shown in Figure A1. In this analogy, the physical domain $V_0(\vec{x})$ is regarded like a "deformed" configuration at an imaginary time $t=t$, while the natural "un-deformed" domain $V(\vec{r})$   is treated like a reference un-deformed configurations at time $t=0$. Both configurations are assumed to be connected through a deformation process;
+
+
+\begin{equation}
+\begin{aligned}
+\vec{X}&=\vec{X}(\vec{r})\\
+\vec{r}&=\vec{r}(\vec{X})
+\end{aligned}
+\label{motion}
+\end{equation}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{img/figure1.pdf}
+\caption{Definition of the natural domain}
+\label{fig:natural domain}
+\end{figure}
+
+ 
+
+In \eqref{motion} we can understand $\vec{r}$ like a material (Lagrangian) variable and $\vec{X}$ like a spatial (or Eulerian) variable. Using the continuum mechanics analogy it is clear that the "deformation" process at the continuum level is fully characterized by the "deformation" gradient or Jacobian of the transformation \eqref{motion} and defined according to;
+
+\begin{equation}
+dX_i=\dfrac{\partial X_i}{\partial r_J}dr_J\equiv J_{iJ}dr_J
+\label{gradient}
+\end{equation}
+
+where $dr_J$ and $dX_i$ represent material vectors in the original and deformed configuration. From \eqref{gradient} it is evident that the Jacobian contains all the information describing the change of the physical sub-domain with respect to the natural element. For the element integration process we will assume that every element $V(\vec{r})$ in the natural domain deforms into the physical element $V_0(\vec{X})$ thus allowing us to write typical terms like the ones in the material stiffness matrix in (22) like;
+
+\begin{equation}
+\int\limits_{V_0(\vec{X})} \hat{B}_{ij}^K(\vec{X}) C_{ijkl} \hat{B}_{kl}^P(\vec{X}) dV_0(\vec{X})\equiv \int\limits_{V_0(\vec{X})} \hat{B}_{ij}^K(\vec{r}) C_{ijkl} \hat{B}_{kl}^P(\vec{r})J dV(\vec{r})
+\label{matmatrix}
+\end{equation}
+
+
+where we have used $dV(\vec{X})=JdV(\vec{r})$, with $J$ being the determinant of the deformation gradient and in general we transform functions between the natural and physical space making use of \eqref{motion} according to;
+
+\begin{equation}
+f(\vec{r})=F[\vec{X}(\vec{r})]
+\label{funtrans}
+\end{equation}
+
+	 								
+\subsubsection{Interpolation scheme}
+Having identified the fact that the integration process will take place in the natural domain we will approach the interpolation process directly in this natural space.  In the case of the displacement based finite element method all the involved variables will then be obtained via interpolation of nodal displacements.  For instance, assume that a given problem variable is defined in the physical space by the tensor $\Phi_{ik...p}(\vec{X})$. The interpolated variable is then obtained like;
+
+\begin{equation}
+\Phi_{ij...p}(\vec{X})=H_{ij...p}^K(\vec{r})\hat{u}^K
+\label{interpol}
+\end{equation}	 						
+
+where $\hat{u}^K$ represents a vector of nodal points displacements, see Figure \ref{fig:interpol nat dom}, and $H_{ij...p}^K(\vec{r})$ is an interpolator which keeps the tensorial character of the original physical variable $\Phi_{ik...p}(\vec{X})$   and where the super-index makes reference to a nodal identifier and the summation convention applies.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=6cm]{img/figure2.pdf}
+\caption{General interpolation strategy in the natural domain}
+\label{fig:interpol nat dom}
+\end{figure}
+ 
+
+
+Since the primary variable corresponds to displacements it must be kept in mind that $H_{ij...p}^K(\vec{r})$ corresponds to combinations of derivatives (or other arbitrary combinations) of the basic element shape functions defined in;
+
+
+\begin{equation}
+u_i(\vec{X})=N_i^K(\vec{r})\hat{u}^K
+\label{el interpol}
+\end{equation}
+
+
+
+For the general interpolation process we need two kinds of transformations.  First we need to transform integrals over the physical space into integrals into the natural space which corresponds to;
+
+
+\begin{equation}
+\int\limits_{V_0(\vec{X})} F(\vec{X})dV_0(\vec{X})\equiv \int\limits_{V_0(\vec{r})} f(\vec{r})J dV(\vec{r})
+\label{gen trans}
+\end{equation}
+
+
+
+Second we need to relate spatial differentiation in both, the physical and spatial domains.  Let us define these operators like $\bigtriangledown_i^X$ and $\bigtriangledown_I^r$ respectively. It then follows from \eqref{funtrans} and the chain rule of differentiation that;
+
+\begin{equation}
+\dfrac{\partial F}{\partial X_i}=\dfrac{\partial f}{\partial r_J}\dfrac{\partial r_J}{\partial X_i}
+\label{chain}
+\end{equation}
+
+from where we can establish the connection between the two operators like
+
+
+\begin{equation}
+\bigtriangledown_i^X=J_{Ji}^{-1}\bigtriangledown_I^r
+\label{fundamental}
+\end{equation}
+
+We further define the fundamental interpolator giving rise to gradients of the primary displacement variable in the physical space according to;
+
+
+\begin{equation}
+u_{i,j}(\vec{X})=L_{ij}^K(\vec{r})\hat{u}^K
+\label{fund operator}
+\end{equation}
+
+
+This fundamental interpolator  $L_{ik}^K(\vec{r})$ is derived after using \eqref{el interpol} and \eqref{fundamental} in the physical displacement gradient definition as shown next;
+
+
+\[
+\begin{aligned}
+u_{i,j}(\vec{X})&=\bigtriangledown_j^X u_i(\vec{X})\\
+u_{i,j}(\vec{X})&=\bigtriangledown_j^X N_i^K(\vec{r})\hat{u}^K\\
+u_{i,j}(\vec{X})&=J_{Qj}^{-1}\bigtriangledown_Q^r N_i^K(\vec{r})\hat{u}^K\\
+u_{i,j}(\vec{X})&=J_{Qj}^{-1}N_{i,Q}^K(\vec{r})\hat{u}^K
+\end{aligned}
+\]
+
+then
+
+\begin{equation}
+L_{ij}^K(\vec{r})=J_{Qj}^{-1}N_{i,Q}^K(\vec{r})
+\label{fundamental interpolator}
+\end{equation}
+
+\subsubsection{Elemental stiffness matrix}
+The elemental material stiffness matrix computed in the natural domain of Figure A3 reads;
+
+
+
+\begin{equation}
+K^{KP}=\int\limits_{V_0(\vec{r})} \hat{B}_{ij}^K(\vec{r}) C_{ijkl} \hat{B}_{kl}^P(\vec{r})J dV(\vec{r})\equiv \int\limits_{r=-1}^{r=+1}\int\limits_{s=-1}^{s=+1} \hat{B}_{ij}^K(r,s) C_{ijkl} \hat{B}_{kl}^P(r,s)J(r,s) \mathrm{d}r\mathrm{d}s
+\label{elematrix}
+\end{equation}
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{img/figure3.pdf}
+\caption{Natural domain of integration}
+\label{fig:Nat domain}
+\end{figure}	 		
+ 
+
+Once the interpolator $\hat{B}_{ij}^K(\vec{r})$ has been identified the elemental stiffness matrix is obtained via numerical integration (quadrature) as described in \eqref{elematrix};
+
+\begin{equation}
+\int\limits_{r=-1}^{r=+1}\int\limits_{s=-1}^{s=+1} \hat{B}_{ij}^K(r,s) C_{ijkl} \hat{B}_{kl}^P(r,s)J(r,s) \mathrm{d}r\mathrm{d}s\approx \sum_{i,j=1}^{NGPTS} \alpha_i \alpha_j \hat{B}_{kl}^K(r_i,s_j)C_{ijkl} \hat{B}_{kl}^P(r_i,s_j) J(r_i,s_j)
+\label{eleinetgration}
+\end{equation}
+
+	 													(A13)
+
+and where NGPTS corresponds to the number of integration points, $\alpha_j$ is a weighting factor and $r_i,s_j$   are the coordinates of a typical point $\vec{r}$ in the natural space of Figure A4 .
+
+ 
+ \begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{img/figure4.pdf}
+\caption{Natural integration domain showing quadrature evaluation nodes}
+\label{fig:integration domain}
+\end{figure}	 
+
+
+One important aspect of the numerical integration that has to be kept in mind is accuracy.  Depending on the particularly selected integration scheme, the number of introduced integration points fixes the maximum polynomial order of the considered functions that can be integrated accurately.  In the case of the integrand in \eqref{eleinetgration}, it is clear that this order increases as the distortion of the physical element  with respect to the natural element increases.  One way of dealing with this dependency of accuracy with element distortion is to make use of adaptative integration techniques which are numerically expensive.  What is actually done in standard FEM analysis is to choose the number of quadrature points beforehand and introduce distortion related error criteria inside the code in such a way that some sort of validation is performed before the numerical integration process is started.
