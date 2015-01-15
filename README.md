@@ -1,2 +1,2 @@
 # FEM-Notes
-Class notes for introductory finite element methods using Pyhton based code.
+Class notes for introductory finite element methods using Python based code.
