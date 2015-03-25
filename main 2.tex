@@ -1,10 +1,7 @@
-%\documentclass[spanish,letterpaper,12pt,oneside,openany]{book}
-\documentclass[12pt,letterpaper]{book}
+\documentclass[spanish,letterpaper,12pt,oneside,openany]{book}
 \usepackage[english]{babel}
 \usepackage{babelbib}
 \usepackage{etoolbox}
-\usepackage{mathtools}
-\usepackage{cancel}
 \patchcmd\btxselectlanguage{\csname}{\csname TEMPPATCH}{}{} % Para hacer a babelbib funcionar
 \usepackage{amstext, amssymb, amsthm, amsmath, amsbsy}
 \usepackage{tabularx}
@@ -22,8 +19,8 @@
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{leftidx}
-\usepackage{algorithm2e}
-%\usepackage{algorithmic}
+%\usepackage{algorithm2e}
+\usepackage{algorithmic}
 \usepackage{cite}  %% Para poner bonitas las citas
 \usepackage{bookmark} %% Para poder organizar las etiquetas en pdf
 \geometry{verbose,letterpaper,tmargin=3cm,bmargin=3cm,lmargin=2cm,rmargin=2cm}
@@ -38,14 +35,13 @@
 \newcommand{\fullref}[1]{\ref{#1} de la p\'agina \pageref{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{cleveref}
 \begin{document}
 %%
-%\renewcommand{\tablename}{Tabla}
-%\renewcommand{\figurename}{Figura}
-%\renewcommand{\contentsname}{Table of Contents}
-%\renewcommand{\listtablename}{Lista de tablas}
-%\renewcommand{\listfigurename}{Lista de figuras}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\listtablename}{Lista de tablas}
+\renewcommand{\listfigurename}{Lista de figuras}
 
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,18 +60,12 @@
 %%%%%%%%%% Introduccion %%%%%%%%%%
 \include{src/resumen}
 \include{src/intro}
-%
-\include{src/thefem}
-\include{src/wavesfreq}
-\include{src/wavestime}
-\include{src/periodic}
-\include{src/computational}
+\include{src/equilibrium}
+\include{src/nonlinscal}
+\include{src/elemat}
 \include{src/nonlindes}
-%
-%\include{src/equilibrium}
-%\include{src/nonlinscal}
-%\include{src/elemat}
-%\include{src/explicit}
+\include{src/gendes}
+\include{src/explicit}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% Bibliografia %%%%%%%%%%
 %%Para referenciar sin cita en el texto
