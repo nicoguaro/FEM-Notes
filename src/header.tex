@@ -1,0 +1,71 @@
+\documentclass[english,letterpaper,12pt,oneside,openany]{book}
+\usepackage[english]{babel}
+\usepackage{babelbib}
+\usepackage{etoolbox}
+\usepackage{mathtools}
+\usepackage{cancel}
+\patchcmd\btxselectlanguage{\csname}{\csname TEMPPATCH}{}{} % For babelbib
+\usepackage{amstext, amssymb, amsthm, amsmath, amsbsy}
+\usepackage{tabularx}
+\usepackage[ansinew]{inputenc}
+\usepackage[margin=20pt,font=small,labelfont=bf,labelsep=period]{caption} % Modify caption format
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[final]{pdfpages} % Include pdf files
+\usepackage{geometry}
+\usepackage{enumerate}
+\usepackage{subfig}
+\usepackage{hyperref} % Nice details for pdf
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{leftidx}
+\usepackage[ruled]{algorithm2e} % Include algorithms
+\usepackage{listings} % To include code
+%\usepackage{algorithmic}
+\usepackage{cite}  % Pretty citations
+\usepackage{bookmark} % Bookmarks in PDF
+\usepackage{cleveref}
+
+\geometry{
+	verbose,
+	letterpaper,
+	tmargin=3cm,
+	bmargin=3cm,
+	lmargin=2cm,
+	rmargin=2cm
+}
+
+\hypersetup{
+	bookmarksopen=true,
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=black,	
+	linktoc=all,
+	pdftitle={Finite Element Methods},
+	pdfauthor={J. Gomez, N. Guarin-Zapata},
+	pdfkeywords={Computational Mechanics, Finite Element Methods},
+	pdfsubject={Class Notes},
+	pdfpagemode=UseOutlines,
+	pdfstartview=FitH
+}
+	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New  commands
+
+\setlength{\parskip}{0.5cm}
+
+% Quotation marks:   ``''
+
+\newcommand{\urlbib}[1]{{\footnotesize{\url{#1}}}} % URL in references
+\newcommand{\fullref}[1]{\ref{#1} at page \pageref{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%\renewcommand{\tablename}{Tabla}
+%\renewcommand{\figurename}{Figura}
+%\renewcommand{\contentsname}{Table of Contents}
+%\renewcommand{\listtablename}{Lista de tablas}
+%\renewcommand{\listfigurename}{Lista de figuras}

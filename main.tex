@@ -1,50 +1,6 @@
-\documentclass[english,letterpaper,12pt,oneside,openany]{book}
-\usepackage[english]{babel}
-\usepackage{babelbib}
-\usepackage{etoolbox}
-\usepackage{mathtools}
-\usepackage{cancel}
-\patchcmd\btxselectlanguage{\csname}{\csname TEMPPATCH}{}{} % Para hacer a babelbib funcionar
-\usepackage{amstext, amssymb, amsthm, amsmath, amsbsy}
-\usepackage{tabularx}
-\usepackage[ansinew]{inputenc}
-\usepackage[margin=20pt,font=small,labelfont=bf,labelsep=period]{caption}%%Para modificar el formato del texto de los "caption"
-\usepackage{graphicx}
-\usepackage{url}
-\usepackage{listings}%%Para incluir codigo
-\usepackage[final]{pdfpages}%%Para incluir archivos en pdf
-\usepackage{geometry}
-\usepackage{enumerate}
-\usepackage{subfig}%%Para incluir subgraficos
-\usepackage[pdftex, pdftitle={Finite Element Methods}, pdfauthor={J. Gomez, N. Guarin-Zapata}, pdfsubject={Class Notes}, pdfkeywords={Computational Mechanics, Finite Element Methods}, pdfpagemode=UseOutlines,bookmarks,bookmarksopen,pdfstartview=FitH,colorlinks,linkcolor=blue, urlcolor=black, citecolor=blue]{hyperref} %%Para incluir detalles cucas del pdf
-\usepackage[ruled]{algorithm2e}%%Para incluir algoritmos
-\usepackage{float}
-\usepackage{multirow}
-\usepackage{leftidx}
-\usepackage{algorithm2e}
-%\usepackage{algorithmic}
-\usepackage{cite}  %% Para poner bonitas las citas
-\usepackage{bookmark} %% Para poder organizar las etiquetas en pdf
-\geometry{verbose,letterpaper,tmargin=3cm,bmargin=3cm,lmargin=2cm,rmargin=2cm}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Nuevos Comandos
+\include{src/header}
 
-\setlength{\parskip}{0.5cm}
-
-% Comillas:   ``''
-
-\newcommand{\urlbib}[1]{{\footnotesize{\url{#1}}}} % para incluir urls en las referencias
-\newcommand{\fullref}[1]{\ref{#1} de la p\'agina \pageref{#1}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{cleveref}
 \begin{document}
-%%
-%\renewcommand{\tablename}{Tabla}
-%\renewcommand{\figurename}{Figura}
-%\renewcommand{\contentsname}{Table of Contents}
-%\renewcommand{\listtablename}{Lista de tablas}
-%\renewcommand{\listfigurename}{Lista de figuras}
 
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,14 +9,14 @@
 
 \frontmatter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Tabla de contenido
-\pdfbookmark[0]{Tabla de contenido}{}
+% Table of contents
+%\pdfbookmark[0]{Table of contents}{Table of contents}
 \tableofcontents
 
 
 \mainmatter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%% Introduccion %%%%%%%%%%
+%%%%%%%%%% Introduction %%%%%%%%%%
 \include{src/resumen}
 \include{src/intro}
 %
@@ -75,13 +31,10 @@
 %\include{src/nonlinscal}
 %\include{src/elemat}
 %\include{src/explicit}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% Bibliografia %%%%%%%%%%
-%%Para referenciar sin cita en el texto
-%\nocite{}
-\addcontentsline{toc}{chapter}{Referencias}
-\bibliographystyle{babunsrt}
-%\bibliography{informe}
+%%%%%% References %%%%%%%%%%
+\include{src/references}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
