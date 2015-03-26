@@ -1,5 +1,5 @@
 # FEM-Notes
-Class notes for introductory finite element methods using Python based code.
+Class notes for introductory finite element methods using Python based code. You can [download it here](https://github.com/jgomezc1/FEM-Notes/raw/master/main.pdf).
 
 ## IPython Notebooks
 Notebooks in IPython are a powerful tool to present programming/math ideas (and are close to [Literate Programming](http://en.wikipedia.org/wiki/Literate_programming)). We have some Notebooks that complements the class notes:
