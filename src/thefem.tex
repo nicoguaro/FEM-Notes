@@ -1,13 +1,187 @@
 \chapter{The Finite Element Method}
 
 \section{Brief review of the linearized theory of elasticity}
-Discuss:
-\begin{itemize}
-\item Equilibrium equations.
-\item Generalized Hooke's law.
-\item Strain-displacement rlationships.
-\item Equilibrium in terms of displacements (Navier equations) and boundary conditions.
-\end{itemize}
+
+
+\begin{equation} \label{pde}
+\begin{split}
+&{\sigma _{ij,j}} + {f_i} = 0 \quad \text{$\forall \vec x \in V$}\\
+ &\sigma _{ij}=\sigma _{ji}\\
+& t_i^{\hat n} = {\sigma _{ij}}{\hat n_{ij}} \quad \text{for $\vec x \in S$}
+\end{split}
+\end{equation}
+
+
+
+Hooke's law;
+
+\begin{equation} \label{Hooke}
+{\sigma _{ij}} = 2\mu {\varepsilon _{ij}} + \lambda {\varepsilon _{kk}}{\delta _{ij}}
+\end{equation}
+
+Strain-displacement (kinematic relationship);
+
+\begin{equation} \label{kin}
+{\varepsilon _{ij}} = \frac{1}{2}\left( {{u_{i,j}} + {u_{j,i}}} \right)
+\end{equation}
+
+\cref{kin} in \cref{Hooke} and the result in \cref{pde} yields;
+
+\[{\sigma _{ij}} = \mu \left( {{u_{i,j}} + {u_{j,i}}} \right) + \lambda {u_{k,k}}{\delta _{ij}}\]
+
+\[{\sigma _{ij,j}} = \mu {u_{i,jj}} + \mu {u_{j,ij}} + \lambda {u_{k,kj}}{\delta _{ij}}\]
+
+\[{\sigma _{ij,j}} = \mu {u_{i,jj}} + \left( {\lambda  + \mu } \right){u_{j,ij}}\]
+
+from which;
+
+\begin{equation} \label{navier}
+\begin{split}
+&\left( {\lambda  + \mu } \right){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \quad \text{$\forall \vec x \in V$} \\
+&t_i^{\hat n} = {\sigma _{ij}}{\hat n_{ij}} \quad \text{for $\vec x$ in $S_t$}\\
+& {u_i} = {{\bar u}_i} \quad \text{for $\vec x$ in $S_u$}
+\end{split}
+\end{equation}
+
+and where ${S_t} \cup {S_u} = S$ and ${S_t} \cap {S_u} = \emptyset $.  
+
+Notice that;
+
+\[t_i^{\hat n} =  = \mu \left( {{u_{i,j}} + {u_{j,i}}} \right){{\hat n}_j} + \lambda {u_{k,k}}{\delta _{ij}}{{\hat n}_j}\]
+
+is really a Newman boundary condition on $u_i$.
+
+%%%%%%
+\section*{Simple wedge under self-equilibrated loads}
+Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \cref{WEDGE}. It is assumed to be contained in the $X-Y$ plane, with loading conditions satisfying a plane strain (or plane stress) idealization. The material is elastic with Lame constants $\lambda$ and $\mu$. The wedge is loaded by uniform tractions of intensity $S$ applied over its four faces in such a way that the wedge is self-equilibrated. We wish to find the closed-form elasticity solution for the stress, strain and displacement fields throughout the problem domain.
+
+%
+\begin{figure}[H]
+\centering
+\includegraphics[width=8cm]{img_src/wedge.pdf}
+\caption{2D Self-equilibrated wedge.}
+\label{WEDGE}
+\end{figure}
+
+Under plane strain conditions the general 3D stress equilibrium equations reduce to:
+
+\begin{equation}
+\begin{aligned}
+&\dfrac{\partial\sigma_{xx}}{\partial x}+\dfrac{\partial\tau_{xy}}{\partial y}=0\\
+&\dfrac{\partial\tau_{xy}}{\partial x}+\dfrac{\partial\sigma_{yy}}{\partial y}=0
+\end{aligned}
+\label{equlibrium}
+\end{equation}
+
+with strain given by;
+
+
+\begin{equation}
+\begin{aligned}
+\epsilon_{xx}&=\dfrac{\partial u}{\partial x}\\
+\epsilon_{yy}&=\dfrac{\partial v}{\partial y}\\
+\gamma_{xy}&=\dfrac{\partial u}{\partial y}+\dfrac{\partial v}{\partial x}
+\end{aligned}
+\label{strain}
+\end{equation}
+
+where $u$ and $v$ are the horizontal and vertical displacements respectively.
+
+\subsection*{Stress field}
+
+The stress field can be obtained by simple inspection after identifying the traction boundary conditions. In the current problem these conditions correspond to boundary conditions are of the second type given by;
+
+\begin{equation}
+t_i=\sigma_{ij}\hat{n_j}
+\label{bcs}
+\end{equation}
+
+and prescribed over the inclined surfaces of the wedge.
+
+Simple equilibrium considerations yield;
+
+\[\sum F_x=0 \longrightarrow -\ell C_\phi S+\sigma_{xx}\ell S_\phi=0\]\\
+\[\sum F_y=0 \longrightarrow -\ell S_\phi S-\sigma_{yy}\ell C_\phi=0\] 
+
+from which the following stress solution results:
+
+\begin{equation}
+\begin{aligned}
+\sigma_{xx}&=SCot\phi\\
+\sigma_{xx}&=-STan\phi\\
+\tau_{xy}&=0
+\end{aligned}
+\label{solution}
+\end{equation}
+
+with the condition $\tau_{xy}=0$ due to symmetry.
+\\
+\\
+
+Let $\hat{n}^1$,$\hat{n}^2$,$\hat{n}^3$,$\hat{n}^4$ be the outward normal vectors to the exposed faces of the wedge and given by;
+
+\[\hat{n}^1=-S_{\phi}\hat{e}_{x}+C_{\phi}\hat{e}_{y}\]
+\[\hat{n}^2=-S_{\phi}\hat{e}_{x}-C_{\phi}\hat{e}_{y}\]
+\[\hat{n}^3=+S_{\phi}\hat{e}_{x}+C_{\phi}\hat{e}_{y}\]
+\[\hat{n}^4=+S_{\phi}\hat{e}_{x}-C_{\phi}\hat{e}_{y}.\]
+
+The components of the traction vector follow directly like;
+
+\[t_{i}=\sigma_{ij}\hat{n}_{j}\]
+
+then over the face with normal $\hat{n}^1$ we have
+
+\[t_{x}=-SC_{\phi}\]
+\[t_{y}=-SS_{\phi}\]
+
+similarly, over the face with normal $\hat{n}^2$
+
+\[t_{x}=-SC_{\phi}\]
+\[t_{y}=+SS_{\phi}\]
+
+over the face with normal $\hat{n}^3$ 
+
+\[t_{x}=+SC_{\phi}\]
+\[t_{y}=-SS_{\phi}\]
+
+and finally, over the face with normal $\hat{n}^4$;
+
+\[t_{x}=+SC_{\phi}\]
+\[t_{y}=+SS_{\phi}.\]
+
+\subsection*{Strain field}
+
+Using the stress field found in \cref{solution} in the constitutive law for a linear elastic material under plane strain conditions gives us;
+
+
+\begin{equation}
+\begin{aligned}
+\epsilon_{xx}&=+\dfrac{S}{E}\left(Cot_{\phi}+\nu Tan_{\phi}\right)=+\dfrac{S}{E}K_{1}(\nu , \phi)\\
+\epsilon_{yy}&=-\dfrac{S}{E}\left(Tan_{\phi}+\nu Cot_{\phi}\right)=-\dfrac{S}{E}K_{2}(\nu , \phi)\\
+\gamma_{xy}&=0.
+\end{aligned}
+\label{strain part}
+\end{equation}
+
+\subsection*{Displacement field}
+
+To determine the displacement field we use the fact that $\omega_{xy}=0$ from which:
+
+\[u=+\dfrac{S}{E} K_{1}(\nu , \phi)x+A\]
+\[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y+B\]
+
+
+where $A$ and $B$ are integration constants.
+
+From the condition $u=0$ @ $x=lC_{\phi}$ we have that $A=-\dfrac{S}{E} K_{1}(\nu , \phi)lC_{\phi}$ then it follows that
+
+\[u=\dfrac{S}{E} K_{1}(\nu , \phi)(x-lC_{\phi}).\]
+
+Similarly, from the condition $v=0$ @ $y=0$ we have that $B=0$ from which
+
+\[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
+
+
 
 \subsection*{Self equilibrated wedge in plane stress}
 
