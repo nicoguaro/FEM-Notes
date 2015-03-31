@@ -1,184 +1,155 @@
 \chapter{The Finite Element Method}
 
 \section{Brief review of the linearized theory of elasticity}
-
-
-\begin{equation} \label{pde}
+The balance of momentum, stress symmetry and traction definition on the boundary are given by
+\begin{equation} \label{eq:pde}
 \begin{split}
-&{\sigma _{ij,j}} + {f_i} = 0 \quad \text{$\forall \vec x \in V$}\\
+&{\sigma _{ij,j}} + {f_i} = 0 \quad \forall\ \vec{x} \in V\\
  &\sigma _{ij}=\sigma _{ji}\\
-& t_i^{\hat n} = {\sigma _{ij}}{\hat n_{ij}} \quad \text{for $\vec x \in S$}
-\end{split}
+& t_i^{\hat n} = {\sigma _{ij}}{\hat n_{ij}} \quad \forall\ \vec{x} \in S
+\end{split} \enspace .
 \end{equation}
 
 
-
-Hooke's law;
-
-\begin{equation} \label{Hooke}
-{\sigma _{ij}} = 2\mu {\varepsilon _{ij}} + \lambda {\varepsilon _{kk}}{\delta _{ij}}
+The simplest constitutive equation in solid mechanics is to consider a linear dependence between stress and strains, and it is called Hooke's law\footnote{Despite the name of \emph{law} used, this relation is not always valid, but is a good approximation for small strains.}
+\begin{equation} \label{eq:Hooke}
+{\sigma _{ij}} = 2\mu {\varepsilon _{ij}} + \lambda {\varepsilon _{kk}}{\delta _{ij}} \enspace .
 \end{equation}
 
-Strain-displacement (kinematic relationship);
-
-\begin{equation} \label{kin}
-{\varepsilon _{ij}} = \frac{1}{2}\left( {{u_{i,j}} + {u_{j,i}}} \right)
+Strain-displacement (kinematic relationship)
+\begin{equation}\label{eq:kin}
+{\varepsilon _{ij}} = \frac{1}{2}\left( u_{i,j} + u_{j,i}\right)
 \end{equation}
-
-\cref{kin} in \cref{Hooke} and the result in \cref{pde} yields;
-
-\[{\sigma _{ij}} = \mu \left( {{u_{i,j}} + {u_{j,i}}} \right) + \lambda {u_{k,k}}{\delta _{ij}}\]
-
-\[{\sigma _{ij,j}} = \mu {u_{i,jj}} + \mu {u_{j,ij}} + \lambda {u_{k,kj}}{\delta _{ij}}\]
-
-\[{\sigma _{ij,j}} = \mu {u_{i,jj}} + \left( {\lambda  + \mu } \right){u_{j,ij}}\]
-
-from which;
-
-\begin{equation} \label{navier}
+\cref{eq:kin} in \cref{eq:Hooke} and the result in \cref{eq:pde} yields
+\begin{align*}
+\sigma _{ij} &= \mu \left( u_{i,j} + u_{j,i}\right) + \lambda u_{k,k}\delta _{ij}\\
+\sigma_{ij,j} &= \mu u_{i,jj} + \mu u_{j,ij} + \lambda u_{k,kj}\delta_{ij}\\
+\sigma_{ij,j} &= \mu u_{i,jj} + \left(\lambda  + \mu\right) u_{j,ij}
+\end{align*}
+from which
+\begin{equation} \label{eq:navier}
 \begin{split}
-&\left( {\lambda  + \mu } \right){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \quad \text{$\forall \vec x \in V$} \\
-&t_i^{\hat n} = {\sigma _{ij}}{\hat n_{ij}} \quad \text{for $\vec x$ in $S_t$}\\
-& {u_i} = {{\bar u}_i} \quad \text{for $\vec x$ in $S_u$}
+&\left(\lambda  + \mu \right)u_{j,ij} + \mu u_{i,jj} + {f_i} = 0 \quad \forall \vec{x} \in V \\
+&t_i^{\hat n} = \sigma _{ij} \hat n_{ij} \quad \forall\ \vec{x} \in S_t\\
+& {u_i} = \bar{u}_i \quad \forall \vec x \in S_u
 \end{split}
 \end{equation}
 
 and where ${S_t} \cup {S_u} = S$ and ${S_t} \cap {S_u} = \emptyset $.  
 
-Notice that;
-
-\[t_i^{\hat n} =  = \mu \left( {{u_{i,j}} + {u_{j,i}}} \right){{\hat n}_j} + \lambda {u_{k,k}}{\delta _{ij}}{{\hat n}_j}\]
-
-is really a Newman boundary condition on $u_i$.
+Notice that
+\[t_i^{\hat n} =  = \mu \left( {{u_{i,j}} + {u_{j,i}}} \right){{\hat n}_j} + \lambda {u_{k,k}}{\delta _{ij}}{{\hat n}_j} \enspace ,\]
+is really a Neumann boundary condition on $u_i$.
 
 %%%%%%
 \section*{Simple wedge under self-equilibrated loads}
-Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \cref{WEDGE}. It is assumed to be contained in the $X-Y$ plane, with loading conditions satisfying a plane strain (or plane stress) idealization. The material is elastic with Lame constants $\lambda$ and $\mu$. The wedge is loaded by uniform tractions of intensity $S$ applied over its four faces in such a way that the wedge is self-equilibrated. We wish to find the closed-form elasticity solution for the stress, strain and displacement fields throughout the problem domain.
-
+Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \cref{fig:WEDGE}. It is assumed to be contained in the $X-Y$ plane, with loading conditions satisfying a plane strain (or plane stress) idealization. The material is elastic with Lame constants $\lambda$ and $\mu$. The wedge is loaded by uniform tractions of intensity $S$ applied over its four faces in such a way that the wedge is self-equilibrated. We wish to find the closed-form elasticity solution for the stress, strain and displacement fields throughout the problem domain.
 %
 \begin{figure}[H]
 \centering
 \includegraphics[width=8cm]{img_src/wedge.pdf}
 \caption{2D Self-equilibrated wedge.}
-\label{WEDGE}
+\label{fig:WEDGE}
 \end{figure}
 
 Under plane strain conditions the general 3D stress equilibrium equations reduce to:
-
 \begin{equation}
 \begin{aligned}
 &\dfrac{\partial\sigma_{xx}}{\partial x}+\dfrac{\partial\tau_{xy}}{\partial y}=0\\
 &\dfrac{\partial\tau_{xy}}{\partial x}+\dfrac{\partial\sigma_{yy}}{\partial y}=0
 \end{aligned}
-\label{equlibrium}
+\label{eq:equilibrium}
 \end{equation}
-
-with strain given by;
-
-
+with strain given by
 \begin{equation}
 \begin{aligned}
 \epsilon_{xx}&=\dfrac{\partial u}{\partial x}\\
 \epsilon_{yy}&=\dfrac{\partial v}{\partial y}\\
-\gamma_{xy}&=\dfrac{\partial u}{\partial y}+\dfrac{\partial v}{\partial x}
+\gamma_{xy}&=\dfrac{\partial u}{\partial y} + \dfrac{\partial v}{\partial x}
 \end{aligned}
-\label{strain}
+\label{eq:strain}
 \end{equation}
-
 where $u$ and $v$ are the horizontal and vertical displacements respectively.
 
 \subsection*{Stress field}
 
-The stress field can be obtained by simple inspection after identifying the traction boundary conditions. In the current problem these conditions correspond to boundary conditions are of the second type given by;
-
+The stress field can be obtained by simple inspection after identifying the traction boundary conditions. In the current problem these conditions correspond to boundary conditions are of the second type given by
 \begin{equation}
 t_i=\sigma_{ij}\hat{n_j}
-\label{bcs}
+\label{eq:bcs}
 \end{equation}
-
 and prescribed over the inclined surfaces of the wedge.
 
-Simple equilibrium considerations yield;
-
-\[\sum F_x=0 \longrightarrow -\ell C_\phi S+\sigma_{xx}\ell S_\phi=0\]\\
-\[\sum F_y=0 \longrightarrow -\ell S_\phi S-\sigma_{yy}\ell C_\phi=0\] 
-
+Simple equilibrium considerations yield
+\begin{align*}
+\sum F_x &= 0 \longrightarrow -\ell S\cos(\phi)  + \sigma_{xx}\ell \sin(\phi) = 0\\
+\sum F_y &= 0 \longrightarrow -\ell S\sin(\phi) - \sigma_{yy}\ell \cos(\phi)=0
+\end{align*}
 from which the following stress solution results:
-
 \begin{equation}
 \begin{aligned}
-\sigma_{xx}&=SCot\phi\\
-\sigma_{xx}&=-STan\phi\\
-\tau_{xy}&=0
+\sigma_{xx}& = S \cot(\phi)\\
+\sigma_{xx}& = -S\tan(\phi)\\
+\tau_{xy}& = 0
 \end{aligned}
-\label{solution}
+\label{eq:solution}
 \end{equation}
-
 with the condition $\tau_{xy}=0$ due to symmetry.
-\\
-\\
 
-Let $\hat{n}^1$,$\hat{n}^2$,$\hat{n}^3$,$\hat{n}^4$ be the outward normal vectors to the exposed faces of the wedge and given by;
-
-\[\hat{n}^1=-S_{\phi}\hat{e}_{x}+C_{\phi}\hat{e}_{y}\]
-\[\hat{n}^2=-S_{\phi}\hat{e}_{x}-C_{\phi}\hat{e}_{y}\]
-\[\hat{n}^3=+S_{\phi}\hat{e}_{x}+C_{\phi}\hat{e}_{y}\]
-\[\hat{n}^4=+S_{\phi}\hat{e}_{x}-C_{\phi}\hat{e}_{y}.\]
-
-The components of the traction vector follow directly like;
-
-\[t_{i}=\sigma_{ij}\hat{n}_{j}\]
-
+Let $\hat{n}^1$,  $\hat{n}^2$, $\hat{n}^3$, $\hat{n}^4$ be the outward normal vectors to the exposed faces of the wedge and given by
+\begin{align*}
+\hat{n}^1 &= -\sin(\phi)\hat{e}_{x}+\cos(\phi)\hat{e}_{y}\\
+\hat{n}^2 &= -\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y}\\
+\hat{n}^3 &= +\sin(\phi)\hat{e}_{x}+\cos(\phi)\hat{e}_{y}\\
+\hat{n}^4 &= +\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y} \enspace .
+\end{align*}
+The components of the traction vector follow directly like
+\[t_{i} = \sigma_{ij}\hat{n}_{j}\]
 then over the face with normal $\hat{n}^1$ we have
-
-\[t_{x}=-SC_{\phi}\]
-\[t_{y}=-SS_{\phi}\]
-
+\begin{align*}
+t_{x} &= -S\cos(\phi)\\
+t_{y} &= -S\sin(\phi)
+\end{align*}
 similarly, over the face with normal $\hat{n}^2$
-
-\[t_{x}=-SC_{\phi}\]
-\[t_{y}=+SS_{\phi}\]
-
+\begin{align*}
+t_{x} &= -S\cos(\phi)\\
+t_{y} &= +S\sin(\phi)
+\end{align*}
 over the face with normal $\hat{n}^3$ 
-
-\[t_{x}=+SC_{\phi}\]
-\[t_{y}=-SS_{\phi}\]
-
+\begin{align*}
+t_{x} &= +S\cos(\phi)\\
+t_{y} &= -S\sin(\phi)
+\end{align*}
 and finally, over the face with normal $\hat{n}^4$;
-
-\[t_{x}=+SC_{\phi}\]
-\[t_{y}=+SS_{\phi}.\]
+\begin{align*}
+t_{x} &= +S\cos(\phi)\\
+t_{y} &= +S\sin(\phi) \enspace .
+\end{align*}
 
 \subsection*{Strain field}
-
-Using the stress field found in \cref{solution} in the constitutive law for a linear elastic material under plane strain conditions gives us;
-
-
+Using the stress field found in \cref{eq:solution} in the constitutive law for a linear elastic material under plane strain conditions gives us
 \begin{equation}
 \begin{aligned}
-\epsilon_{xx}&=+\dfrac{S}{E}\left(Cot_{\phi}+\nu Tan_{\phi}\right)=+\dfrac{S}{E}K_{1}(\nu , \phi)\\
-\epsilon_{yy}&=-\dfrac{S}{E}\left(Tan_{\phi}+\nu Cot_{\phi}\right)=-\dfrac{S}{E}K_{2}(\nu , \phi)\\
-\gamma_{xy}&=0.
+\epsilon_{xx}& = +\dfrac{S}{E}\left[\cot(\phi)+\nu \tan(\phi)\right] = +\dfrac{S}{E}K_{1}(\nu , \phi)\\
+\epsilon_{yy}& = -\dfrac{S}{E}\left[\tan(\phi)+\nu \cot(\phi)\right] = -\dfrac{S}{E}K_{2}(\nu , \phi)\\
+\gamma_{xy}& = 0.
 \end{aligned}
-\label{strain part}
+\label{eq:strain part}
 \end{equation}
 
 \subsection*{Displacement field}
 
 To determine the displacement field we use the fact that $\omega_{xy}=0$ from which:
-
-\[u=+\dfrac{S}{E} K_{1}(\nu , \phi)x+A\]
-\[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y+B\]
-
-
+\begin{align*}
+u &= +\dfrac{S}{E} K_{1}(\nu , \phi)x + A\\
+v &= -\dfrac{S}{E} K_{2}(\nu , \phi)y + B
+\end{align*}
 where $A$ and $B$ are integration constants.
 
-From the condition $u=0$ @ $x=lC_{\phi}$ we have that $A=-\dfrac{S}{E} K_{1}(\nu , \phi)lC_{\phi}$ then it follows that
+From the condition $u=0$ at $x=l\cos(\phi)$ we have that $A=-\dfrac{S}{E} K_{1}(\nu , \phi)l\cos(\phi)$ then it follows that
+\[u=\dfrac{S}{E} K_{1}(\nu , \phi)(x-l\cos(\phi)).\]
 
-\[u=\dfrac{S}{E} K_{1}(\nu , \phi)(x-lC_{\phi}).\]
-
-Similarly, from the condition $v=0$ @ $y=0$ we have that $B=0$ from which
-
+Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
 \[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
 
 
@@ -189,7 +160,7 @@ Similarly, from the condition $v=0$ @ $y=0$ we have that $B=0$ from which
 
 \subsection{The principle of virtual work}
 
-\section{Discretization of the PVW via the finite element method}
+\section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
 
 \subsection*{Application to a simple spring-mass system}
 
@@ -198,24 +169,20 @@ Similarly, from the condition $v=0$ @ $y=0$ we have that $B=0$ from which
 \subsection{Principle of minimum potential energy}
 
 \subsection{Hu-Washizu Variational Principle}
-Consider the following functional;
-
+Consider the following functional
 \begin{equation}
 {\pi ^*} = \pi  - \int\limits_V {\lambda _{ij}^\varepsilon ({\varepsilon _{ij}} - {L_{ijk}}{u_k})dV}  - \int\limits_{{S_u}} {\lambda _i^u(u_i^{{S_u}} - {{\bar u}_i})dS}
-\label{Hu}
+\label{eq:Hu}
 \end{equation}
-
-where;
-
+where
 \begin{itemize}
 \item $\pi$: is the potential energy functional.
 \item $L_{ijk}$ is a differential operator such ${\varepsilon _{ij}} = {L_{ijk}}{u_k}$.
-\item $S_u$ surface where esential bundary conditions are prescribed.
+\item $S_u$ surface where essential boundary conditions are prescribed.
 \item $\lambda _{ij}^\varepsilon $ and ${\lambda _i^u}$ are Lagrange multipliers.
 \end{itemize}
 
-we want to determine the so-called Euler equations resulting from the condition $\delta \pi^* = 0$. Aplying the variational operator we have:
-
+We want to determine the so-called Euler equations resulting from the condition $\delta \pi^* = 0$. Applying the variational operator we have:
 \begin{equation}
 \begin{aligned}
 \delta \pi *& = \delta \pi  - \int\limits_V {\delta \lambda _{ij}^\varepsilon } ({\varepsilon _{ij}} - {L_{ijk}}{u_k})dV- \int\limits_V {\lambda _{ij}^\varepsilon } (\delta {\varepsilon _{ij}} - {L_{ijk}}\delta {u_k})dV \\
@@ -259,48 +226,26 @@ therefore
 \end{align*}
 
 
-Now imposing the conditions $\delta {\varepsilon _{ij}} \neq 0$, $\delta \lambda _{ij}^\varepsilon  \neq 0$, $\delta {u_i} \neq 0$ in $S_t$, $\delta {u_i} \neq 0$ in $V$ and $\delta \lambda _i^u \neq 0$ in $S_u$ we have;
-
-we have
-
-\begin{equation}
-\lambda _{ij}^\varepsilon  = {C_{ijkl}}{\varepsilon _{kl}}
-\end{equation}
-
-
-
-\begin{equation}
-{\varepsilon _{ij}} = {L_{ijk}}{u_k}
-\end{equation}
-
-
-
-\begin{equation}
-{t_i} = \lambda _{ij}^\varepsilon {{\hat n}_j}
-\end{equation}
-
-
-
-\begin{equation}
-\lambda _{ij,j}^\varepsilon  + {f_i} = 0
-\end{equation}
-
-
-
-\begin{equation}
-u_i^{{S_u}} = {{\bar u}_i}
-\end{equation}
+Now, imposing the conditions $\delta {\varepsilon _{ij}} \neq 0$, $\delta \lambda _{ij}^\varepsilon  \neq 0$, $\delta {u_i} \neq 0$ in $S_t$, $\delta {u_i} \neq 0$ in $V$ and $\delta \lambda _i^u \neq 0$ in $S_u$ we have
+%
+\begin{align}
+&\lambda _{ij}^\varepsilon  = C_{ijkl} \varepsilon_{kl}\\
+&\varepsilon_{ij} = {L_{ijk}}{u_k}\\
+t_i &= \lambda_{ij}^\varepsilon \hat{n}_j\\
+&\lambda _{ij,j}^\varepsilon  + {f_i} = 0\\
+&u_i^{S_u} = \bar{u}_i
+\end{align}
 
 \section{Weighted residual methods}
-\subsection{Application to the Navier equtions}
+\subsection{Application to the Navier equations}
 \subsection{Application to the acoustic wave equation}
 
 \section{Basic elements of interpolation theory}
 \subsection{Formulation in the physical space}
-\subsection{Formulation in the natural space-The continnum mechanics analogy}
+\subsection{Formulation in the natural space: the continuum mechanics analogy}
 In typical finite element equilibrium equations we need to perform integration over the reference element domain $V_0(\vec{x})$ corresponding to originally arbitrarily shaped sub-domains as created during the meshing process.  In order to proceed with this integration it is useful to consider the following continuum mechanics analogy.
 
-First assume that the actual physical domain $V_0(\vec{x})$ is the result of a deformation process imparted upon the natural domain as shown in \cref{fig:natural domain}. In this analogy, the physical domain $V_0(\vec{x})$ is regarded like a "deformed" configuration at an imaginary time $t=t$, while the natural "un-deformed" domain $V(\vec{r})$   is treated like a reference un-deformed configurations at time $t=0$. Both configurations are assumed to be connected through a deformation process;
+First assume that the actual physical domain $V_0(\vec{x})$ is the result of a deformation process imparted upon the natural domain as shown in \cref{fig:natural domain}. In this analogy, the physical domain $V_0(\vec{x})$ is regarded like a ``deformed'' configuration at an imaginary time $t=t$, while the natural ``undeformed'' domain $V(\vec{r})$   is treated like a reference undeformed configurations at time $t=0$. Both configurations are assumed to be connected through a deformation process;
 
 
 \begin{equation}
@@ -308,7 +253,7 @@ First assume that the actual physical domain $V_0(\vec{x})$ is the result of a d
 \vec{X}&=\vec{X}(\vec{r})\\
 \vec{r}&=\vec{r}(\vec{X})
 \end{aligned}
-\label{motion}
+\label{eq:motion}
 \end{equation}
 
 \begin{figure}[h]
@@ -320,26 +265,22 @@ First assume that the actual physical domain $V_0(\vec{x})$ is the result of a d
 
  
 
-In \cref{motion} we can understand $\vec{r}$ like a material (Lagrangian) variable and $\vec{X}$ like a spatial (or Eulerian) variable. Using the continuum mechanics analogy it is clear that the "deformation" process at the continuum level is fully characterized by the "deformation" gradient or Jacobian of the transformation \cref{motion} and defined according to;
+In \cref{eq:motion} we can understand $\vec{r}$ like a material (Lagrangian) variable and $\vec{X}$ like a spatial (or Eulerian) variable. Using the continuum mechanics analogy it is clear that the ``deformation'' process at the continuum level is fully characterized by the ``deformation'' gradient or Jacobian of the transformation \cref{eq:motion} and defined according to;
 
 \begin{equation}
 dX_i=\dfrac{\partial X_i}{\partial r_J}dr_J\equiv J_{iJ}dr_{J}
-\label{gradient}
+\label{eq:gradient}
 \end{equation}
 
-where $dr_{J}$ and $dX_i$ represent material vectors in the original and deformed configuration. From \cref{gradient} it is evident that the Jacobian contains all the information describing the change of the physical sub-domain with respect to the natural element. For the element integration process we will assume that every element $V(\vec{r})$ in the natural domain deforms into the physical element $V_0(\vec{X})$, thus allowing us to write typical terms like the ones in the material stiffness matrix;
-
+where $dr_{J}$ and $dX_i$ represent material vectors in the original and deformed configuration. From \cref{eq:gradient} it is evident that the Jacobian contains all the information describing the change of the physical sub-domain with respect to the natural element. For the element integration process we will assume that every element $V(\vec{r})$ in the natural domain deforms into the physical element $V_0(\vec{X})$, thus allowing us to write typical terms like the ones in the material stiffness matrix
 \begin{equation}
 \int\limits_{V(\vec{X})} \hat{B}_{ij}^K(\vec{X}) C_{ijkl} \hat{B}_{kl}^P(\vec{X}) dV(\vec{X})\equiv \int\limits_{V_0(\vec{r})} \hat{B}_{ij}^K(\vec{r}) C_{ijkl} \hat{B}_{kl}^P(\vec{r})J dV_0(\vec{r})
-\label{matmatrix}
+\label{eq:matmatrix}
 \end{equation}
-
-
-where we have used $dV(\vec{X})=JdV(\vec{r})$, with $J$ being the determinant of the deformation gradient and in general we transform functions between the natural and physical space making use of \cref{motion} according to;
-
+where we have used $dV(\vec{X})=JdV(\vec{r})$, with $J$ being the determinant of the deformation gradient and in general we transform functions between the natural and physical space making use of \cref{eq:motion} according to
 \begin{equation}
 f(\vec{r})=F[\vec{X}(\vec{r})]
-\label{funtrans}
+\label{eq:funtrans}
 \end{equation}
 
 	 								
@@ -348,7 +289,7 @@ Having identified the fact that the integration process will take place in the n
 
 \begin{equation}
 \Phi_{ij...p}(\vec{X})=H_{ij...p}^K(\vec{r})\hat{u}^K
-\label{interpol}
+\label{eq:interpol}
 \end{equation}	 						
 
 where $\hat{u}^K$ represents a vector of nodal points displacements, see \cref{fig:interpol nat dom}, and $H_{ij...p}^K(\vec{r})$ is an interpolator which keeps the tensorial character of the original physical variable $\Phi_{ik...p}(\vec{X})$ and where the super-index makes reference to a nodal identifier (with the summation convention in place).
@@ -368,14 +309,12 @@ Since the primary variable corresponds to displacements it must be kept in mind 
 
 \begin{equation}
 u_i(\vec{X})=N_i^K(\vec{r})\hat{u}^K
-\label{el interpol}
+\label{eq:el interpol}
 \end{equation}
 
 
 
-For the general interpolation process we need two kinds of transformations.  First we need to transform integrals over the physical space into integrals into the natural space which corresponds to;
-
-
+For the general interpolation process we need two kinds of transformations.  First we need to transform integrals over the physical space into integrals into the natural space which corresponds to
 \begin{equation}
 \int\limits_{V(\vec{X})} F(\vec{X})dV(\vec{X})\equiv \int\limits_{V_0(\vec{r})} f(\vec{r})J dV_0(\vec{r})
 \label{gen trans}
@@ -383,49 +322,39 @@ For the general interpolation process we need two kinds of transformations.  Fir
 
 
 
-Second we need to relate spatial differentiation in both, the physical and spatial domains.  Let us define these operators like $\bigtriangledown_i^X$ and $\bigtriangledown_I^r$ respectively. It then follows from \cref{funtrans} that;
-
+Second we need to relate spatial differentiation in both, the physical and spatial domains.  Let us define these operators like $\bigtriangledown_i^X$ and $\bigtriangledown_I^r$ respectively. It then follows from \cref{eq:funtrans} that
 \begin{equation}
 \dfrac{\partial F}{\partial X_i}=\dfrac{\partial f}{\partial r_J}\dfrac{\partial r_J}{\partial X_i}
-\label{chain}
+\label{eq:chain}
 \end{equation}
-
 from where we can establish the connection between the two operators like
 
 
 \begin{equation}
 \bigtriangledown_i^X=J_{iJ}^{-1}\bigtriangledown_J^r
-\label{fundamental}
+\label{eq:fundamental}
 \end{equation}
 
 
 \section*{The fundamental interpolator}
-We further define the fundamental interpolator giving rise to gradients of the primary displacement variable in the physical space according to;
-
-
+We further define the fundamental interpolator giving rise to gradients of the primary displacement variable in the physical space according to
 \begin{equation}
 u_{i,j}(\vec{X})=L_{ij}^K(\vec{r})\hat{u}^K
-\label{fund operator}
+\label{eq:fund operator}
 \end{equation}
 
 
-This fundamental interpolator  $L_{ik}^K(\vec{r})$ is derived after using \cref{el interpol} and \cref{fundamental} in the physical displacement gradient definition as shown next;
-
-
-\[
-\begin{aligned}
+This fundamental interpolator  $L_{ik}^K(\vec{r})$ is derived after using \cref{eq:el interpol} and \cref{eq:fundamental} in the physical displacement gradient definition as shown next
+\begin{align*}
 u_{i,j}(\vec{X})&=\bigtriangledown_j^X u_i(\vec{X})\\
 u_{i,j}(\vec{X})&=\bigtriangledown_j^X N_i^K(\vec{r})\hat{u}^K\\
 u_{i,j}(\vec{X})&=J_{jQ}^{-1}\bigtriangledown_Q^r N_i^K(\vec{r})\hat{u}^K\\
 u_{i,j}(\vec{X})&=J_{jQ}^{-1}N_{i,Q}^K(\vec{r})\hat{u}^K
-\end{aligned}
-\]
-
+\end{align*}
 then
-
 \begin{equation}
 L_{ij}^K(\vec{r})=J_{jQ}^{-1}N_{i,Q}^K(\vec{r})
-\label{fundamental interpolator}
+\label{eq:fundamental interpolator}
 \end{equation}
 
 \section*{Elemental stiffness matrix}
@@ -433,7 +362,7 @@ The elemental material stiffness matrix computed in the natural domain of \cref{
 
 \begin{equation}
 K^{KP}=\int\limits_{V_0(\vec{r})} \hat{B}_{ij}^K(\vec{r}) C_{ijkl} \hat{B}_{kl}^P(\vec{r})J dV_0(\vec{r})\equiv \int\limits_{r=-1}^{r=+1}\int\limits_{s=-1}^{s=+1} \hat{B}_{ij}^K(r,s) C_{ijkl} \hat{B}_{kl}^P(r,s)J(r,s) \mathrm{d}r\mathrm{d}s
-\label{elematrix}
+\label{eq:elematrix}
 \end{equation}
 
 
@@ -446,11 +375,11 @@ K^{KP}=\int\limits_{V_0(\vec{r})} \hat{B}_{ij}^K(\vec{r}) C_{ijkl} \hat{B}_{kl}^
 \end{figure}	 		
  
 
-Once the interpolator $\hat{B}_{ij}^K(\vec{r})$ has been identified the elemental stiffness matrix is obtained via numerical integration (quadrature) as described in \eqref{eleinetgration};
+Once the interpolator $\hat{B}_{ij}^K(\vec{r})$ has been identified the elemental stiffness matrix is obtained via numerical integration (quadrature) as described in \eqref{eq:eleinetgration};
 
 \begin{equation}
-\int\limits_{r=-1}^{r=+1}\int\limits_{s=-1}^{s=+1} \hat{B}_{ij}^K(r,s) C_{ijkl} \hat{B}_{kl}^P(r,s)J(r,s) \mathrm{d}r\mathrm{d}s\approx \sum_{i,j=1}^{NGPTS} \alpha_i \alpha_j \hat{B}_{kl}^K(r_i,s_j)C_{ijkl} \hat{B}_{kl}^P(r_i,s_j) J(r_i,s_j)
-\label{eleinetgration}
+\int\limits_{r=-1}^{r=+1}\int\limits_{s=-1}^{s=+1} \hat{B}_{ij}^K(r,s) C_{ijkl} \hat{B}_{kl}^P(r,s)J(r,s) \mathrm{d}r\mathrm{d}s\approx \sum_{i,j=1}^\text{NGPTS} \alpha_i \alpha_j \hat{B}_{kl}^K(r_i,s_j)C_{ijkl} \hat{B}_{kl}^P(r_i,s_j) J(r_i,s_j)
+\label{eq:eleinetgration}
 \end{equation}
 
 	 											
@@ -465,10 +394,10 @@ and where NGPTS corresponds to the number of integration points, $\alpha_j$ is a
 \end{figure}	 
 
 
-One important aspect of the numerical integration that has to be kept in mind is accuracy.  Depending on the particularly selected integration scheme, the number of introduced integration points fixes the maximum polynomial order of the considered functions that can be integrated accurately.  In the case of the integrand in \cref{eleinetgration}, it is clear that this order increases as the distortion of the physical element  with respect to the natural element increases.  One way of dealing with this dependency of accuracy with element distortion is to make use of adaptative integration techniques which are numerically expensive.  What is actually done in standard FEM analysis is to choose the number of quadrature points beforehand and introduce distortion related error criteria inside the code in such a way that some sort of validation is performed before the numerical integration process is started.
+One important aspect of the numerical integration that has to be kept in mind is accuracy.  Depending on the particularly selected integration scheme, the number of introduced integration points fixes the maximum polynomial order of the considered functions that can be integrated accurately.  In the case of the integrand in \cref{eq:eleinetgration}, it is clear that this order increases as the distortion of the physical element  with respect to the natural element increases.  One way of dealing with this dependency of accuracy with element distortion is to make use of adaptative integration techniques which are numerically expensive.  What is actually done in standard FEM analysis is to choose the number of quadrature points beforehand and introduce distortion related error criteria inside the code in such a way that some sort of validation is performed before the numerical integration process is started.
 
 \section*{Strain displacement interpolator for the infinitesimal strain tensor}
-The $Q$-th nodal contribution to the infinitesimal strain-displacement interpolator can be obtained in explicit form as follows. Let $L_x^Q$ and $L_y^Q$ be the spatial differential operators in $x$ and $y$ respectively. We have after expanding \cref{fundamental interpolator}  that
+The $Q$-th nodal contribution to the infinitesimal strain-displacement interpolator can be obtained in explicit form as follows. Let $L_x^Q$ and $L_y^Q$ be the spatial differential operators in $x$ and $y$ respectively. We have after expanding \cref{eq:fundamental interpolator}  that
 
 \begin{align*}
 L_x^Q & = J_{xP}^{ - 1}\frac{{\partial {N^Q}}}{{\partial {r_P}}} \equiv J_{xr}^{ - 1}\frac{{\partial {N^Q}}}{{\partial r}} + J_{xs}^{ - 1}\frac{{\partial {N^Q}}}{{\partial s}}\\
@@ -515,7 +444,7 @@ The $Q$-th nodal contribution is then assembled as follows;
 .\\
 .
 \end{array}} \right\}
-\label{strain inter}
+\label{eq:strain inter}
 \end{equation}
 
 \begin{algorithm}[H]
