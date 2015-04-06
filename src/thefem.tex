@@ -11,8 +11,6 @@
 \end{split}
 \end{equation}
 
-
-
 Hooke's law;
 
 \begin{equation} \label{Hooke}
@@ -51,7 +49,6 @@ Notice that;
 
 is really a Newman boundary condition on $u_i$.
 
-%%%%%%
 \section*{Simple wedge under self-equilibrated loads}
 Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \cref{WEDGE}. It is assumed to be contained in the $X-Y$ plane, with loading conditions satisfying a plane strain (or plane stress) idealization. The material is elastic with Lame constants $\lambda$ and $\mu$. The wedge is loaded by uniform tractions of intensity $S$ applied over its four faces in such a way that the wedge is self-equilibrated. We wish to find the closed-form elasticity solution for the stress, strain and displacement fields throughout the problem domain.
 
@@ -74,7 +71,6 @@ Under plane strain conditions the general 3D stress equilibrium equations reduce
 \end{equation}
 
 with strain given by;
-
 
 \begin{equation}
 \begin{aligned}
@@ -115,8 +111,6 @@ from which the following stress solution results:
 \end{equation}
 
 with the condition $\tau_{xy}=0$ due to symmetry.
-\\
-\\
 
 Let $\hat{n}^1$,$\hat{n}^2$,$\hat{n}^3$,$\hat{n}^4$ be the outward normal vectors to the exposed faces of the wedge and given by;
 
@@ -182,16 +176,185 @@ Similarly, from the condition $v=0$ @ $y=0$ we have that $B=0$ from which
 \[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
 
 
-
-\subsection*{Self equilibrated wedge in plane stress}
-
 \section{Formal definition of strong and weak forms}
+\subsection*{Strong form}
+The strong form of the problem, denoted by $\{ S \}$ reads:\\
 
-\subsection{The principle of virtual work}
+Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \Re$ such:
 
-\section{Discretization of the PVW via the finite element method}
+\begin{equation} \label{navier_2}
+\begin{split}
+&\left( {\lambda  + \mu } \right){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \quad \text{$\forall \vec x \in V$} \\
+&t_i^{\hat n} = {\sigma _{ij}}{\hat n_{ij}} \quad \text{for $\vec x$ in $S_t$}\\
+& {u_i} = {{\bar u}_i} \quad \text{for $\vec x$ in $S_u$}
+\end{split}
+\end{equation}
+
+In \cref{navier_2} the boundary conditions specified by the traction vector $t_i^{\hat n}$ correspond to the natural boudnary condictions, while those specified in terms of the displacements vector $\bar u_i$ represent the esential boundary conditions.
+
+\begin{itemize}
+\item We are interested in developing methods to obtain approximate solutions to $\{ S \}$.
+\item The FEM is formulated starting from a statement equivalent to $\{ S \}$ in which we use trial functions until certain prescribed conditions are met.
+\item We will look for solutions $u_i$ subject to the following conditions:
+
+\[u_i=\bar u_i\]
+
+\[\int\limits_S {{{\left( {\frac{{\partial {u_i}}}{{\partial {x_j}}}} \right)}^2}} dS < \infty \]
+
+\end{itemize}
+
+The first condition corresponds to the satisfaction of the esential boundary condition, while the second corresponds to the functions being square integrable. The space of functions satisfying the above two conditions is denoted by $\varsigma$ and formally defined like;
+
+\[ \varsigma = \left\{ {{u_i}\left| {{u_i} \in H,{u_i} = {{\bar u}_i} \quad in \quad {S_u}} \right.} \right\}\].
+
+On the other hand, in order to validate the introduced trial functions we also need testing (or wighting and distribution) functions $w_i$. Such functions are arbitrary apart form having to staisfy the following conditions:
+
+\[w_i=0 \quad in \quad {S_u}\]
+
+\[\int\limits_S {{{\left( {\frac{{\partial {w_i}}}{{\partial {x_j}}}} \right)}^2}} dS < \infty \]
+
+In what follows we formally denote the space of these functions by $V$ and formally define it like
+
+\[ V = \left\{ {{w_i}\left| {{w_i} \in H,{u_i} = {w_i=0} \quad in \quad {S_u}} \right.} \right\}\]
+
+\subsection*{Weak form}
+Having defined the strong form $\{S\}$ and the spaces $\varsigma$ and $V$ we will state an alternative form (equivalent to $\{S\}$) but with advantages when thinking about a numerical solution. Since in that form the continuity requirements of the trial functions is weaker than in the strong form such formulation is commonly referred to like the weak form $\{W\}$ and defined as follows.
+
+Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \Re$ and $\forall {w_i} \in V$ such:
+
+\[\int\limits_V {{\sigma _{ij,j}}{w_{i,j}}dV - \int\limits_V {{f_i}{w_i}dV}  - \int\limits_{{S_t}} {t_i^{\hat n}} } {w_i}dS = 0\]
+
+\subsubsection*{Proof 1:}
+Let $u_i \in \varsigma $ be a solution to $\{S\}$ and let $w_i \in V $. Forming the inner product of the equlibrium statement with $w_i$ and forcing the integral over the domain to be zero we have:
+
+\[\int\limits_V {\left( {{\sigma _{ij,j}} + {f_i}} \right){w_i}} dV = 0\]
+
+expanding the terms in the integrand yields;
+
+\[\int\limits_V {{\sigma _{ij,j}}{w_i}dV + \int\limits_V {{f_i}{w_i}dV = 0} } \]
+
+Now integrating by parts the first term on the left we have:
+
+\[ - \int\limits_V {{w_{i,j}}{\sigma _{ij}}dV}  + \int\limits_S {{\sigma _{ij}}{{\hat n}_j}{w_i}dS}  + \int\limits_V {{w_i}{f_i}dV = 0} \]
+
+since $w_i \in V$ it follows that $w_i = 0$ in $S_u$ from which
+
+\begin{equation}\label{weak}
+\int\limits_V {{\sigma _{ij,j}}{w_{i,j}}dV - \int\limits_V {{f_i}{w_i}dV}  - \int\limits_{{S_t}} {t_i^{\hat n}} } {w_i}dS = 0
+\end{equation}
+
+
+Now, considering that $u_i$ is solution of the strong form $\{S\}$ it must satisfy $u_i = \bar u_{i} \quad in \quad S_u$ and as a result $u_i \in \varsigma$. On the other hand, since $u_i$ satisfies \cref{weak} $\forall {w_i} \in V$ we have that $u_i$ satisfies the definition of weak solution specified in $\{ W \}$.
+
+\subsubsection*{Proof 2:}
+Let $u_i$ be a solution of $\{W\}$ and thus $u_i \in \varsigma$ which means that:
+
+\[u_i = \bar u_{i} \quad in \quad S_u\]
+
+and that it satisfies
+
+\[\int\limits_V {{\sigma _{ij}}{w_{i,j}}dV - \int\limits_V {{f_i}{w_i}dV - \int\limits_{{S_t}} {t_i^n} } } {w_i}dS = 0\]
+
+integrating by parts,
+
+\[ - \int\limits_V {{\sigma _{ij,j}}{w_i}dV + \int\limits_S {{\sigma _{ij}}{n_j}{w_i}}  - \int\limits_V {{f_i}{w_i}dV - \int\limits_{{S_t}} {t_i^n} } } {w_i}dS = 0\]
+
+Since ${w_i} \in V$ we have that ${w_i}=0$ in $S_u$ and therefore:
+
+
+\[\int\limits_V {{w_i}\left( {{\sigma _{ij,j}} + {f_i}} \right)dV + \int\limits_{{S_t}} {{w_i}\left( {{\sigma _{ij}}{n_j} - t_i^n} \right)dS = 0} } \]
+
+from which:
+
+\begin{equation} \label{equil_2}
+\begin{split}
+&{\sigma _{ij,j}} + {f_i} = 0 \quad \vec{x} \in V \\
+&t_i^n = {\sigma _{ij}}{n_j} \quad for \quad \vec{x} \quad in \quad S_t\\
+&{u_i} = {{\bar u}_i} \quad for \quad \vec{x} \quad in \quad S_u
+\end{split}
+\end{equation}
+
+\subsection{The principle of virtual work-Discretization into local interpolating functions}
+We now discretize the principle of virtual work repeated below for completeness:
+
+\begin{equation} \label{pvw_2}
+\int\limits_V {{\sigma _{ij}}\delta {u_{i,j}}dV - \int\limits_V {{f_i}\delta {u_i}dV - \int\limits_{{S_t}} {t_i^n} } } \delta {u_i}dS = 0.
+\end{equation}
+
+For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping subdomains over each one of which we will appoximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been casted into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows;
+
+\begin{equation}\label{pvw_dis}
+\sum\limits_{e = 1}^{NEL} {\int\limits_{{V^e}} {{\sigma _{ij}}\delta {u_{i,j}}d{V^e} - \int\limits_V {{f_i}\delta {u_i}d{V^e} - \int\limits_{{S_t}} {t_i^n} } } \delta {u_i}d{S^e} = 0} 
+\end{equation}
+
+For facility consider a single subdomain
+
+\begin{equation} \label{pvw_sing}
+\int\limits_V {{\sigma _{ij}}\delta {u_{i,j}}dV - \int\limits_V {{f_i}\delta {u_i}dV - \int\limits_{{S_t}} {t_i^n} } } \delta {u_i}dS = 0.
+\end{equation}
+
+The involved functions (e.g., displacements, strain, stresses) wiil be approximated via interpolation of the solution over a determined number of points termed in what folows nodes. Assume for instance that over element $e$ containing $n$ such nodes we know the displacements vector $u_i$. Furthermore, let the displacements for the $p$-node $u^P=[u^P, v^P, w^P]$. Using ideas from interpolation theory it is now possible to approximate the displacements vector over an arbitrary point $\vec{x}$ inside the element as follows;
+
+\[{u_i}(\vec x) = N_i^1(\vec x){u^1} + N_i^2(\vec x){u^2} + ... + N_i^P(\vec x){u^P} + ... + N_i^n(\vec x){u^n}\]
+
+or in more general form;
+
+\begin{equation} \label{bas_interpol}
+{u_i}(\vec x) = N_i^Q(\vec x){u^Q}
+\end{equation}
+
+and where the caption superscripts indicate summation over the number of nodes of the element while the subscript refers to the physical character of the variable being interpolated.
+
+\[{\varepsilon _{ij}}(\vec x) = B_{ij}^Q(\vec x){u^Q}\]
+
+\[{\varepsilon _{ij}}(\vec x) = \frac{1}{2}\left( {{u_{i,j}} + {u_{j,i}}} \right)\]
+
+
+\[{\varepsilon _{ij}}(\vec x) = \frac{1}{2}\left( {\frac{{\partial N_i^Q}}{{\partial {x_j}}} + \frac{{\partial N_j^Q}}{{\partial {x_i}}}} \right){u^Q}\]
+
+\[B_{ij}^Q = \frac{1}{2}\left( {\frac{{\partial N_i^Q}}{{\partial {x_j}}} + \frac{{\partial N_j^Q}}{{\partial {x_i}}}} \right)\]
+
+\[\delta {u_i} = N_i^Q(\vec x)\delta {u^Q}\]
+
+\[\int\limits_V {{C_{ijkl}}B_{kl}^P{u^P}B_{ij}^Q\delta {u^Q}dV - \int\limits_V {{f_i}N_i^Q\delta {u^Q}dV}  - \int\limits_{{S_t}} {t_i^nN_i^Q\delta {u^Q}dS = 0} } \]
+
+\[\delta {u^Q}\int\limits_V {B_{ij}^Q{C_{ijkl}}B_{kl}^PdV{u^P} - \delta {u^Q}\int\limits_V {N_i^Q{f_i}dV}  - \delta {u^Q}\int\limits_{{S_t}} {N_i^Qt_i^ndS = 0} } \]
+
+\[\delta {u^Q}f_\sigma ^Q - \delta {u^Q}f_V^Q - \delta {u^Q}f_c^Q = 0\]
+
+\[f_\sigma ^Q - f_V^Q - f_c^Q = 0\]
+
+\[f_\sigma ^Q = \int\limits_V {B_{ij}^Q{C_{ijkl}}B_{kl}^PdV{u^P} \equiv {K^{QP}}} {u^P}\]
+
+\[f_V^Q = \int\limits_V {N_i^Q{f_i}dV} \]
+
+\[f_c^Q = \int\limits_{{S_t}} {N_i^Qt_i^ndS} \]
+
+\[{K^{QP}}{u^P} = f_V^Q + f_c^Q\]
 
 \subsection*{Application to a simple spring-mass system}
+
+
+\begin{algorithm}[H]
+ \SetAlgoLined
+ \KwData{Problem paramters; NUMNP, NUMEL, NMATP}
+ \KwResult{Displacements and spring forces}
+ Create $DM$E operator\;
+ Assemble $K^G$, $F^G$\;
+\While{$j \leq 1, NUMEL$}{
+\[
+\begin{aligned}
+K^G \leftarrow K^G+K^i\\
+F^G \leftarrow F^G+F^i\\
+\end{aligned}
+\]
+}
+Impose BCs\;
+Solve $[K^G]U=F^G$\\
+Find internal forces
+\caption{Springs Algorithm}
+\end{algorithm}
+
 
 \section{Variational formulations}
 
