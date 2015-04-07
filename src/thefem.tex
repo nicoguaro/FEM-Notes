@@ -10,17 +10,9 @@ The balance of momentum, stress symmetry and traction definition on the boundary
 \end{split} \enspace .
 \end{equation}
 
-<<<<<<< HEAD
-Hooke's law;
-
-\begin{equation} \label{Hooke}
-{\sigma _{ij}} = 2\mu {\varepsilon _{ij}} + \lambda {\varepsilon _{kk}}{\delta _{ij}}
-=======
-
 The simplest constitutive equation in solid mechanics is to consider a linear dependence between stress and strains, and it is called Hooke's law\footnote{Despite the name of \emph{law} used, this relation is not always valid, but is a good approximation for small strains.}
 \begin{equation} \label{eq:Hooke}
 {\sigma _{ij}} = 2\mu {\varepsilon _{ij}} + \lambda {\varepsilon _{kk}}{\delta _{ij}} \enspace .
->>>>>>> origin/master
 \end{equation}
 
 Strain-displacement (kinematic relationship)
@@ -66,13 +58,7 @@ Under plane strain conditions the general 3D stress equilibrium equations reduce
 \end{aligned}
 \label{eq:equilibrium}
 \end{equation}
-<<<<<<< HEAD
-
-with strain given by;
-
-=======
 with strain given by
->>>>>>> origin/master
 \begin{equation}
 \begin{aligned}
 \epsilon_{xx}&=\dfrac{\partial u}{\partial x}\\
@@ -107,20 +93,6 @@ from which the following stress solution results:
 \label{eq:solution}
 \end{equation}
 with the condition $\tau_{xy}=0$ due to symmetry.
-<<<<<<< HEAD
-
-Let $\hat{n}^1$,$\hat{n}^2$,$\hat{n}^3$,$\hat{n}^4$ be the outward normal vectors to the exposed faces of the wedge and given by;
-
-\[\hat{n}^1=-S_{\phi}\hat{e}_{x}+C_{\phi}\hat{e}_{y}\]
-\[\hat{n}^2=-S_{\phi}\hat{e}_{x}-C_{\phi}\hat{e}_{y}\]
-\[\hat{n}^3=+S_{\phi}\hat{e}_{x}+C_{\phi}\hat{e}_{y}\]
-\[\hat{n}^4=+S_{\phi}\hat{e}_{x}-C_{\phi}\hat{e}_{y}.\]
-
-The components of the traction vector follow directly like;
-
-\[t_{i}=\sigma_{ij}\hat{n}_{j}\]
-=======
->>>>>>> origin/master
 
 Let $\hat{n}^1$,  $\hat{n}^2$, $\hat{n}^3$, $\hat{n}^4$ be the outward normal vectors to the exposed faces of the wedge and given by
 \begin{align*}
@@ -185,7 +157,7 @@ The strong form of the problem, denoted by $\{ S \}$ reads:\\
 
 Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \Re$ such:
 
-\begin{equation} \label{navier_2}
+\begin{equation} \label{eq:navier_2}
 \begin{split}
 &\left( {\lambda  + \mu } \right){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \quad \text{$\forall \vec x \in V$} \\
 &t_i^{\hat n} = {\sigma _{ij}}{\hat n_{ij}} \quad \text{for $\vec x$ in $S_t$}\\
@@ -193,24 +165,25 @@ Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \Re$ such:
 \end{split}
 \end{equation}
 
-In \cref{navier_2} the boundary conditions specified by the traction vector $t_i^{\hat n}$ correspond to the natural boudnary condictions, while those specified in terms of the displacements vector $\bar u_i$ represent the esential boundary conditions.
+In \cref{eq:navier_2} the boundary conditions specified by the traction vector $t_i^{\hat n}$ correspond to the natural boundary conditions, while those specified in terms of the displacements vector $\bar u_i$ represent the essential boundary conditions.
 
 \begin{itemize}
 \item We are interested in developing methods to obtain approximate solutions to $\{ S \}$.
 \item The FEM is formulated starting from a statement equivalent to $\{ S \}$ in which we use trial functions until certain prescribed conditions are met.
 \item We will look for solutions $u_i$ subject to the following conditions:
 
-\[u_i=\bar u_i\]
-
-\[\int\limits_S {{{\left( {\frac{{\partial {u_i}}}{{\partial {x_j}}}} \right)}^2}} dS < \infty \]
+\begin{align*}
+u_i=\bar u_i\\
+\int\limits_S {{{\left( {\frac{{\partial {u_i}}}{{\partial {x_j}}}} \right)}^2}} dS < \infty
+\end{align*}
 
 \end{itemize}
 
-The first condition corresponds to the satisfaction of the esential boundary condition, while the second corresponds to the functions being square integrable. The space of functions satisfying the above two conditions is denoted by $\varsigma$ and formally defined like;
+The first condition corresponds to the satisfaction of the essential boundary condition, while the second corresponds to the functions being square integrable. The space of functions satisfying the above two conditions is denoted by $\varsigma$ and formally defined like;
 
 \[ \varsigma = \left\{ {{u_i}\left| {{u_i} \in H,{u_i} = {{\bar u}_i} \quad in \quad {S_u}} \right.} \right\}\].
 
-On the other hand, in order to validate the introduced trial functions we also need testing (or wighting and distribution) functions $w_i$. Such functions are arbitrary apart form having to staisfy the following conditions:
+On the other hand, in order to validate the introduced trial functions we also need testing (or weighting and distribution) functions $w_i$. Such functions are arbitrary apart form having to satisfy the following conditions:
 
 \[w_i=0 \quad in \quad {S_u}\]
 
@@ -228,7 +201,7 @@ Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \Re$ and $\forall
 \[\int\limits_V {{\sigma _{ij,j}}{w_{i,j}}dV - \int\limits_V {{f_i}{w_i}dV}  - \int\limits_{{S_t}} {t_i^{\hat n}} } {w_i}dS = 0\]
 
 \subsubsection*{Proof 1:}
-Let $u_i \in \varsigma $ be a solution to $\{S\}$ and let $w_i \in V $. Forming the inner product of the equlibrium statement with $w_i$ and forcing the integral over the domain to be zero we have:
+Let $u_i \in \varsigma $ be a solution to $\{S\}$ and let $w_i \in V $. Forming the inner product of the equilibrium statement with $w_i$ and forcing the integral over the domain to be zero we have:
 
 \[\int\limits_V {\left( {{\sigma _{ij,j}} + {f_i}} \right){w_i}} dV = 0\]
 
@@ -264,8 +237,6 @@ integrating by parts,
 
 Since ${w_i} \in V$ we have that ${w_i}=0$ in $S_u$ and therefore:
 
-<<<<<<< HEAD
-
 \[\int\limits_V {{w_i}\left( {{\sigma _{ij,j}} + {f_i}} \right)dV + \int\limits_{{S_t}} {{w_i}\left( {{\sigma _{ij}}{n_j} - t_i^n} \right)dS = 0} } \]
 
 from which:
@@ -285,19 +256,19 @@ We now discretize the principle of virtual work repeated below for completeness:
 \int\limits_V {{\sigma _{ij}}\delta {u_{i,j}}dV - \int\limits_V {{f_i}\delta {u_i}dV - \int\limits_{{S_t}} {t_i^n} } } \delta {u_i}dS = 0.
 \end{equation}
 
-For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping subdomains over each one of which we will appoximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been casted into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows;
+For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping subdomains over each one of which we will approximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been casted into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows;
 
 \begin{equation}\label{pvw_dis}
 \sum\limits_{e = 1}^{NEL} {\int\limits_{{V^e}} {{\sigma _{ij}}\delta {u_{i,j}}d{V^e} - \int\limits_V {{f_i}\delta {u_i}d{V^e} - \int\limits_{{S_t}} {t_i^n} } } \delta {u_i}d{S^e} = 0} 
 \end{equation}
 
-For facility consider a single subdomain
+For easiness consider a single subdomain
 
 \begin{equation} \label{pvw_sing}
 \int\limits_V {{\sigma _{ij}}\delta {u_{i,j}}dV - \int\limits_V {{f_i}\delta {u_i}dV - \int\limits_{{S_t}} {t_i^n} } } \delta {u_i}dS = 0.
 \end{equation}
 
-The involved functions (e.g., displacements, strain, stresses) wiil be approximated via interpolation of the solution over a determined number of points termed in what folows nodes. Assume for instance that over element $e$ containing $n$ such nodes we know the displacements vector $u_i$. Furthermore, let the displacements for the $p$-node $u^P=[u^P, v^P, w^P]$. Using ideas from interpolation theory it is now possible to approximate the displacements vector over an arbitrary point $\vec{x}$ inside the element as follows;
+The involved functions (e.g., displacements, strain, stresses) will be approximated via interpolation of the solution over a determined number of points termed in what follows nodes. Assume for instance that over element $e$ containing $n$ such nodes we know the displacements vector $u_i$. Furthermore, let the displacements for the $p$-node $u^P=[u^P, v^P, w^P]$. Using ideas from interpolation theory it is now possible to approximate the displacements vector over an arbitrary point $\vec{x}$ inside the element as follows;
 
 \[{u_i}(\vec x) = N_i^1(\vec x){u^1} + N_i^2(\vec x){u^2} + ... + N_i^P(\vec x){u^P} + ... + N_i^n(\vec x){u^n}\]
 
@@ -335,9 +306,8 @@ and where the caption superscripts indicate summation over the number of nodes o
 \[f_c^Q = \int\limits_{{S_t}} {N_i^Qt_i^ndS} \]
 
 \[{K^{QP}}{u^P} = f_V^Q + f_c^Q\]
-=======
+
 \section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
->>>>>>> origin/master
 
 \subsection*{Application to a simple spring-mass system}
 
@@ -521,7 +491,7 @@ For the general interpolation process we need two kinds of transformations.  Fir
 
 
 
-Second we need to relate spatial differentiation in both, the physical and spatial domains.  Let us define these operators like $\bigtriangledown_i^X$ and $\bigtriangledown_I^r$ respectively. It then follows from \cref{eq:funtrans} that
+Second we need to relate spatial differentiation in both, the physical and spatial domains.  Let us define these operators like $\nabla_i^X$ and $\nabla_I^r$ respectively. It then follows from \cref{eq:funtrans} that
 \begin{equation}
 \dfrac{\partial F}{\partial X_i}=\dfrac{\partial f}{\partial r_J}\dfrac{\partial r_J}{\partial X_i}
 \label{eq:chain}
@@ -530,7 +500,7 @@ from where we can establish the connection between the two operators like
 
 
 \begin{equation}
-\bigtriangledown_i^X=J_{iJ}^{-1}\bigtriangledown_J^r
+\nabla_i^X=J_{iJ}^{-1}\nabla_J^r
 \label{eq:fundamental}
 \end{equation}
 
@@ -545,9 +515,9 @@ u_{i,j}(\vec{X})=L_{ij}^K(\vec{r})\hat{u}^K
 
 This fundamental interpolator  $L_{ik}^K(\vec{r})$ is derived after using \cref{eq:el interpol} and \cref{eq:fundamental} in the physical displacement gradient definition as shown next
 \begin{align*}
-u_{i,j}(\vec{X})&=\bigtriangledown_j^X u_i(\vec{X})\\
-u_{i,j}(\vec{X})&=\bigtriangledown_j^X N_i^K(\vec{r})\hat{u}^K\\
-u_{i,j}(\vec{X})&=J_{jQ}^{-1}\bigtriangledown_Q^r N_i^K(\vec{r})\hat{u}^K\\
+u_{i,j}(\vec{X})&=\nabla_j^X u_i(\vec{X})\\
+u_{i,j}(\vec{X})&=\nabla_j^X N_i^K(\vec{r})\hat{u}^K\\
+u_{i,j}(\vec{X})&=J_{jQ}^{-1}\nabla_Q^r N_i^K(\vec{r})\hat{u}^K\\
 u_{i,j}(\vec{X})&=J_{jQ}^{-1}N_{i,Q}^K(\vec{r})\hat{u}^K
 \end{align*}
 then
@@ -578,7 +548,7 @@ Once the interpolator $\hat{B}_{ij}^K(\vec{r})$ has been identified the elementa
 
 \begin{equation}
 \int\limits_{r=-1}^{r=+1}\int\limits_{s=-1}^{s=+1} \hat{B}_{ij}^K(r,s) C_{ijkl} \hat{B}_{kl}^P(r,s)J(r,s) \mathrm{d}r\mathrm{d}s\approx \sum_{i,j=1}^\text{NGPTS} \alpha_i \alpha_j \hat{B}_{kl}^K(r_i,s_j)C_{ijkl} \hat{B}_{kl}^P(r_i,s_j) J(r_i,s_j)
-\label{eq:eleinetgration}
+\label{eq:eleintegration}
 \end{equation}
 
 	 											
@@ -593,14 +563,14 @@ and where NGPTS corresponds to the number of integration points, $\alpha_j$ is a
 \end{figure}	 
 
 
-One important aspect of the numerical integration that has to be kept in mind is accuracy.  Depending on the particularly selected integration scheme, the number of introduced integration points fixes the maximum polynomial order of the considered functions that can be integrated accurately.  In the case of the integrand in \cref{eq:eleinetgration}, it is clear that this order increases as the distortion of the physical element  with respect to the natural element increases.  One way of dealing with this dependency of accuracy with element distortion is to make use of adaptative integration techniques which are numerically expensive.  What is actually done in standard FEM analysis is to choose the number of quadrature points beforehand and introduce distortion related error criteria inside the code in such a way that some sort of validation is performed before the numerical integration process is started.
+One important aspect of the numerical integration that has to be kept in mind is accuracy.  Depending on the particularly selected integration scheme, the number of introduced integration points fixes the maximum polynomial order of the considered functions that can be integrated accurately.  In the case of the integrand in \cref{eq:eleintegration}, it is clear that this order increases as the distortion of the physical element  with respect to the natural element increases.  One way of dealing with this dependency of accuracy with element distortion is to make use of adaptative integration techniques which are numerically expensive.  What is actually done in standard FEM analysis is to choose the number of quadrature points beforehand and introduce distortion related error criteria inside the code in such a way that some sort of validation is performed before the numerical integration process is started.
 
 \section*{Strain displacement interpolator for the infinitesimal strain tensor}
 The $Q$-th nodal contribution to the infinitesimal strain-displacement interpolator can be obtained in explicit form as follows. Let $L_x^Q$ and $L_y^Q$ be the spatial differential operators in $x$ and $y$ respectively. We have after expanding \cref{eq:fundamental interpolator}  that
 
 \begin{align*}
-L_x^Q & = J_{xP}^{ - 1}\frac{{\partial {N^Q}}}{{\partial {r_P}}} \equiv J_{xr}^{ - 1}\frac{{\partial {N^Q}}}{{\partial r}} + J_{xs}^{ - 1}\frac{{\partial {N^Q}}}{{\partial s}}\\
-L_y^Q & = J_{yP}^{ - 1}\frac{{\partial {N^Q}}}{{\partial {r_P}}} \equiv J_{yr}^{ - 1}\frac{{\partial {N^Q}}}{{\partial r}} + J_{ys}^{ - 1}\frac{{\partial {N^Q}}}{{\partial s}}
+L_x^Q & = J_{xP}^{-1}\frac{{\partial {N^Q}}}{\partial {r_P}} \equiv J_{xr}^{-1}\frac{{\partial {N^Q}}}{{\partial r}} + J_{xs}^{ - 1}\frac{{\partial {N^Q}}}{{\partial s}}\\
+L_y^Q & = J_{yP}^{ - 1}\frac{{\partial {N^Q}}}{{\partial {r_P}}} \equiv J_{yr}^{ - 1}\frac{{\partial {N^Q}}}{{\partial r}} + J_{ys}^{-1}\frac{\partial {N^Q}}{\partial s}
 \end{align*}
 
 or in matrix form;
@@ -627,21 +597,21 @@ The $Q$-th nodal contribution is then assembled as follows;
 {\frac{{\partial v}}{{\partial y}}}\\
 {\frac{{\partial u}}{{\partial y}} + \frac{{\partial v}}{{\partial x}}}
 \end{array}} \right\} = \left[ {\begin{array}{*{20}{c}}
-.&.&.&{\begin{array}{*{20}{c}}
+\cdot&\cdot&\cdot&{\begin{array}{*{20}{c}}
 {L_x^Q}&0\\
 0&{L_y^Q}\\
 {L_y^Q}&{L_{xy}^Q}
-\end{array}}.&.&.&
+\end{array}}\cdot&\cdot&\cdot&
 \end{array}}\right]
 \left\{ {\begin{array}{*{20}{c}}
-.\\
-.\\
-.\\
+\cdot\\
+\cdot\\
+\cdot\\
 {{u^Q}}\\
 {{v^Q}}\\
-.\\
-.\\
-.
+\cdot\\
+\cdot\\
+\cdot
 \end{array}} \right\}
 \label{eq:strain inter}
 \end{equation}
