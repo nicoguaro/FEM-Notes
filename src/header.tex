@@ -15,7 +15,6 @@
 \usepackage{geometry}
 \usepackage{enumerate}
 \usepackage{subfig}
-\usepackage{hyperref} % Nice details for pdf
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{leftidx}
@@ -25,6 +24,7 @@
 \usepackage{cite}  % Pretty citations
 \usepackage{bookmark} % Bookmarks in PDF
 \usepackage{cleveref}
+\usepackage{hyperref} % Nice details for pdf
 
 \geometry{
 	verbose,
@@ -60,6 +60,11 @@
 
 \newcommand{\urlbib}[1]{{\footnotesize{\url{#1}}}} % URL in references
 \newcommand{\fullref}[1]{\ref{#1} at page \pageref{#1}}
+
+
+% Partial derivatives
+\newcommand{\pder}[2][]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdern}[3][]{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -156,7 +156,7 @@ Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
 The strong form of the problem, denoted by $\{ S \}$ reads:\\
 
 Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \Re$ such:
-
+%
 \begin{equation} \label{eq:navier_2}
 \begin{split}
 &\left( {\lambda  + \mu } \right){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \quad \text{$\forall \vec x \in V$} \\
@@ -566,53 +566,50 @@ and where NGPTS corresponds to the number of integration points, $\alpha_j$ is a
 One important aspect of the numerical integration that has to be kept in mind is accuracy.  Depending on the particularly selected integration scheme, the number of introduced integration points fixes the maximum polynomial order of the considered functions that can be integrated accurately.  In the case of the integrand in \cref{eq:eleintegration}, it is clear that this order increases as the distortion of the physical element  with respect to the natural element increases.  One way of dealing with this dependency of accuracy with element distortion is to make use of adaptative integration techniques which are numerically expensive.  What is actually done in standard FEM analysis is to choose the number of quadrature points beforehand and introduce distortion related error criteria inside the code in such a way that some sort of validation is performed before the numerical integration process is started.
 
 \section*{Strain displacement interpolator for the infinitesimal strain tensor}
-The $Q$-th nodal contribution to the infinitesimal strain-displacement interpolator can be obtained in explicit form as follows. Let $L_x^Q$ and $L_y^Q$ be the spatial differential operators in $x$ and $y$ respectively. We have after expanding \cref{eq:fundamental interpolator}  that
-
+The $Q$-th nodal contribution to the infinitesimal strain-displacement interpolator can be obtained in explicit form as follows. Let $L_x^Q$ and $L_y^Q$ be the spatial differential operators in $x$ and $y$ respectively. We have after expanding \cref{eq:fundamental interpolator}
+%
 \begin{align*}
-L_x^Q & = J_{xP}^{-1}\frac{{\partial {N^Q}}}{\partial {r_P}} \equiv J_{xr}^{-1}\frac{{\partial {N^Q}}}{{\partial r}} + J_{xs}^{ - 1}\frac{{\partial {N^Q}}}{{\partial s}}\\
-L_y^Q & = J_{yP}^{ - 1}\frac{{\partial {N^Q}}}{{\partial {r_P}}} \equiv J_{yr}^{ - 1}\frac{{\partial {N^Q}}}{{\partial r}} + J_{ys}^{-1}\frac{\partial {N^Q}}{\partial s}
+L_x^Q & = J_{xP}^{-1}\frac{\partial N^Q}{\partial r_P} \equiv J_{xr}^{-1}\frac{\partial N^Q}{\partial r} + J_{xs}^{-1}\frac{\partial N^Q}{\partial s}\\
+L_y^Q & = J_{yP}^{-1}\frac{\partial N^Q}{\partial r_P} \equiv J_{yr}^{-1}\frac{\partial N^Q}{\partial r} + J_{ys}^{-1}\frac{\partial N^Q}{\partial s}
 \end{align*}
-
-or in matrix form;
-
+%
+or in matrix form
+%
 \begin{equation}
-\left\{ {\begin{array}{*{20}{c}}
-{L_x^Q}\\
-{L_y^Q}
-\end{array}} \right\} = \left[ {\begin{array}{*{20}{c}}
-{J_{xP}^{ - 1}}&{J_{xs}^{ - 1}}\\
-{J_{yr}^{ - 1}}&{J_{ys}^{ - 1}}
-\end{array}} \right]\left\{ {\begin{array}{*{20}{c}}
-{\frac{{\partial {N^Q}}}{{\partial r}}}\\
-{\frac{{\partial {N^Q}}}{{\partial s}}}
-\end{array}} \right\}
+\begin{Bmatrix}
+L_x^Q\\
+L_y^Q
+\end{Bmatrix} = 
+\begin{bmatrix}
+J_{xP}^{-1} &J_{xs}^{- 1}\\
+J_{yr}^{-1} &J_{ys}^{- 1}
+\end{bmatrix}
+\begin{Bmatrix}
+\frac{\partial N^Q}{\partial r}\\
+\frac{\partial N^Q}{\partial s}
+\end{Bmatrix}
 \end{equation}
 
 The $Q$-th nodal contribution is then assembled as follows;
 
 
 \begin{equation}
-\left\{ {\begin{array}{*{20}{c}}
-{\frac{{\partial u}}{{\partial x}}}\\
-{\frac{{\partial v}}{{\partial y}}}\\
-{\frac{{\partial u}}{{\partial y}} + \frac{{\partial v}}{{\partial x}}}
-\end{array}} \right\} = \left[ {\begin{array}{*{20}{c}}
-\cdot&\cdot&\cdot&{\begin{array}{*{20}{c}}
-{L_x^Q}&0\\
-0&{L_y^Q}\\
-{L_y^Q}&{L_{xy}^Q}
-\end{array}}\cdot&\cdot&\cdot&
-\end{array}}\right]
-\left\{ {\begin{array}{*{20}{c}}
-\cdot\\
-\cdot\\
-\cdot\\
-{{u^Q}}\\
-{{v^Q}}\\
-\cdot\\
-\cdot\\
-\cdot
-\end{array}} \right\}
+\begin{Bmatrix}
+\frac{\partial u}{\partial x}\\
+\frac{\partial v}{\partial y}\\
+\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x}
+\end{Bmatrix} =
+\begin{bmatrix}
+ &L_x^Q &0 \\
+\cdots &0 &L_y^Q &\cdots\\
+ &L_y^Q &L_{xy}^Q
+\end{bmatrix}
+\begin{Bmatrix}
+\vdots\\
+u^Q\\
+v^Q\\
+\vdots
+\end{Bmatrix}
 \label{eq:strain inter}
 \end{equation}
 
