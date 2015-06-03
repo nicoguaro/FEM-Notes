@@ -1,17 +1,15 @@
-\documentclass[english,letterpaper,12pt,oneside,openany]{book}
+\documentclass[12pt,oneside,openany]{book}
 \usepackage[english]{babel}
 \usepackage{babelbib}
 \usepackage{etoolbox}
 \usepackage{mathtools}
 \usepackage{cancel}
-\patchcmd\btxselectlanguage{\csname}{\csname TEMPPATCH}{}{} % For babelbib
 \usepackage{amstext, amssymb, amsthm, amsmath, amsbsy}
 \usepackage{tabularx}
 \usepackage[ansinew]{inputenc}
 \usepackage[margin=20pt,font=small,labelfont=bf,labelsep=period]{caption} % Modify caption format
 \usepackage{graphicx}
 \usepackage{url}
-\usepackage[final]{pdfpages} % Include pdf files
 \usepackage{geometry}
 \usepackage{enumerate}
 \usepackage{subfig}
@@ -25,12 +23,17 @@
 \usepackage{bookmark} % Bookmarks in PDF
 \usepackage{cleveref}
 \usepackage{hyperref} % Nice details for pdf
+\usepackage[colorinlistoftodos]{todonotes}
+
+%% Packages setup
+
+\patchcmd\btxselectlanguage{\csname}{\csname TEMPPATCH}{}{} % For babelbib
 
 \geometry{
 	verbose,
 	letterpaper,
 	tmargin=3cm,
-	bmargin=3cm,
+	bmargin=2cm,
 	lmargin=2cm,
 	rmargin=2cm
 }
