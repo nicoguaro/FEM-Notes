@@ -1,6 +1,17 @@
 % This file was created with JabRef 2.9.2.
 % Encoding: Cp1252
 
+@BOOK{book:achenbach_waves,
+  title = {{W}ave {P}ropagation in {E}lastic {S}olids},
+  publisher = {North Holland Publishing Company},
+  year = {1973},
+  author = {J.D. Achenbach},
+  pages = {425},
+  keywords = {Elastodynamics, Wave Propagation, Continuum Mechanics},
+  owner = {nguarinz},
+  timestamp = {2011.11.28}
+}
+
 @BOOK{book:arfken,
   title = {{M}athematical {M}ethods for {P}hysicists},
   publisher = {Academic Press},
@@ -69,6 +80,16 @@
 	techniques" -- procedures that will be standard and authoritative
 	for finite element analysis for years to come.},
   timestamp = {2011.02.12}
+}
+
+@BOOK{book:brillouin2003,
+  title = {Wave propagation in periodic structures: electric filters and crystal
+	lattices},
+  publisher = {Courier Dover Publications},
+  year = {2003},
+  author = {Brillouin, L{\'e}on},
+  owner = {nguarin},
+  timestamp = {2014.04.03}
 }
 
 @BOOK{book:burden-analisis,
@@ -177,6 +198,67 @@
   url = {http://www.unige.ch/~gander/Preprints/Ritz.pdf}
 }
 
+@BOOK{book:PDE_gockenbach,
+  title = {{P}artial {D}ifferential {E}quations: {A}nalytical and {N}umerical
+	{M}ethods},
+  publisher = {SIAM},
+  year = {2002},
+  author = {Mark S. Gockenbach},
+  owner = {nguarinz},
+  timestamp = {2012.03.27}
+}
+
+@MASTERSTHESIS{MSc_thesis-Guarin2012,
+  author = {Nicol\'as Guar\'in-Zapata},
+  title = {{S}imulaci\'on {N}um\'erica de {P}roblemas de {P}ropagaci\'on de
+	{O}ndas: {D}ominios {I}nfinitos y {S}emi-infinitos},
+  school = {Universidad EAFIT},
+  year = {2012},
+  abstract = {Espa\~nol:
+	
+	Se presenta el desarrollo de dos herramientas computacionales para
+	la simulaci\'on de propagaci\'on de ondas en s\'olidos infinitos
+	y semi-infinitos. Ambas herramientas est\'an basadas en el M\'etodo
+	de los Elementos Finitos (FEM). En una primera parte se presenta
+	el acople de FEM con un M\'etodo de Elementos de Frontera (BEM) para
+	la soluci\'on del problema de esparcimiento en una heterogeneidad
+	en la parte superior de un semi-espacio. Se us\'o un criterio para
+	comprimir las matrices de BEM para disminuir los recursos computacinoales
+	requeridos y poder tratar problemas de mayor tama\~no.
+	
+	En la segunda parte se describe la formulaci\'on e implementaci\'on
+	de una herramienta de an\'alisis para la propagaci\'on de ondas en
+	materiales con heterogeneidades peri\'odicas. \'Esta pretende servir
+	para caracterizar las propiedades globales del material cuando por
+	\'el se propaga una onda con cierta frecuencia dada. Para esto se
+	usaron diversos conceptos de la f\'isica del estado s\'olido y la
+	soluci\'on se fundamenta en el teorema de Bloch.
+	
+	
+	English:
+	
+	We present the development of two computational tools for the simulation
+	wave propagation in infinite and semi-infinite solids. Both tools
+	are based on the Finite Element Method (FEM). In the first part it
+	is shown the couplinf of the FEM with a Boundary Element Method (BEM)
+	for the solution of the scattering problem due to heterogeneity in
+	the top of a half-space. We used a criterion for the compression
+	of the resulting matrices from the BEM to decrease the computational
+	costs and could handle bigger problems.
+	
+	En the second part is is described the formulation and implementation
+	of an analysis tool for the wave propagation in periodic heterogeneous
+	materials. This is useful to caracterize the bulk properties when
+	it is a wave traveling through the material with a particular frequency.
+	For this we used diverse concepts from the solid state physics and
+	the solution is baes on the Bloch's theorem.},
+  keywords = {Wave propagation, Computational elastodynamics, Finite Element Method,
+	Boundary element method, Seismic waves, Periodic materials, Waves
+	in heterogeneous materials},
+  owner = {nguarinz},
+  timestamp = {2012.09.29}
+}
+
 @BOOKLET{abaqus_theory,
   title = {ABAQUS theory manual, version 6.3},
   author = {Hibbitt, HD and Karlsson, BI and Sorensen, P},
@@ -184,6 +266,40 @@
   journal = {Pawtucket, Rhode Island, USA},
   owner = {nguarin},
   timestamp = {2015.03.26}
+}
+
+@ARTICLE{hladky-hennion1992,
+  author = {Anne-Christine Hladky-Hennion and Jean-No\"el Decarpigny},
+  title = {{A}nalysis of the scattering of a plane acoustic wave by a doubly
+	periodic structure using the finite element method: {A}pplication
+	to {A}lberich anechoic coatings},
+  journal = {J. Acoust. Soc. Am},
+  year = {1991},
+  volume = {90},
+  pages = {3356-3367},
+  abstract = {The finite element approach has been previously used, with the help
+	of the ATILA code, to model the scattering of acoustic waves by single
+	periodic structures, such as compliant tube gratings [A. C. Hennion
+	et al., J. Acoust. Soc. Am. 87, 1861–1870 (1990)]. In this paper,
+	the same approach is extended to doubly periodic structures, such
+	as Alberich anechoic coatings. To do this, only the unit cell of
+	the periodic structure, including a small part of the surrounding
+	fluid domain, has to be meshed, due to the use of classical Bloch
+	type relations. Then, the effects of the remaining fluid domain are
+	accounted for by matching the pressure field in the finite element
+	mesh with simple plane wave expansions of the ingoing and outgoing
+	waves. After an outline of the method, the paper describes the results
+	obtained for the scattering of a plane wave by different periodic
+	structures. Internal losses are taken into account and the incident
+	plane wave impinges at normal or oblique incidence. Numerical results
+	obtained for Alberich anechoic coatings are first analyzed to check
+	the convergence and then compared to previous numerical results or
+	to experimental results, demonstrating that the finite element approach
+	is accurate and well suited to predict the behavior of these gratings.
+	Moreover, careful attention is devoted to the analysis of the inclusion
+	vibrations, to identify the origin of the resonance mechanisms.},
+  owner = {Nico},
+  timestamp = {2012.04.01}
 }
 
 @ARTICLE{hrennikoff1941solution,
@@ -196,6 +312,37 @@
   number = {4},
   owner = {nicoguaro},
   timestamp = {2015.01.15}
+}
+
+@TECHREPORT{algebraic_waves,
+  author = {Steven G. Johnson},
+  title = {{N}otes on the algebraic structure of wave equations},
+  institution = {Massachusetts Institute of Technology},
+  year = {2010},
+  owner = {nguarinz},
+  timestamp = {2012.03.28}
+}
+
+@BOOK{book:kittel1986,
+  title = {Introduction to solid state physics},
+  publisher = {Wiley New York},
+  year = {1986},
+  author = {Kittel, Charles and McEuen, Paul},
+  volume = {8},
+  owner = {nguarin},
+  timestamp = {2014.04.03}
+}
+
+@BOOK{book:kreyzsig_functional,
+  title = {{I}ntroductory {F}unctional {A}nalysis with {A}pplications},
+  publisher = {Wiley},
+  year = {1989},
+  author = {Erwin Kreyzsig},
+  pages = {704},
+  edition = {1},
+  keywords = {Functional Analysis},
+  owner = {nguarinz},
+  timestamp = {2011.11.28}
 }
 
 @BOOK{book:FEM_Matlab,
@@ -213,6 +360,45 @@
 	for introductory and advanced courses in the Finite Element Method,
 	as well as a reference for practicing engineers.},
   timestamp = {2015.01.15}
+}
+
+@PHDTHESIS{langlet-thesis,
+  author = {Philippe Langlet},
+  title = {{A}nalyse de la {P}ropagation des {O}ndes {A}coustiques dans les
+	{M}ateriaux {P}eriodiques a l'aide de la {M}ethode des {E}lements
+	{F}inis},
+  school = {L'Universite de Valenciennes et du Hainaut-Cambresis},
+  year = {1993},
+  abstract = {La propagation d'une onde acoustique plane dans un matériau comportant
+	des cavités ou des inclusions rangées périodiquement est susceptible
+	de nombreuses applications, notamment dans les domaines de l'acoustique
+	sous-marine, du traitement des signaux et de l'acoustique médicale.
+	De tels matériaux son utilisés, par exemple, comme revêtements anéchoïques
+	de structures immergées, comme lignes à retar ou filtres acoustiques.
+	De même, les matériaux piézocomposites interviennent dans la conception
+	de nouveaux transducteurs ultrasonores.
+	
+	Cette thèse concerne la modélisatin par la méthoe des éléments finis,
+	à l'aide du code ATILA, de matériaux élastiques ou piézoélectriques,
+	périodiques dans une, deux ou trois directions de l'espace. Les développements
+	théoriques spécifiques nécessaires à la description de ces matériaux
+	sont tout d'abord présentés. Une première validation est réalisée
+	à travers quelques résultats obtenus pour matériaux périodiques,
+	pour lesquels des formulations analytiques simples existent. Ensuite,
+	la technique développée est appliquée à l'étude de la propagation
+	des ondes dans les matériaux périodiques poreux ou résultats éléments
+	finis obtenus sont comparés avec succès aux résultats de modèles
+	antérieurs semi-analytiques et empiriques ou à des résultats expérimentaux.
+	Les propiétés homogénéisées de matériaux poreux sont ensuite recherchées
+	sur des solides anisotropes, cette procédure d'homogéneisation est
+	menée en étudiant les fréquences de résonance de plaques perforées
+	périodiquement. Enfin, l'ensemble des résultats conduit à proposer
+	une extension de la méthode pur les problèmes couplés fluide-solide
+	et pour l'étude des ondes évanescentes dans les bandes interdites.},
+  keywords = {Acoustic wave propagation, Periodic Materials, Finite Element Method,
+	Effective Properties, Porous Materials, Piezocomposites, Waveguides},
+  owner = {Nico},
+  timestamp = {2012.03.19}
 }
 
 @ARTICLE{leissa2005historical,
@@ -268,6 +454,18 @@
   owner = {nicoguaro},
   timestamp = {2015.01.15},
   url = {http://people.sc.fsu.edu/~jpeterson/history_fem.pdf}
+}
+
+@BOOK{algebra_lineal-poole,
+  title = {\'{A}lgebra lineal: una introducci\'on moderna},
+  publisher = {Cengage Learning Editores},
+  year = {2007},
+  author = {David Poole},
+  pages = {712},
+  edition = {2},
+  note = {ISBN 9706865950},
+  owner = {Nico},
+  timestamp = {2012.04.05}
 }
 
 @BOOK{book:FEM_SEM,
@@ -376,6 +574,51 @@
 	des Integrals Polynomen resultiert.},
   owner = {nicoguaro},
   timestamp = {2015.01.15}
+}
+
+@BOOK{book:sepulveda_fismat,
+  title = {{F}ísica {M}atemática},
+  publisher = {Editorial Universidad de Antioquia},
+  year = {2009},
+  author = {Alonso Sep\'ulveda},
+  pages = {406},
+  edition = {1},
+  keywords = {Mathematical Physics, Theoretical Physics},
+  owner = {nguarinz},
+  timestamp = {2011.11.28}
+}
+
+@ARTICLE{sukumar_bloch-2009,
+  author = {N. Sukumar and J. E. Pask},
+  title = {{C}lassical and enriched {F}inite element formulations for {B}loch-periodic
+	boundary conditions},
+  journal = {International Journal of Numerical Methods in Engineering},
+  year = {2009},
+  volume = {77},
+  pages = {1121–1138},
+  number = {8},
+  month = {2},
+  abstract = {In this paper, classical and enriched Finite element formulations
+	to impose Bloch-periodic boundary conditions are proposed. Bloch-periodic
+	boundary conditions arise in the description of wave-like phenomena
+	in periodic media. We consider the quantum-mechanical problem in
+	a crystalline solid, and derive the weak formulation and matrix equations
+	for the SchrÄodinger and Poisson equations in a parallelepiped unit
+	cell under Bloch-periodic and periodic boundary conditions, respectively.
+	For such second-order problems, these conditions consist of value-
+	and derivative-periodic parts. The value-periodic part is enforced
+	as an essential boundary condition by construction of a value-periodic
+	basis, whereas the derivative-periodic part is enforced as a natural
+	boundary condition in the weak formulation. We show that the resulting
+	matrix equations can be obtained by suitably specifying the connectivity
+	of element matrices in the assembly of the global matrices or by
+	modifying the Neumann matrices via row and column operations. The
+	implementation and accuracy of the new formulation is demonstrated
+	via numerical examples for the three-dimensional Poisson and Schrodinger
+	equations using classical and enriched (partition-of-unity) higher-order
+	Funite elements.},
+  owner = {nguarinz},
+  timestamp = {2012.03.29}
 }
 
 @MISC{wiki:calculus_of_variations,
@@ -488,20 +731,35 @@
 
 @comment{jabref-meta: groupstree:
 0 AllEntriesGroup:;
-1 ExplicitGroup:FEM\;0\;abaqus_theory\;book:FEM_Matlab\;book:FEM_SEM\;
-book:bathe\;book:reddy_functional_analysis\;book:reddy_intro_FEM\;book
-:zienkiewicz_FEM1\;book:zienkiewicz_FEM2\;clough1999early\;courant43\;
-leissa2005historical\;;
-1 ExplicitGroup:Numerical Analysis\;0\;book:burden-analisis\;book:burd
-en2011\;book:numerical_recipes\;;
-1 ExplicitGroup:Calculus of Variations\;0\;courant43\;gander2012euler\
-;hrennikoff1941solution\;leissa2005historical\;meek96\;ritz1909\;wiki:
-calculus_of_variations\;wiki:variational_principle\;;
-1 ExplicitGroup:Mathematics\;0\;book:arfken\;book:burden-analisis\;boo
-k:burden2011\;book:reddy_intro_FEM\;clough1999early\;hrennikoff1941sol
-ution\;wiki:calculus_of_variations\;wiki:variational_principle\;;
-1 ExplicitGroup:Historical development of FEM\;0\;clough1999early\;cou
+1 ExplicitGroup:FEM\;0\;MSc_thesis-Guarin2012\;abaqus_theory\;book:FEM
+_Matlab\;book:FEM_SEM\;book:bathe\;book:reddy_functional_analysis\;boo
+k:reddy_intro_FEM\;book:zienkiewicz_FEM1\;book:zienkiewicz_FEM2\;cloug
+h1999early\;courant43\;hladky-hennion1992\;langlet-thesis\;leissa2005h
+istorical\;sukumar_bloch-2009\;;
+2 ExplicitGroup:Historical development of FEM\;0\;clough1999early\;cou
 rant43\;gander2012euler\;hrennikoff1941solution\;leissa2005historical\
 ;meek96\;ritz1909\;;
+1 ExplicitGroup:Mathematics\;0\;Arfken2005\;algebra_lineal-poole\;alge
+braic_waves\;book:PDE_gockenbach\;book:arfken\;book:burden-analisis\;b
+ook:burden2011\;book:reddy_intro_FEM\;clough1999early\;hrennikoff1941s
+olution\;wiki:calculus_of_variations\;wiki:variational_principle\;;
+2 ExplicitGroup:Mathematical Physics\;0\;Arfken2005\;book:arfken\;book
+:reddy_functional_analysis\;book:sepulveda_fismat\;;
+2 ExplicitGroup:Calculus of Variations\;0\;book:reddy_functional_analy
+sis\;courant43\;gander2012euler\;hrennikoff1941solution\;leissa2005his
+torical\;meek96\;ritz1909\;wiki:calculus_of_variations\;wiki:variation
+al_principle\;;
+2 ExplicitGroup:Numerical Analysis\;0\;book:burden-analisis\;book:burd
+en2011\;book:numerical_recipes\;;
+2 ExplicitGroup:Functional analysis\;0\;book:kreyzsig_functional\;book
+:reddy_functional_analysis\;;
+2 ExplicitGroup:PDE\;0\;book:PDE_gockenbach\;sukumar_bloch-2009\;;
+1 ExplicitGroup:Physics\;0\;algebraic_waves\;book:achenbach_waves\;boo
+k:brillouin2003\;book:kittel1986\;;
+1 ExplicitGroup:Periodic materials\;0\;MSc_thesis-Guarin2012\;algebrai
+c_waves\;book:brillouin2003\;hladky-hennion1992\;langlet-thesis\;sukum
+ar_bloch-2009\;;
+1 ExplicitGroup:Waves\;0\;MSc_thesis-Guarin2012\;algebraic_waves\;book
+:achenbach_waves\;book:brillouin2003\;;
 }
 
