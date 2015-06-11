@@ -6,6 +6,8 @@ A periodic material is defined as the repetition of a given motif in one, two or
 
 A periodic material is completely described by a lattice and a elementary unit, that is termed \emph{elementary cell}. The lattice is defined by a vector base, and the dimension of thi base is the number of direction for the periodicity.  This set is called lattice \emph{base vectors}, and they allow to build the whole material applying successive translation operations \cite{book:brillouin2003}. For periodic material in 3D, we will denote the base vectors as $\mathbf{a}_1$, $\mathbf{a}_2$ and $\mathbf{a}_3$ (see Figure \ref{fig:periodic_3D}). In the case of 2D periodicity, we can have a material that is infinite or finite in the third dimension (see Figure \ref{fig:periodic_2D}), we denote the vectors as $\mathbf{a}_1$ and $\mathbf{a}_2$. There is also possible to have periodic materials in one direction, and this one can be finite or infinite in the other two directions.
 
+The mesh generator \texttt{gmsh} provides an option to link elements in opposite sides.
+\cite{gmsh_manual}. Finite Element Method Magnetic (FEMMM) provides the option of \emph{periodic} boundary conditions, where Multipoint constraints are imposed, this are used for approximation of infinite boundary conditions \cite{FEMM_manual}.
 
 \begin{figure}[h]
 \centering
@@ -124,6 +126,7 @@ where $f_r$ is a harmonic force in the direction $r$, $\sigma_{rs}=C_{rskl}\epsi
 u_r(x_s +a_s)=u_r(x_s)e^{i k_s a_s}\ \text{in } \Gamma_u, \label{eq:disp_bloch}\\
 t_r(x_s +a_s)=-t_r(x_s)e^{i k_s a_s}\ \text{in } \Gamma_t, \label{eq:force_bloch}
 \end{align}
+\label{eq:bloch_cond}
 \end{subequations}
 being $t_{r}$ the traction on the surface of the cell.
 
@@ -151,8 +154,8 @@ where the index $l$ refers to each one of the pairs of opposite sides in the bou
 \end{align*}
 and the expression in square brackets is the condition \eqref{eq:force_bloch}, that is equal to zero. This variational form can be computed for other operators that have similar algebraic properties to wave equations and are positive definite \cite{algebraic_waves, book:reddy_functional_analysis, book:kreyzsig_functional}.
 
-
-\section{Bloch-periodicity in FEM}
+\section{Implementation}
+\subsection{Bloch-periodicity in FEM}
 The Bloch-periodic conditions in a Finite Element problem or, more generally, in a discrete problem can be formulated as a set of relations between the degrees of freedom of opposite sides of the unit cell.
 \begin{figure}[h]
 \centering
@@ -411,11 +414,33 @@ A $\leftarrow$ T$^H$AT
 \caption{Impose Bloch-periodic conditions using tranformation matrices.}\label{algo:bloch_matrix}
 \end{algorithm}
 
-\section{Bloch analysis}
 
-\section{Implementation}
+\subsection{Real algebra implementation}
+Following \cite{aberg1997}, we can formulate the problem using just real algebra. This allow to implement the Bloch-periodicity in \emph{standard finite element programs} like Abaqus/Calculix and FEAP \cite{feap_manual,Abaqus_manual,Calculix_manual}, that do not allow to impose conditions with complex valued quantities. The idea is to duplicate the degrees of freedom, i.e., to have two meshes: one for real values and the other one for imaginary ones (see Figure \ref{fig:double_mesh_real})
+\begin{figure}
+\missingfigure{Double mesh for real implementation.}
+\label{fig:double_mesh_real}
+\end{figure}
 
-
-
-
+We can express the values in boundary as
+\begin{align*}
+u_r(x_s) &= u_r^\text{Re}(x_s) + i u_r^\text{Im}(x_s)\\
+t_r(x_s) &= t_r^\text{Re}(x_s) + i t_r^\text{Im}(x_s) \enspace ,
+\end{align*}
+and replacing these in \eqref{eq:bloch_cond}, we obtain
+\begin{subequations}
+\begin{align}
+u_r^\text{Re}(x_s) &= u_r^\text{Re}(x_s + a_s)\cos(k_s a_s) + u_r^\text{Im}(x_s + a_s)\sin(k_s a_s)\\
+u_r^\text{Im}(x_s) &= u_r^\text{Im}(x_s + a_s)\cos(k_s a_s) - u_r^\text{Re}(x_s + a_s)\sin(k_s a_s) \enspace ,
+\end{align}
+\label{eq:real_bloch_disp}
+\end{subequations}
+and
+\begin{subequations}
+\begin{align}
+t_r^\text{Re}(x_s + a_s) &= -t_r^\text{Re}(x_s)\cos(k_s a_s) + t_r^\text{Im}(x_s)\sin(k_s a_s)\\
+t_r^\text{Im}(x_s + a_s) &= -t_r^\text{Im}(x_s)\cos(k_s a_s) - t_r^\text{Re}(x_s)\sin(k_s a_s) \enspace .
+\end{align}
+\label{eq:real_bloch_trac}
+\end{subequations}
 
