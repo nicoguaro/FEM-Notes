@@ -380,7 +380,7 @@ index\_vec $\leftarrow \vec{0}$   \tcp{Array with new equation identifiers}
 }
 \For(\tcp{Assign new identifiers}){ i=1 \KwTo ndof}{
 	cont $\leftarrow$ 0\;
-	\For(How many image nodes there are before the current one){ j=1 \KwTo ncond}{
+	\For(\tcp{How many image nodes before the current one}){ j=1 \KwTo ncond}{
 		\uIf{$index\_vec[i]<0$}{
 			\If(){$image[j]< | index\_vec[i]|$}{
 				cont $\leftarrow$ cont + 1 \;
@@ -390,7 +390,7 @@ index\_vec $\leftarrow \vec{0}$   \tcp{Array with new equation identifiers}
 			cont $\leftarrow$ cont + 1\;	
 		}
 	}
-	\eIf(Assign new identifiers){$index\_vec[i]<0$}{
+	\eIf(\tcp{Assign new identifiers}){$index\_vec[i]<0$}{
 		index\_vec[i] $\leftarrow$ index\_vec[i] + cont\;		
 	}{
 		index\_vec[i] $\leftarrow$ i - cont\;	
@@ -417,8 +417,10 @@ A $\leftarrow$ T$^H$AT
 
 \subsection{Real algebra implementation}
 Following \cite{aberg1997}, we can formulate the problem using just real algebra. This allow to implement the Bloch-periodicity in \emph{standard finite element programs} like Abaqus/Calculix and FEAP \cite{feap_manual,Abaqus_manual,Calculix_manual}, that do not allow to impose conditions with complex valued quantities. The idea is to duplicate the degrees of freedom, i.e., to have two meshes: one for real values and the other one for imaginary ones (see Figure \ref{fig:double_mesh_real})
-\begin{figure}
-\missingfigure{Double mesh for real implementation.}
+\begin{figure}[h]
+\centering
+\includegraphics[height=6cm]{img/cell_FEM-real_algebra.pdf} 
+\caption{Mesh for the real algebra implementation.}
 \label{fig:double_mesh_real}
 \end{figure}
 
@@ -444,3 +446,57 @@ t_r^\text{Im}(x_s + a_s) &= -t_r^\text{Im}(x_s)\cos(k_s a_s) - t_r^\text{Re}(x_s
 \label{eq:real_bloch_trac}
 \end{subequations}
 
+In this case, the displacements and forces are arranged in block vectors as
+\begin{align*}
+\mathbf{U} &= \left[\mathbf{U}^\text{Re}\ \mathbf{U}^\text{Im}\right]^T\\
+\mathbf{F} &= \left[\mathbf{F}^\text{Re}\ \mathbf{F}^\text{Im}\right]^T \ ,
+\end{align*}
+with
+\begin{align*}
+\mathbf{U}^\text{Re} &= \left[\mathbf{u}^\text{Re}_l\ \mathbf{u}^\text{Re}_r\ \mathbf{u}^\text{Re}_b\ \mathbf{u}^\text{Re}_t\ \mathbf{u}^\text{Re}_{lb}\ \mathbf{u}^\text{Re}_{rb}\ \mathbf{u}^\text{Re}_{lt}\ \mathbf{u}^\text{Re}_{rt}\ \mathbf{u}^\text{Re}_{i}\right]^T\\
+\mathbf{U}^\text{Im} &=\left[\mathbf{u}^\text{Im}_l\ \mathbf{u}^\text{Im}_r\ \mathbf{u}^\text{Im}_b\ \mathbf{u}^\text{Im}_t\ \mathbf{u}^\text{Im}_{lb}\ \mathbf{u}^\text{Im}_{rb}\ \mathbf{u}^\text{Im}_{lt}\ \mathbf{u}^\text{Im}_{rt}\ \mathbf{u}^\text{Im}_{i}\right]^T \\
+%%-- Forces
+\mathbf{F}^\text{Re} &= \left[\mathbf{f}^\text{Re}_l\ \mathbf{f}^\text{Re}_r\ \mathbf{f}^\text{Re}_b\ \mathbf{f}^\text{Re}_t\ \mathbf{f}^\text{Re}_{lb}\ \mathbf{f}^\text{Re}_{rb}\ \mathbf{f}^\text{Re}_{lt}\ \mathbf{f}^\text{Re}_{rt}\ \mathbf{f}^\text{Re}_{i}\right]^T\\
+\mathbf{F}^\text{Im} &= \left[\mathbf{f}^\text{Im}_l\ \mathbf{f}^\text{Im}_r\ \mathbf{f}^\text{Im}_b\ \mathbf{f}^\text{Im}_t\ \mathbf{f}^\text{Im}_{lb}\ \mathbf{f}^\text{Im}_{rb}\ \mathbf{f}^\text{Im}_{lt}\ \mathbf{f}^\text{Im}_{rt}\ \mathbf{f}^\text{Im}_{i}\right]^T \ .
+\end{align*}
+
+For the two dimensional example presented above the equations read
+\begin{align*}
+% u_r
+\mathbf{u}^\text{Re}_r &= \mathbf{u}^\text{Re}_l\cos(\psi_x) - \mathbf{u}^\text{Im}_l\sin(\psi_x)\\
+\mathbf{u}^\text{Im}_r &= \mathbf{u}^\text{Im}_l\cos(\psi_x) + \mathbf{u}^\text{Re}_l\sin(\psi_x)\\
+% u_t
+\mathbf{u}^\text{Re}_t &= \mathbf{u}^\text{Re}_b\cos(\psi_y) - \mathbf{u}^\text{Im}_b\sin(\psi_y)\\
+\mathbf{u}^\text{Im}_t &= \mathbf{u}^\text{Im}_b\cos(\psi_y) + \mathbf{u}^\text{Re}_b\sin(\psi_y)\\
+% u_{rb}
+\mathbf{u}^\text{Re}_{rb} &= \mathbf{u}^\text{Re}_{lb}\cos(\psi_x) - \mathbf{u}^\text{Im}_{lb}\sin(\psi_x)\\
+\mathbf{u}^\text{Im}_{rb} &= \mathbf{u}^\text{Im}_{lb}\cos(\psi_x) + \mathbf{u}^\text{Re}_{lb}\sin(\psi_x)\\
+% u_{lt}
+\mathbf{u}^\text{Re}_{lt} &= \mathbf{u}^\text{Re}_{lb}\cos(\psi_y) - \mathbf{u}^\text{Im}_{lb}\sin(\psi_y)\\
+\mathbf{u}^\text{Im}_{lt} &= \mathbf{u}^\text{Im}_{lb}\cos(\psi_y) + \mathbf{u}^\text{Re}_{lb}\sin(\psi_y)\\
+% u_{rt}
+\mathbf{u}^\text{Re}_{rt} &= \mathbf{u}^\text{Re}_{lb}\cos(\psi_x + \psi_y) - \mathbf{u}^\text{Im}_{lb}\sin(\psi_x + \psi_y)\\
+\mathbf{u}^\text{Im}_{rt} &= \mathbf{u}^\text{Im}_{lb}\cos(\psi_x + \psi_y) + \mathbf{u}^\text{Re}_{lb}\sin(\psi_x + \psi_y) \enspace ,
+\end{align*}
+where $\psi_x$ and $\psi_y$ are the phase shifts in $x$ and $y$. Similar expressions hold for the forces. Although the expressions are written explicitly here, they are all contained compactly in \eqref{eq:real_bloch_disp} and \eqref{eq:real_bloch_trac}. The phase shift is $\psi = k_j d_j$, with $k_j$ the components of the wave vector and $d_j$ the distance between the image and reference node in $j$ direction.
+
+\begin{algorithm}[h]  
+\DontPrintSemicolon
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\Input{ $k_x$, $k_y$, $k_z$: wave-vector components\\
+		nodes: array with nodal coordinates\\
+		image, reference: array with corresponding image and reference nodes
+}
+\Output{List of Multipoint constraints}
+\BlankLine
+ncond $\leftarrow$ Size of image\;
+\For(){ i=1 \KwTo ncond}{
+	x\_img, y\_img, z\_img $\leftarrow$ coordinates of image[i]\;
+	x\_ref, y\_ref, z\_ref $\leftarrow$ coordinates of reference[i]\;
+	$\psi$ $\leftarrow$ $k_x$(x\_img - x\_ref) + $k_y$(y\_img - y\_ref) + $k_z$(z\_img - z\_ref)\;
+	$u_\text{img}^\text{Re}\ \leftarrow\ u_\text{ref}^\text{Re}\cos\psi + u_\text{ref}^\text{Im}\sin\psi$\;
+	$u_\text{img}^\text{Im}\ \leftarrow\ u_\text{ref}^\text{Im}\cos\psi - u_\text{ref}^\text{Re}\sin\psi$\;
+}
+
+\caption{Generate the list of Multipoint constraints for the Bloch-periodic imposition using real algebra.}\label{algo:bloch_MPC_real}
+\end{algorithm}
