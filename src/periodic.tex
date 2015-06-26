@@ -174,9 +174,18 @@ The Bloch-periodic conditions in a Finite Element problem or, more generally, in
 		\includegraphics[width=0.45\textwidth]{img/cell_FEM-nodes.pdf}
 		\caption{The black circles now correspond to single degrees of freedom. Notice that the nodal numbering does not match the original numbering for groups of degrees of freedom.}
 	\end{subfigure}
-\caption{Relevant sets of DOF for an schematic unitary cell discretized with several finite elements. Each circle represents a family of degrees of freedom for a typical mesh and not a single degree of freedom. In part a) we show all the degrees of freedom for the unitary cell before imposing the relevant Bloch-periodic boundary conditions. Part b) shows the reduced cell where the white circles enclosed by the dark square represent the \emph{reference} nodes containing the information from the \emph{image} nodes which will be eventually deleted from the system. Part c) shows an example of node grouping for a mesh of $4\times 4$ elements.}
+\caption{Relevant sets of DOF for an schematic unitary cell in 2D discretized with several finite elements. Each circle represents a family of degrees of freedom for a typical mesh and not a single degree of freedom. In part a) we show all the degrees of freedom for the unitary cell before imposing the relevant Bloch-periodic boundary conditions. Part b) shows the reduced cell where the white circles enclosed by the dark square represent the \emph{reference} nodes containing the information from the \emph{image} nodes which will be eventually deleted from the system. Part c) shows an example of node grouping for a mesh of $4\times 4$ elements.}
 \label{fig:bloch_FEM}
 \end{figure}
+
+In three dimension, and periodicity or Bloch-periodicity in the three of them, we can depict the original and reduced cell in Figure \ref{fig:bloch_3D_cell}. It should be highlighted that in 3D it is possible to have periodicity in 1, 2 or 3 dimensions, depending on the nature of the problem of interest.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.65\textwidth]{img/Cube_Bloch_Schematic.pdf}
+	\caption{Three dimensional unitary cell with a $4\times4\times4$ mesh. It is partitioned into the image DOF and remaining ones. The reduced cell is highlighted.}
+	\label{fig:bloch_3D_cell}
+\end{figure}
+
 Let us start from the original problem
 \begin{equation}
 [K-\omega^2 M]\lbrace u\rbrace = \lbrace f\rbrace \enspace ,
