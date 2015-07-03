@@ -25,6 +25,7 @@
 \usepackage{cleveref}
 \usepackage{hyperref} % Nice details for pdf
 \usepackage[colorinlistoftodos]{todonotes}
+\usepackage{physics} % Extra operators and cool stuff
 
 %% Packages setup
 
@@ -65,10 +66,20 @@
 \newcommand{\urlbib}[1]{{\footnotesize{\url{#1}}}} % URL in references
 \newcommand{\fullref}[1]{\ref{#1} at page \pageref{#1}}
 
+% make "C++" look pretty when used in text by touching up the plus signs
+\newcommand{\CPP}
+{C\nolinebreak[4]\hspace{-.05em}\raisebox{.22ex}{\footnotesize\bf ++}}
+
+%%--- Math commands ---
+
 
 % Partial derivatives
-\newcommand{\pder}[2][]{\frac{\partial #1}{\partial #2}}
-\newcommand{\pdern}[3][]{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
+%\newcommand{\pder}[2][]{\frac{\partial #1}{\partial #2}}
+%\newcommand{\pdern}[3][]{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
+
+% Integrals
+\newcommand{\intL}{\int\limits}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

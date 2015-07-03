@@ -131,26 +131,26 @@ t_r(x_s +a_s)=-t_r(x_s)e^{i k_s a_s}\ \text{in } \Gamma_t, \label{eq:force_bloch
 being $t_{r}$ the traction on the surface of the cell.
 
 Now, let us multiply the momentum equation by the complex conjugate of an arbitrary function $v_r$ and integrate over the domain\footnote{In the deduction of weak forms for FEM it is customary to multiply by a function $v_r$ that is real. In this case the function is complex; in order to satisfy the properties for an inner product, we need to multiply by the complex conjugate (see for example  \cite{sukumar_bloch-2009, book:arfken}).}
-\[\int\limits_{\Omega} v_r^{*}[\sigma_{rs,s} + f_r(\omega)]d \Omega = -\omega^2 \int\limits_{\Omega} \rho v_r^{*} u_r d \Omega \enspace , \]
+\[\intL_{\Omega} v_r^{*}[\sigma_{rs,s} + f_r(\omega)]d \Omega = -\omega^2 \intL_{\Omega} \rho v_r^{*} u_r d \Omega \enspace , \]
 the complex conjugate is denoted by $*$. Then, using the constitutive relation
-\[\int\limits_{\Omega} v_r^{*}C_{rskl}\epsilon_{kl,s}d \Omega + \int\limits_{\Omega} v_r^{*}f_r d \Omega = -\omega^2 \int\limits_{\Omega} \rho v_r^{*} u_r d \Omega \enspace , \]
+\[\intL_{\Omega} v_r^{*}C_{rskl}\epsilon_{kl,s}d \Omega + \intL_{\Omega} v_r^{*}f_r d \Omega = -\omega^2 \intL_{\Omega} \rho v_r^{*} u_r d \Omega \enspace , \]
 and using divergence theorem
-\[-\int\limits_{\Omega} v_r,s^{*}C_{rskl}\epsilon_{kl}d \Omega + \int\limits_{\Omega}v_r^{*}t_r(n_s)d \Gamma +  \int\limits_{\Omega} v_r^{*}f_r d \Omega = -\omega^2 \int\limits_{\Omega} \rho v_r^{*} u_r d \Omega \enspace , \]
+\[-\intL_{\Omega} v_r,s^{*}C_{rskl}\epsilon_{kl}d \Omega + \intL_{\Omega}v_r^{*}t_r(n_s)d \Gamma +  \intL_{\Omega} v_r^{*}f_r d \Omega = -\omega^2 \intL_{\Omega} \rho v_r^{*} u_r d \Omega \enspace , \]
 with $t_r^{n_s} = C_{rskl}\epsilon_{kl}n_{s}$, if we take $v_r = u_r$ and consider that the tensor $\epsilon_{rs}$ is symmetric, we obtain
-\[ -\int\limits_{\Omega} \epsilon_{rs}C_{rskl}\epsilon_{kl} d \Omega + \int\limits_\Gamma u_r^{*} t_{r}(n_s) d \Gamma \int\limits_\Omega u_r^{*}f_r(\omega) d\Omega = -\omega^2\int\limits_\Omega \rho u_r^{*} u_r d\Omega \enspace . \]
+\[ -\intL_{\Omega} \epsilon_{rs}C_{rskl}\epsilon_{kl} d \Omega + \intL_\Gamma u_r^{*} t_{r}(n_s) d \Gamma \intL_\Omega u_r^{*}f_r(\omega) d\Omega = -\omega^2\intL_\Omega \rho u_r^{*} u_r d\Omega \enspace . \]
 And neglecting the body forces, the Energy Functional for this problem is written as
 \begin{equation}
-\Pi(\omega) = \int\limits_\Omega \epsilon_{rs}^{*}(\mathbf{x})C_{rskl}(\mathbf{x})\epsilon_{kl}(\mathbf{x}) d \Omega - \omega^2\int\limits_\Omega \rho(\mathbf{x})u_r^{*}(\mathbf{x})u_r(\mathbf{x}) d\Omega - \int\limits_{\Gamma} u_r^{*}(\mathbf{x})t_r(\mathbf{x}) d\Gamma \enspace .
+\Pi(\omega) = \intL_\Omega \epsilon_{rs}^{*}(\mathbf{x})C_{rskl}(\mathbf{x})\epsilon_{kl}(\mathbf{x}) d \Omega - \omega^2\intL_\Omega \rho(\mathbf{x})u_r^{*}(\mathbf{x})u_r(\mathbf{x}) d\Omega - \intL_{\Gamma} u_r^{*}(\mathbf{x})t_r(\mathbf{x}) d\Gamma \enspace .
 \label{eq:energy_functional}
 \end{equation}
 The first term in the equation \eqref{eq:energy_functional} is the deformation energy inside the domain, the second term corresponds with the kinetic energy for harmonic motion with angular frequency $\omega$, the last term is the deformation energy on the boundary of the domain. The boundary term is related with the imposition of natural boundary conditions (Neumann BCs) in the formulation of the FEM. In this case the Bloch-periodic conditions for the forces are implicitly satisfied  in the variational form, as we will see in detail.
 
 Since the domain is a single cell of a lattice, it should form a tessellation \footnote{A tessellation is a regular pattern that covers all the space with no overlaps and no gaps.}. Hence, the boundaries can be grouped by pairs, i.e., each side (\emph{reference side}) should have an opposite side  (\emph{image side}), so the last term in \eqref{eq:energy_functional}can be rewritten as
-\[ \int\limits_{\Gamma} u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) d\Gamma = \sum\limits_{l} \int\limits_{\Gamma_l} [ u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) + u_r^{*}(\mathbf{x+\mathbf{a}_l}) t_r(\mathbf{x}+\mathbf{a}_l) ]d\Gamma \enspace ,\]
+\[ \intL_{\Gamma} u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) d\Gamma = \sum\limits_{l} \intL_{\Gamma_l} [ u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) + u_r^{*}(\mathbf{x+\mathbf{a}_l}) t_r(\mathbf{x}+\mathbf{a}_l) ]d\Gamma \enspace ,\]
 where the index $l$ refers to each one of the pairs of opposite sides in the boundary. Thus
 \begin{align*}
-\int\limits_{\Gamma} u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) d\Gamma &= \sum\limits_{l} \int\limits_{\Gamma_l} [ u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) +e^{-i\mathbf{k}\cdot\mathbf{a}_l} u_r^{*}(\mathbf{x}) t_r(\mathbf{x}+\mathbf{a}_l) ]d\Gamma \enspace , \\
-\int\limits_{\Gamma} u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) d\Gamma &= \sum\limits_{l} \int\limits_{\Gamma_l} u_r^{*}(\mathbf{x})[ t_r(\mathbf{x}) +e^{-i\mathbf{k}\cdot\mathbf{a}_l} t_r(\mathbf{x}+\mathbf{a}_l) ]d\Gamma \enspace ,
+\intL_{\Gamma} u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) d\Gamma &= \sum\limits_{l} \intL_{\Gamma_l} [ u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) +e^{-i\mathbf{k}\cdot\mathbf{a}_l} u_r^{*}(\mathbf{x}) t_r(\mathbf{x}+\mathbf{a}_l) ]d\Gamma \enspace , \\
+\intL_{\Gamma} u_r^{*}(\mathbf{x}) t_r(\mathbf{x}) d\Gamma &= \sum\limits_{l} \intL_{\Gamma_l} u_r^{*}(\mathbf{x})[ t_r(\mathbf{x}) +e^{-i\mathbf{k}\cdot\mathbf{a}_l} t_r(\mathbf{x}+\mathbf{a}_l) ]d\Gamma \enspace ,
 \end{align*}
 and the expression in square brackets is the condition \eqref{eq:force_bloch}, that is equal to zero. This variational form can be computed for other operators that have similar algebraic properties to wave equations and are positive definite \cite{algebraic_waves, book:reddy_functional_analysis, book:kreyzsig_functional}.
 
