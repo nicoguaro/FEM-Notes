@@ -3,7 +3,7 @@
 \section{Brief review of the linearized theory of elasticity model}
 Here we present a brief description of the boundary value problem governing the response of an elastic body. For a full discussion of the model and its mathematical aspects the reader is referred to \cite{shames1997elastic}.
 
-The governing equations (in terms of stresses) stem from the principle of conservation of linear momentum and conservation of moment of linear momentum. The former leads to a set of 3 partial differential equations in the components of the stress tensor while the latter leads to the symmetrie in the stress tensor.
+The governing equations (in terms of stresses) stem from the principle of conservation of linear momentum and conservation of moment of linear momentum. The former leads to a set of 3 partial differential equations in the components of the stress tensor while the latter leads to the symmetries in the stress tensor.
 
 \begin{equation} \label{eq:pde}
 \begin{aligned}
@@ -375,7 +375,7 @@ The simple problem of a spring-mass system considered next resembles most of the
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=10cm]{img_src/system.pdf}
+\includegraphics[width=10cm]{img/spring_system.pdf}
 \caption{Typical assemblage of springs and masses.}
 \label{fig:bathe}
 \end{figure}
@@ -385,7 +385,7 @@ Consider a typical spring (finite element) like the one shown in \cref{fig:sprin
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=10cm]{img_src/springel.pdf}
+\includegraphics[width=10cm]{img/springel.pdf}
 \caption{Typical spring element.}
 \label{fig:springel}
 \end{figure}
@@ -428,7 +428,7 @@ which can be written in terms of displacements using \cref{Kspring} like;
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=8cm]{img_src/dclmass.pdf}
+\includegraphics[width=8cm]{img/dcl_mass.pdf}
 \caption{Free body diagram for a typical mass connceted to springs $i$ and $i+1$.}
 \label{fig:dclmass}
 \end{figure}
@@ -552,14 +552,14 @@ f(\vb{r})=F[\vb{X}(\vb{r})]
 \label{eq:funtrans}
 \end{equation}
 
-	 								
+
 \subsubsection*{Interpolation scheme}
 Having identified the fact that the integration process will take place in the natural domain, we will approach the interpolation process directly in this natural space. In the case of the displacement based finite element method all the involved variables will then be obtained via interpolation of nodal displacements. For instance, assume that a given problem variable is defined in the physical space by the tensor $\Phi_{ik...p}(\vb{X})$. The interpolated variable is then written like;
 
 \begin{equation}
 \Phi_{ij...p}(\vb{X})=H_{ij...p}^K(\vb{r})\hat{u}^K
 \label{eq:interpol}
-\end{equation}	 						
+\end{equation}
 
 where $\hat{u}^K$ represents a vector of nodal points displacements, see \cref{fig:interpol nat dom}, and $H_{ij...p}^K(\vb{r})$ is an interpolator which keeps the tensorial character of the original physical variable $\Phi_{ik...p}(\vb{X})$ and where the super-index makes reference to a nodal identifier (with the summation convention in place).
 
@@ -627,7 +627,7 @@ L_{ij}^K(\vb{r})=J_{jQ}^{-1}N_{i,Q}^K(\vb{r})
 \end{equation}
 
 \subsubsection*{Elemental stiffness matrix}
-The elemental material stiffness matrix computed in the natural domain of \cref{fig:Nat domain} reads;
+The elemental material stiffness matrix computed in the natural domain of \cref{fig:Nat domain} reads
 
 \begin{equation}
 K^{KP}=\intL_{V_0(\vb{r})} \hat{B}_{ij}^K(\vb{r}) C_{ijkl} \hat{B}_{kl}^P(\vb{r})J dV_0(\vb{r})\equiv \intL_{r=-1}^{r=+1}\intL_{s=-1}^{s=+1} \hat{B}_{ij}^K(r,s) C_{ijkl} \hat{B}_{kl}^P(r,s)J(r,s) \mathrm{d}r\mathrm{d}s
@@ -641,17 +641,17 @@ K^{KP}=\intL_{V_0(\vb{r})} \hat{B}_{ij}^K(\vb{r}) C_{ijkl} \hat{B}_{kl}^P(\vb{r}
 \includegraphics[width=6cm]{img/figure3.pdf}
 \caption{Natural domain of integration}
 \label{fig:Nat domain}
-\end{figure}	 		
+\end{figure}
  
 
-Once the interpolator $\hat{B}_{ij}^K(\vb{r})$ has been identified the elemental stiffness matrix is obtained via numerical integration (quadrature) as described in \eqref{eq:eleinetgration};
+Once the interpolator $\hat{B}_{ij}^K(\vb{r})$ has been identified the elemental stiffness matrix is obtained via numerical integration (quadrature) as described in \eqref{eq:eleintegration}
 
 \begin{equation}
 \intL_{r=-1}^{r=+1}\intL_{s=-1}^{s=+1} \hat{B}_{ij}^K(r,s) C_{ijkl} \hat{B}_{kl}^P(r,s)J(r,s) \mathrm{d}r\mathrm{d}s\approx \sum_{i,j=1}^\text{NGPTS} \alpha_i \alpha_j \hat{B}_{kl}^K(r_i,s_j)C_{ijkl} \hat{B}_{kl}^P(r_i,s_j) J(r_i,s_j)
 \label{eq:eleintegration}
 \end{equation}
 
-	 											
+
 and where NGPTS corresponds to the number of integration points, $\alpha_j$ is a weighting factor and $r_i,s_j$   are the coordinates of a typical point $\vb{r}$ in the natural space of \cref{fig:Nat domain}.
 
  
