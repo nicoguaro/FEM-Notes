@@ -1,41 +1,59 @@
 \chapter{The Finite Element Method}
 
-\section{Brief review of the linearized theory of elasticity}
-The starting point is the balance of momentum, stress symmetry and traction definition on the boundary are given by
+\section{Brief review of the linearized theory of elasticity model}
+Here we present a brief description of the boundary value problem governing the response of an elastic body. For a full discussion of the model and its mathematical aspects the reader is referred to \cite{shames1997elastic}.
+
+The governing equations (in terms of stresses) stem from the principle of conservation of linear momentum and conservation of moment of linear momentum. The former leads to a set of 3 partial differential equations in the components of the stress tensor while the latter leads to the symmetrie in the stress tensor.
+
 \begin{equation} \label{eq:pde}
-\begin{split}
+\begin{aligned}
 &\sigma_{ij,j} + {f_i} = \rho\ddot{u}_i \quad \forall\ \vb{x} \in V,\, t \in \mathbb{R}^{+}\\
- &\sigma_{ij}=\sigma _{ji}\\
-& t_i^{\hat n} = \sigma_{ij} \hat{n}_{j} \quad \forall\ \vb{x} \in S \enspace .
-\end{split} 
+&\sigma_{ij}=\sigma _{ji}.
+\end{aligned} 
 \end{equation}
 
-The simplest constitutive\footnote{A constitutive relation is a relation between two physical quantities (especially between kinetic and kinematic quantities) that is specific to a material or substance, and approximates the response of that material to external stimuli, usually as applied fields or forces.\cite{wiki:constitutive_relation}.} equation in solid mechanics is to consider a linear dependence between stress and strains, and it is called Hooke's law\footnote{Despite the name of \emph{law} used, this relation is not always valid, but is a good approximation for small strains.}
+In \cref{eq:pde} $\sigma_{ij}$ is the stress tensor; $f_i$ is the vector of body forces; and $u_i$ is the displacements vector.
+
+Denoting the tractions vector associated with a surface with normal direction $\hat{n}_{j}$ by $t_i^{\hat n}$ we have the complete BVP as follows:
+
+\begin{equation} \label{eq:bcs}
+t_i^{\hat n} = \sigma_{ij} \hat{n}_{j} \quad \forall \in \vb{x} \in S.
+\end{equation}
+
+\Cref{eq:pde} correspond to 6 equations with 12 unknowns (the 9 components of the stress tensor and the 3 components of the displacements vector ) and the system is undetermined. In order to have a solvable BVP we must introduce kinematic strain-displacement relations and a stress-strain law. In the case of infinitesimal theory of elasticity the strain-displacement relation is given by:
+
+\begin{equation}\label{eq:kin}
+\varepsilon_{ij} = \frac{1}{2}(u_{i,j} + u_{j,i})
+\end{equation}
+
+where the term $\epsilon_{ij}$ is the symmetric component of the displacements gradient tensor. The components of the strain tensor describe the distrotions and changes in magnitude (volumetric changes) of the material point in the continuum model. Now the simplest stress-strain (constituive) relationship is given by Hooke's law\footnote{Despite the name of \emph{law} used, this relation is not always valid, but is a good approximation for small strains.}
+
 \begin{equation} \label{eq:Hooke}
 \sigma_{ij} = 2\mu \varepsilon_{ij} + \lambda \varepsilon_{kk}\delta_{ij} \enspace .
 \end{equation}
 
-Strain-displacement (kinematic relationship)
-\begin{equation}\label{eq:kin}
-\varepsilon_{ij} = \frac{1}{2}(u_{i,j} + u_{j,i})
-\end{equation}
-\cref{eq:kin} in \cref{eq:Hooke} and the result in \cref{eq:pde} yields
-\begin{align*}
-\sigma_{ij} &= \mu ( u_{i,j} + u_{j,i}) + \lambda u_{k,k}\delta _{ij}\\
-\sigma_{ij,j} &= \mu u_{i,jj} + \mu u_{j,ij} + \lambda u_{k,kj}\delta_{ij}\\
-\sigma_{ij,j} &= \mu u_{i,jj} + (\lambda  + \mu) u_{j,ij}
-\end{align*}
-from which
+where $\mu$ and $\lambda$ are material constants. The problem involves now a total of 18 equations and 18 unknowns can be solved if subjected to properly specified boudnary conditions.
+
+\subsection*{Displacement formulation}
+Substituting \cref{eq:kin} in \cref{eq:Hooke} and the result in \cref{eq:pde} yields after some manipulation:
+
 \begin{equation} \label{eq:navier}
+(\lambda  + \mu)u_{j,ij} + \mu u_{i,jj} + {f_i} = \rho \ddot{u}_i \quad \forall \vb{x} \in V,\, t \in \mathbb{R}^{+}.
+\end{equation}
+
+Since \cref{eq:navier} ( simultaneously describing equilibrium, kinematic relations and constituive response) is a second order equation governing the displacemt field possible boundary conditions are in terms of the variable itself or its first oder derivatives. For a well-possed problem the following is a set of valid boundary conditions: 
+
+\begin{equation} \label{eq:Wellbcs}
 \begin{split}
-&(\lambda  + \mu)u_{j,ij} + \mu u_{i,jj} + {f_i} = \rho \ddot{u}_i \quad \forall \vb{x} \in V,\, t \in \mathbb{R}^{+} \\
 &t_i^{\hat n} = \sigma _{ij} \hat n_{ij} \quad \forall\ \vb{x} \in S_t\\
 & {u_i} = \bar{u}_i \quad \forall \vb x \in S_u
 \end{split}
 \end{equation}
+
 and where ${S_t} \cup {S_u} = S$ and ${S_t} \cap {S_u} = \emptyset $. 
 
-If we consider that $u_i$ is not a function of time, we obtain the static version of the equation, i.e,
+
+In the particular case in which $u_i$ is not a function of time, we obtain the static version of the BVP, i.e,
 \begin{equation}
 \begin{split}
 &\left(\lambda  + \mu \right)u_{j,ij} + \mu u_{i,jj} + {f_i} = 0 \quad \forall \vb{x} \in V \\
@@ -44,124 +62,15 @@ If we consider that $u_i$ is not a function of time, we obtain the static versio
 \end{split}
 \end{equation}
 
-Notice that
+Notice that the tractions BC 
 \[t_i^{\hat n} = \mu (u_{i,j} + u_{j,i}) \hat{n}_j + \lambda u_{k,k} \delta_{ij}\hat{n}_j \enspace ,\]
-is a Neumann boundary condition on $u_i$.
 
-\section*{Simple wedge under self-equilibrated loads}
-Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \cref{fig:WEDGE}. It is assumed to be contained in the $X-Y$ plane, with loading conditions satisfying a plane strain (or plane stress) idealization. The material is elastic with Lame constants $\lambda$ and $\mu$. The wedge is loaded by uniform tractions of intensity $S$ applied over its four faces in such a way that the wedge is self-equilibrated. We wish to find the closed-form elasticity solution for the stress, strain and displacement fields throughout the problem domain.
+actually involves first order displacemts derivative and as such it is a Neumann boundary condition on $u_i$.
 %
-\begin{figure}[H]
-\centering
-\includegraphics[width=8cm]{img_src/wedge.pdf}
-\caption{2D Self-equilibrated wedge.}
-\label{fig:WEDGE}
-\end{figure}
 
-Under plane strain conditions the general 3D stress equilibrium equations reduce to:
-\begin{equation}
-\begin{aligned}
-&\pdv{\sigma_{xx}}{x}+\pdv{\tau_{xy}}{y}=0\\
-&\pdv{\tau_{xy}}{x}+\pdv{\sigma_{yy}}{y}=0
-\end{aligned}
-\label{eq:equilibrium}
-\end{equation}
-with strain given by
-\begin{equation}
-\begin{aligned}
-\epsilon_{xx}&=\pdv{u}{x}\\
-\epsilon_{yy}&=\pdv{v}{y}\\
-\gamma_{xy}&=\pdv{u}{y} + \pdv{v}{x}
-\end{aligned}
-\label{eq:strain}
-\end{equation}
-where $u$ and $v$ are the horizontal and vertical displacements respectively.
-
-\subsection*{Stress field}
-
-The stress field can be obtained by simple inspection after identifying the traction boundary conditions. In the current problem these conditions correspond to boundary conditions are of the second type given by
-\begin{equation}
-t_i=\sigma_{ij}\hat{n_j}
-\label{eq:bcs}
-\end{equation}
-and prescribed over the inclined surfaces of the wedge.
-
-Simple equilibrium considerations yield
-\begin{align*}
-\sum F_x &= 0 \longrightarrow - \ell S\cos(\phi)  + \sigma_{xx}\ell \sin(\phi) = 0\\
-\sum F_y &= 0 \longrightarrow - \ell S\sin(\phi) - \sigma_{yy}\ell \cos(\phi)=0
-\end{align*}
-from which the following stress solution results:
-\begin{equation}
-\begin{aligned}
-\sigma_{xx}& = S \cot(\phi)\\
-\sigma_{xx}& = -S\tan(\phi)\\
-\tau_{xy}& = 0
-\end{aligned}
-\label{eq:solution}
-\end{equation}
-with the condition $\tau_{xy}=0$ due to symmetry.
-
-Let $\hat{n}^1$,  $\hat{n}^2$, $\hat{n}^3$, $\hat{n}^4$ be the outward normal vectors to the exposed faces of the wedge and given by
-\begin{align*}
-\hat{n}^1 &= -\sin(\phi)\hat{e}_{x}+\cos(\phi)\hat{e}_{y}\\
-\hat{n}^2 &= -\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y}\\
-\hat{n}^3 &= +\sin(\phi)\hat{e}_{x}+\cos(\phi)\hat{e}_{y}\\
-\hat{n}^4 &= +\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y} \enspace .
-\end{align*}
-The components of the traction vector follow directly like
-\[t_{i} = \sigma_{ij}\hat{n}_{j}\]
-then over the face with normal $\hat{n}^1$ we have
-\begin{align*}
-t_{x} &= -S\cos(\phi)\\
-t_{y} &= -S\sin(\phi)
-\end{align*}
-similarly, over the face with normal $\hat{n}^2$
-\begin{align*}
-t_{x} &= -S\cos(\phi)\\
-t_{y} &= +S\sin(\phi)
-\end{align*}
-over the face with normal $\hat{n}^3$ 
-\begin{align*}
-t_{x} &= +S\cos(\phi)\\
-t_{y} &= -S\sin(\phi)
-\end{align*}
-and finally, over the face with normal $\hat{n}^4$;
-\begin{align*}
-t_{x} &= +S\cos(\phi)\\
-t_{y} &= +S\sin(\phi) \enspace .
-\end{align*}
-
-\subsection*{Strain field}
-Using the stress field found in \cref{eq:solution} in the constitutive law for a linear elastic material under plane strain conditions gives us
-\begin{equation}
-\begin{aligned}
-\epsilon_{xx}& = +\dfrac{S}{E}\left[\cot(\phi)+\nu \tan(\phi)\right] = +\dfrac{S}{E}K_{1}(\nu , \phi)\\
-\epsilon_{yy}& = -\dfrac{S}{E}\left[\tan(\phi)+\nu \cot(\phi)\right] = -\dfrac{S}{E}K_{2}(\nu , \phi)\\
-\gamma_{xy}& = 0.
-\end{aligned}
-\label{eq:strain part}
-\end{equation}
-
-\subsection*{Displacement field}
-
-To determine the displacement field we use the fact that $\omega_{xy}=0$ from which:
-\begin{align*}
-u &= +\dfrac{S}{E} K_{1}(\nu , \phi)x + A\\
-v &= -\dfrac{S}{E} K_{2}(\nu , \phi)y + B
-\end{align*}
-where $A$ and $B$ are integration constants.
-
-From the condition $u=0$ at $x=\ell\cos(\phi)$ we have that $A=-\dfrac{S}{E} K_{1}(\nu , \phi)\ell\cos(\phi)$ then it follows that
-\[u=\dfrac{S}{E} K_{1}(\nu , \phi)(x-\ell\cos(\phi)).\]
-
-Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
-\[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
-
-
-\section{Formal definition of strong and weak forms}
-\subsection*{Strong form}
-The strong form of the problem, denoted by $\{ S \}$ reads:
+\subsection{Equivalence between strong and weak forms}
+\subsubsection{Strong form}
+The strong form corresponds to the differential formulation of the problem, it is denoted by $\{ S \}$ and it reads:
 
 Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \mathbb{R}$ such:
 %
@@ -190,36 +99,36 @@ The first condition corresponds to the satisfaction of the essential boundary co
 %
 \[\varsigma = \left\{u_i\left| {u_i} \in H, {u_i} = \bar{u}_i \in S_u \right. \right\} \enspace .\]
 %
-On the other hand, in order to validate the introduced trial functions we also need testing (or weighting and distribution) functions $w_i$. Such functions are arbitrary apart form having to satisfy the following conditions:
+On the other hand, in order to validate the introduced trial functions we also need testing functions $w_i$ also called in the FEM literature weighting or distribution functions. These functions are arbitrary apart from having to satisfy the following conditions:
 %
 \begin{align*}
 &w_i = 0 \quad in \quad {S_u}\\
 &\intL_S \left(\pdv{w_i}{x_j}\right)^2 dS < \infty
 \end{align*}
 %
-In what follows we formally denote the space of these functions by $V$ and formally define it like
+In what follows we formally denote the space of these functions by $V$ and define it like
 %
 \[V = \left\{ w_i\left| w_i \in H, u_i = w_i=0 \in S_u \right. \right\} \enspace .\]
 
-\subsection*{Weak form}
-Having defined the strong form $\{S\}$ and the spaces $\varsigma$ and $V$ we will state an alternative form (equivalent to $\{S\}$) but with advantages when thinking about a numerical solution. Since in that form the continuity requirements of the trial functions is weaker than in the strong form such formulation is commonly referred to like the weak form $\{W\}$ and defined as follows.
+\subsubsection{Weak form}
+Here we will show that the equilibrium statement represented in the differential formultaionthe problem can be described in an alternative forms. In such description the continuity requirement for the trial functions is weaker than in the strong form leading to the term "weak" statement. Here this alternative representation will be denoted like $\{W\}$ and it reads;
 
 Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \mathbb{R}$ and $\forall {w_i} \in V$ such:
 
 \[\intL_V \sigma _{ij,j} w_{i,j}\, dV - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, dS = 0\]
 
 \subsubsection*{Proof 1:}
-Let $u_i \in \varsigma $ be a solution to $\{S\}$ and let $w_i \in V $. Forming the inner product of the equilibrium statement with $w_i$ and forcing the integral over the domain to be zero we have
+Let $u_i \in \varsigma $ be a solution to $\{S\}$ and let $w_i \in V $. Forming the inner product of the equilibrium statement given in \cref{eq:pde} with $w_i$ and forcing the integral over the domain to be zero we have
 %
 \[\intL_V (\sigma_{ij,j} + f_i ){w_i}\, dV = 0 \enspace ,\]
 %
-expanding the terms in the integrand yields;
+expanding the terms in the integrand and integrating by parts the first term on the left we have
 %
 \[\intL_V \sigma _{ij,j} w_i\, dV + \intL_V f_i w_i\, dV = 0 \enspace .\]
-
-Now, integrating by parts the first term on the left we have
 \[ - \intL_V w_{i,j} \sigma _{ij}\, dV  + \intL_S \sigma _{ij} \hat{n}_j w_i\, dS  + \intL\limits_V w_i f_i\, dV = 0 \]
+
 since $w_i \in V$ it follows that $w_i = 0$ in $S_u$ from which
+
 \begin{equation}\label{weak}
 \intL_V \sigma _{ij,j} w_{i,j}\, dV - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, dS = 0
 \end{equation}
@@ -245,76 +154,137 @@ from which
 \end{split}
 \end{equation}
 
-\subsection{The principle of virtual work-Discretization into local interpolating functions}
-We now discretize the principle of virtual work repeated below for completeness:
+which is once again the strong form of the problem given in \cref{eq:pde}.
 
-\begin{equation} \label{pvw_2}
-\intL_V \sigma_{ij} \delta u_{i,j} dV - \intL_V f_i \delta u_i dV - \intL_{S_t} t_i^n \delta u_i dS = 0.
+\subsection*{Simple wedge under self-equilibrated loads}
+Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \cref{fig:WEDGE}. It is assumed to be contained in the $X-Y$ plane, with loading conditions satisfying a plane strain (or plane stress) idealization. The material is elastic with Lame constants $\lambda$ and $\mu$. The wedge is loaded by uniform tractions of intensity $S$ applied over its four faces in such a way that the wedge is self-equilibrated. We wish to find the closed-form elasticity solution for the stress, strain and displacement fields throughout the problem domain.
+%
+\begin{figure}[H]
+\centering
+\includegraphics[width=7cm]{img_src/wedge.pdf}
+\caption{2D Self-equilibrated wedge.}
+\label{fig:WEDGE}
+\end{figure}
+
+Under plane strain conditions the general 3D stress equilibrium equations (see \cref{eq:pde}) reduce to:
+\begin{equation}
+\begin{aligned}
+&\pdv{\sigma_{xx}}{x}+\pdv{\tau_{xy}}{y}=0\\
+&\pdv{\tau_{xy}}{x}+\pdv{\sigma_{yy}}{y}=0
+\end{aligned}
+\label{eq:equilibrium}
 \end{equation}
 
-For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping subdomains over each one of which we will approximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been casted into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows;
+while the kinematic relation (\cref{eq:kin}) reads
 
-\begin{equation}\label{pvw_dis}
-\sum_{e=1}^{NEL} \intL_{V^e} \sigma_{ij} \delta u_{i,j} d{V^e} - \intL_V f_i \delta u_i d{V^e} - \intL_{S_t} t_i^n \delta u_id{S^e} = 0 
+\begin{equation}
+\begin{aligned}
+\epsilon_{xx}&=\pdv{u}{x}\\
+\epsilon_{yy}&=\pdv{v}{y}\\
+\gamma_{xy}&=\pdv{u}{y} + \pdv{v}{x}
+\end{aligned}
+\label{eq:strain}
 \end{equation}
+where $u$ and $v$ are the horizontal and vertical displacements respectively.
 
-For easiness consider a single subdomain
-\begin{equation} \label{pvw_sing}
-\intL_V \sigma_{ij} \delta u_{i,j} dV - \intL_V f_i\delta u_idV - \intL_{S_t} t_i^n \delta u_i dS = 0.
-\end{equation}
+\subsubsection*{Stress field}
 
-The involved functions (e.g., displacements, strain, stresses) will be approximated via interpolation of the solution over a determined number of points termed in what follows nodes. Assume for instance that over element $e$ containing $n$ such nodes we know the displacements vector $u_i$. Furthermore, let the displacements for the $p$-node $u^P=[u^P, v^P, w^P]$. Using ideas from interpolation theory it is now possible to approximate the displacements vector over an arbitrary point $\vb{x}$ inside the element as follows
-\[u_i(\vb x) = N_i^1(\vb x)u^1 + N_i^2(\vb x)u^2 + \cdots + N_i^P(\vb x)u^P + \cdots + N_i^n(\vb x)u^n\]
-or in more general form
-\begin{equation} \label{bas_interpol}
-{u_i}(\vb x) = N_i^Q(\vb x){u^Q}
-\end{equation}
-
-and where the caption superscripts indicate summation over the number of nodes of the element while the subscript refers to the physical character of the variable being interpolated.
+The stress field can be obtained by simple inspection from the traction boundary conditions prescribed over the inclined surfaces yielding;
 
 \begin{align*}
-&\varepsilon_{ij}(\vb x) = B_{ij}^Q(\vb x){u^Q}\\
-&\varepsilon_{ij}(\vb x) = \frac{1}{2}( u_{i,j} + u_{j,i} )\\
-&\varepsilon_{ij}(\vb x) = \frac{1}{2}\left(\pdv{N_i^Q}{x_j} + \pdv{N_j^Q}{x_i} \right){u^Q}\\
-&B_{ij}^Q = \frac{1}{2}\left(\pdv{N_i^Q}{x_j} + \pdv{N_j^Q}{x_i} \right)\\
-&\delta {u_i} = N_i^Q(\vb x)\delta {u^Q}\\
-&\intL_V C_{ijkl} B_{kl}^P u^P B_{ij}^Q\delta u^Q \dd{V} - \intL_V f_i N_i^Q\delta {u^Q}\dd{V}  - \intL_{S_t} t_i^n N_i^Q\delta {u^Q} \dd{S} = 0\\
-&\delta {u^Q}\intL_V B_{ij}^Q C_{ijkl} B_{kl}^P\dd{V}{u^P} - \delta {u^Q}\intL_V N_i^Q{f_i}\dd{V}  - \delta {u^Q}\intL_{S_t} N_i^Qt_i^n\dd{S} = 0 \\
-&\delta u^Q f_\sigma ^Q - \delta {u^Q}f_V^Q - \delta u^Q f_c^Q = 0\\
-&f_\sigma ^Q - f_V^Q - f_c^Q = 0\\
-&f_\sigma ^Q = \intL_V B_{ij}^Q C_{ijkl} B_{kl}^P\dd{V} u^P \equiv K^{QP} u^P\\
-&f_V^Q = \intL_V N_i^Q f_i\dd{V} \\
-&f_c^Q = \intL_{S_t} N_i^Qt_i^n \dd{S} \\
-&K^{QP} u^P = f_V^Q + f_c^Q
+\sum F_x &= 0 \longrightarrow - \ell S\cos(\phi)  + \sigma_{xx}\ell \sin(\phi) = 0\\
+\sum F_y &= 0 \longrightarrow - \ell S\sin(\phi) - \sigma_{yy}\ell \cos(\phi)=0
 \end{align*}
 
-\section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
+and the following stress solution:
 
-\subsection*{Application to a simple spring-mass system}
-
-
-\begin{algorithm}[H]
- \SetAlgoLined
- \KwData{Problem paramters; NUMNP, NUMEL, NMATP}
- \KwResult{Displacements and spring forces}
- Create $DM$E operator\;
- Assemble $K^G$, $F^G$\;
-\While{$j \leq 1, NUMEL$}{
-\[
+\begin{equation}
 \begin{aligned}
-K^G \leftarrow K^G+K^i\\
-F^G \leftarrow F^G+F^i\\
+\sigma_{xx}& = S \cot(\phi)\\
+\sigma_{xx}& = -S\tan(\phi)\\
+\tau_{xy}& = 0.
 \end{aligned}
-\]
-}
-Impose BCs\;
-Solve $[K^G]U=F^G$\\
-Find internal forces
-\caption{Springs Algorithm}
-\end{algorithm}
+\label{eq:solution}
+\end{equation}
 
+In \cref{eq:solution} the condition $\tau_{xy}=0$ is due to symmetrie in the problem.
 
-\section{Variational formulations}
+\subsubsection*{Traction boundary conditions}
+Let us verify that the above stress solution satisfies the traction BC using the expression:
+
+\[t_i^{\hat n} = \sigma _{ij} \hat n_{ij}.\]
+
+Donoting the outward normals to the inclined surfaces of the wedge by $\hat{n}^1$,  $\hat{n}^2$, $\hat{n}^3$, $\hat{n}^4$ these are given by;
+\begin{align*}
+\hat{n}^1 &= -\sin(\phi)\hat{e}_{x}+\cos(\phi)\hat{e}_{y}\\
+\hat{n}^2 &= -\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y}\\
+\hat{n}^3 &= +\sin(\phi)\hat{e}_{x}+\cos(\phi)\hat{e}_{y}\\
+\hat{n}^4 &= +\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y} \enspace
+\end{align*}
+
+where $\hat{e}_{x}$ and $\hat{e}_{y}$ are the reference unit vectors. Now, the components of the traction vector follow directly like
+
+\[t_{i} = \sigma_{ij}\hat{n}_{j}\]
+
+then over the face with normal $\hat{n}^1$ we have
+\begin{align*}
+t_{x} &= -S\cos(\phi)\\
+t_{y} &= -S\sin(\phi)
+\end{align*}
+similarly, over the face with normal $\hat{n}^2$
+\begin{align*}
+t_{x} &= -S\cos(\phi)\\
+t_{y} &= +S\sin(\phi)
+\end{align*}
+over the face with normal $\hat{n}^3$ 
+\begin{align*}
+t_{x} &= +S\cos(\phi)\\
+t_{y} &= -S\sin(\phi)
+\end{align*}
+and finally, over the face with normal $\hat{n}^4$;
+\begin{align*}
+t_{x} &= +S\cos(\phi)\\
+t_{y} &= +S\sin(\phi) \enspace .
+\end{align*}
+
+\subsubsection*{Strain field}
+The strain field can be obtained after using the stress solution found in \cref{eq:solution} together with the constituive law given by \cref{eq:Hooke} which for a plane strain idalization takes the form:
+
+\begin{equation}
+\begin{aligned}
+\epsilon_{xx}& = +\dfrac{S}{E}\left[\cot(\phi)+\nu \tan(\phi)\right] = +\dfrac{S}{E}K_{1}(\nu , \phi)\\
+\epsilon_{yy}& = -\dfrac{S}{E}\left[\tan(\phi)+\nu \cot(\phi)\right] = -\dfrac{S}{E}K_{2}(\nu , \phi)\\
+\gamma_{xy}& = 0.
+\end{aligned}
+\label{eq:strain part}
+\end{equation}
+
+\subsubsection*{Displacement field}
+The displacement field is obtained after direct integration of the strains after using the fact that:
+
+\[du_i=\epsilon_{ij}dx_j + \omega_{ij}dx_j\]
+
+and the condition $\omega_{xy}=0$ also due to symmetrie , as follows:
+
+\begin{align*}
+u &= +\dfrac{S}{E} K_{1}(\nu , \phi)x + A\\
+v &= -\dfrac{S}{E} K_{2}(\nu , \phi)y + B
+\end{align*}
+
+and where $A$ and $B$ are integration constants.
+
+From the condition $u=0$ at $x=\ell\cos(\phi)$ we have that $A=-\dfrac{S}{E} K_{1}(\nu , \phi)\ell\cos(\phi)$ then it follows that
+\[u=\dfrac{S}{E} K_{1}(\nu , \phi)(x-\ell\cos(\phi)).\]
+
+Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
+\[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
+
+\section{Boundary value problems}
+%%
+\subsection{Differential formulation}
+%%
+\subsection{Variational formulation}
+%%
 \todo{Add Variational formulation definition.}
 According to Wikipedia \cite{wiki:variational_principle}
 
@@ -324,9 +294,9 @@ A variational principle is a scientific principle used within the calculus of va
 According to Cornelius Lanczos, any physical law which can be expressed as a variational principle describes an expression which is self-adjoint. These expressions are also called Hermitian. Such an expression describes an invariant under a Hermitian transformation.
 \end{quotation}
 
-\subsection{Principle of minimum potential energy}
+\subsubsection*{Principle of minimum potential energy}
 
-\subsection{Hu-Washizu Variational Principle}
+\subsubsection*{Hu-Washizu Variational Principle}
 Consider the following functional
 \begin{equation}
 \pi^* = \pi  - \intL_V \lambda_{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}  - \intL_{S_u} \lambda_i^u(u_i^{S_u} - \bar{ u}_i)\dd{S}
@@ -394,13 +364,154 @@ t_i &= \lambda_{ij}^\varepsilon \hat{n}_j\\
 &u_i^{S_u} = \bar{u}_i
 \end{align}
 
-\section{Weighted residual methods}
-\subsection{Application to the Navier equations}
-\subsection{Application to the acoustic wave equation}
+\subsection{Weighted residual methods}
+\subsubsection*{Application to the Navier equations}
+\subsubsection*{Application to the acoustic wave equation}
 
-\section{Basic elements of interpolation theory}
-\subsection{Formulation in the physical space}
-\subsection{Formulation in the natural space: the continuum mechanics analogy}
+\section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
+\subsection*{A simple spring-mass system}
+The simple problem of a spring-mass system considered next resembles most of the algorithmic aspects of a finite element code with the advantage that the problem is already a discrete mechanical system. The problem consists of an assamblage of masses joined by different springs submitted to time varying loads. Each spring plays the role of a finite element and each mass is analogous to a nodal point in a finite element algorithm. For instance the full system may be like the one shown in \cref{fig:bathe}:
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=10cm]{img_src/system.pdf}
+\caption{Typical assemblage of springs and masses.}
+\label{fig:bathe}
+\end{figure}
+
+
+Consider a typical spring (finite element) like the one shown in \cref{fig:springel}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=10cm]{img_src/springel.pdf}
+\caption{Typical spring element.}
+\label{fig:springel}
+\end{figure}
+
+The relation between the force and the relative displacement can be written like;
+
+\[{f_1} = K({u_1} - {u_2})\]
+
+and from equilibrium we have;
+
+\[{f_1} + {f_2} = 0\]
+
+which yields the following force-displacement relationship for a tyical spring element:
+
+\begin{equation}
+\left\{ {\begin{array}{*{20}{c}}
+{{f_1}}\\
+{{f_2}}
+\end{array}} \right\} = K\left[ {\begin{array}{*{20}{c}}
+{1.0}&{ - 1.0}\\
+{ - 1.0}&{1.0}
+\end{array}} \right]\left\{ {\begin{array}{*{20}{c}}
+{{u_1}}\\
+{{u_2}}
+\end{array}} \right\}
+\label{Kspring}
+\end{equation}
+
+On the other hand, the equilibrium equation for a typical mass with displacement $u_j$  (see \cref{fig:dclmass}) and attached to springs $i$ and $i+1$ read;
+
+\begin{equation}
+f_2^i + f_1^{i + 1} + {m_j}\frac{{d{V_j}}}{{dt}} = {P_j}.
+\label{equilmass}
+\end{equation}
+
+which can be written in terms of displacements using \cref{Kspring} like;
+
+\[({K^i} + {K^{i + 1}}){u_j} - {K^i}{u_{j - 1}} - {K^{i + 1}}{u_{j + 1}} + {m_j}\frac{{d{V_j}}}{{dt}} = {P_j}.\]
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=8cm]{img_src/dclmass.pdf}
+\caption{Free body diagram for a typical mass connceted to springs $i$ and $i+1$.}
+\label{fig:dclmass}
+\end{figure}
+
+Considering now the complete system of masses and springs leads to a system of linear equations of the form;
+
+\begin{equation}
+\left[ {{K_G}} \right]\left\{ {{U_G}} \right\} + \left[ M \right]\left\{ {{A_G}} \right\} = \left\{ {{F_G}} \right\}.
+\label{global}
+\end{equation}
+
+where each equation represents the equilibrium of a given mass. The system given by \cref{global} can be solved in the displacements $U_G$. The pseudo-code shown in \cref{springsalg} presents all the steps required to sove the problem in the context of the finite element method. In that code the so-called DME operator is an equation assembly array indicating how each element contributes to the global stiffness and mass matrix.
+
+
+\begin{algorithm}[H]
+ \SetAlgoLined
+ \KwData{Problem paramters; NUMNP, NUMEL, NMATP}
+ \KwResult{Displacements and spring forces}
+ Create $DM$E operator\;
+ Assemble $K^G$, $F^G$\;
+\While{$j \leq 1, NUMEL$}{
+\[
+\begin{aligned}
+K^G \leftarrow K^G+K^i\\
+F^G \leftarrow F^G+F^i\\
+\end{aligned}
+\]
+}
+Impose BCs\;
+Solve $[K^G]U=F^G$\\
+Find internal forces
+\caption{Springs Algorithm}
+\label{springsalg}
+\end{algorithm}
+
+
+\subsection{Basic elements of interpolation theory}
+
+\subsection{Formulation of the finite element matrices}
+We now discretize the principle of virtual work repeated below for completeness:
+
+\begin{equation} \label{pvw_2}
+\intL_V \sigma_{ij} \delta u_{i,j} dV - \intL_V f_i \delta u_i dV - \intL_{S_t} t_i^n \delta u_i dS = 0.
+\end{equation}
+
+For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping subdomains over each one of which we will approximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been casted into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows;
+
+\begin{equation}\label{pvw_dis}
+\sum_{e=1}^{NEL} \intL_{V^e} \sigma_{ij} \delta u_{i,j} d{V^e} - \intL_V f_i \delta u_i d{V^e} - \intL_{S_t} t_i^n \delta u_id{S^e} = 0 
+\end{equation}
+
+For easiness consider a single subdomain
+\begin{equation} \label{pvw_sing}
+\intL_V \sigma_{ij} \delta u_{i,j} dV - \intL_V f_i\delta u_idV - \intL_{S_t} t_i^n \delta u_i dS = 0.
+\end{equation}
+
+The involved functions (e.g., displacements, strain, stresses) will be approximated via interpolation of the solution over a determined number of points termed in what follows nodes. Assume for instance that over element $e$ containing $n$ such nodes we know the displacements vector $u_i$. Furthermore, let the displacements for the $p$-node $u^P=[u^P, v^P, w^P]$. Using ideas from interpolation theory it is now possible to approximate the displacements vector over an arbitrary point $\vb{x}$ inside the element as follows
+\[u_i(\vb x) = N_i^1(\vb x)u^1 + N_i^2(\vb x)u^2 + \cdots + N_i^P(\vb x)u^P + \cdots + N_i^n(\vb x)u^n\]
+or in more general form
+\begin{equation} \label{bas_interpol}
+{u_i}(\vb x) = N_i^Q(\vb x){u^Q}
+\end{equation}
+
+and where the caption superscripts indicate summation over the number of nodes of the element while the subscript refers to the physical character of the variable being interpolated.
+
+\begin{align*}
+&\varepsilon_{ij}(\vb x) = B_{ij}^Q(\vb x){u^Q}\\
+&\varepsilon_{ij}(\vb x) = \frac{1}{2}( u_{i,j} + u_{j,i} )\\
+&\varepsilon_{ij}(\vb x) = \frac{1}{2}\left(\pdv{N_i^Q}{x_j} + \pdv{N_j^Q}{x_i} \right){u^Q}\\
+&B_{ij}^Q = \frac{1}{2}\left(\pdv{N_i^Q}{x_j} + \pdv{N_j^Q}{x_i} \right)\\
+&\delta {u_i} = N_i^Q(\vb x)\delta {u^Q}\\
+&\intL_V C_{ijkl} B_{kl}^P u^P B_{ij}^Q\delta u^Q \dd{V} - \intL_V f_i N_i^Q\delta {u^Q}\dd{V}  - \intL_{S_t} t_i^n N_i^Q\delta {u^Q} \dd{S} = 0\\
+&\delta {u^Q}\intL_V B_{ij}^Q C_{ijkl} B_{kl}^P\dd{V}{u^P} - \delta {u^Q}\intL_V N_i^Q{f_i}\dd{V}  - \delta {u^Q}\intL_{S_t} N_i^Qt_i^n\dd{S} = 0 \\
+&\delta u^Q f_\sigma ^Q - \delta {u^Q}f_V^Q - \delta u^Q f_c^Q = 0\\
+&f_\sigma ^Q - f_V^Q - f_c^Q = 0\\
+&f_\sigma ^Q = \intL_V B_{ij}^Q C_{ijkl} B_{kl}^P\dd{V} u^P \equiv K^{QP} u^P\\
+&f_V^Q = \intL_V N_i^Q f_i\dd{V} \\
+&f_c^Q = \intL_{S_t} N_i^Qt_i^n \dd{S} \\
+&K^{QP} u^P = f_V^Q + f_c^Q
+\end{align*}
+
+\subsubsection{Formulation in the physical space}
+\subsubsection{Formulation in the natural space: the continuum mechanics analogy}
 In typical finite element equilibrium equations we need to perform integration over the reference element domain $V_0(\vb{x})$ corresponding to originally arbitrarily shaped sub-domains as created during the meshing process.  In order to proceed with this integration it is useful to consider the following continuum mechanics analogy.
 
 First assume that the actual physical domain $V_0(\vb{x})$ is the result of a deformation process imparted upon the natural domain as shown in \cref{fig:natural domain}. In this analogy, the physical domain $V_0(\vb{x})$ is regarded like a ``deformed'' configuration at an imaginary time $t=t$, while the natural ``undeformed'' domain $V(\vb{r})$   is treated like a reference undeformed configurations at time $t=0$. Both configurations are assumed to be connected through a deformation process;
@@ -442,7 +553,7 @@ f(\vb{r})=F[\vb{X}(\vb{r})]
 \end{equation}
 
 	 								
-\section*{Interpolation scheme}
+\subsubsection*{Interpolation scheme}
 Having identified the fact that the integration process will take place in the natural domain, we will approach the interpolation process directly in this natural space. In the case of the displacement based finite element method all the involved variables will then be obtained via interpolation of nodal displacements. For instance, assume that a given problem variable is defined in the physical space by the tensor $\Phi_{ik...p}(\vb{X})$. The interpolated variable is then written like;
 
 \begin{equation}
@@ -494,7 +605,7 @@ from where we can establish the connection between the two operators like
 \end{equation}
 
 
-\section*{The fundamental interpolator}
+\subsubsection*{The fundamental interpolator}
 We further define the fundamental interpolator giving rise to gradients of the primary displacement variable in the physical space according to
 \begin{equation}
 u_{i,j}(\vb{X})=L_{ij}^K(\vb{r})\hat{u}^K
@@ -515,7 +626,7 @@ L_{ij}^K(\vb{r})=J_{jQ}^{-1}N_{i,Q}^K(\vb{r})
 \label{eq:fundamental interpolator}
 \end{equation}
 
-\section*{Elemental stiffness matrix}
+\subsubsection*{Elemental stiffness matrix}
 The elemental material stiffness matrix computed in the natural domain of \cref{fig:Nat domain} reads;
 
 \begin{equation}
@@ -554,7 +665,7 @@ and where NGPTS corresponds to the number of integration points, $\alpha_j$ is a
 
 One important aspect of the numerical integration that has to be kept in mind is accuracy.  Depending on the particularly selected integration scheme, the number of introduced integration points fixes the maximum polynomial order of the considered functions that can be integrated accurately.  In the case of the integrand in \cref{eq:eleintegration}, it is clear that this order increases as the distortion of the physical element  with respect to the natural element increases.  One way of dealing with this dependency of accuracy with element distortion is to make use of adaptative integration techniques which are numerically expensive.  What is actually done in standard FEM analysis is to choose the number of quadrature points beforehand and introduce distortion related error criteria inside the code in such a way that some sort of validation is performed before the numerical integration process is started.
 
-\section*{Strain displacement interpolator for the infinitesimal strain tensor}
+\subsubsection*{Strain displacement interpolator for the infinitesimal strain tensor}
 The $Q$-th nodal contribution to the infinitesimal strain-displacement interpolator can be obtained in explicit form as follows. Let $L_x^Q$ and $L_y^Q$ be the spatial differential operators in $x$ and $y$ respectively. We have after expanding \cref{eq:fundamental interpolator}
 %
 \begin{align*}
