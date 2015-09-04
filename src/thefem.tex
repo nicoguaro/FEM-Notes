@@ -280,47 +280,209 @@ Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
 \[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
 
 \section{Boundary value problems}
+In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we will introduce the variational formulation where the governing equations and natural boundary conditions are now obtained after solution of an extremization problem of a so-called functional. It will become evident that the resulting extremization problem is equivalent to the weak form of the problem defined previously.
 %%
 \subsection{Differential formulation}
+Let $ds$ be a differential surface element; $dV$ a differential volume element; $u(\vec x,t)$ a scalar (or vector) function of space and time.
+The flux or rate of flow of the quantity $u(\vec x,t)$ through $ds$ at time $t$ is defined like;
+\[p(\vec x)\vec \nabla u \cdot \hat nds\]
+
+where $p(\vec x)$ is a positive function, assumed known and time independent. Similarly, the time rate of change of $u(\vec x,t)$ in an element $dV$ is given by;
+
+\[\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV\]
+
+where once again $\rho (\vec x)$ is a known, given, time independent positive function. Additional effects occurring in the element $dV$ at the time time can be expressed like;
+
+\[H(\vec x,t)dV \equiv  - q(\vec x)u(\vec x,t) + \hat F(\vec x,t)\]
+
+where $\hat F(\vec x,t) = \rho (\vec x)F(\vec x,t)$. In the above the term $qu$ represent internal effects due to changes proportional to $u$ while $\hat F(\vec x,t)$ are other external inlfuences in the medium.
+
+Balancing the internal and external changes yields;
+
+\[\int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV = \int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds} }  + \int\limits_V {H(\vec x,t)dV} \]
+
+or equivalently;
+
+\[\int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV = \int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds} }  - \int\limits_V {q(\vec x)u(\vec x,t)dV}  + \int\limits_V {\rho (\vec x)F(\vec x,t)dV} \]
+
+using the divergence theorem as
+
+\[\int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds}  = \int\limits_V {\vec \nabla  \cdot \left( {p\vec \nabla u} \right)dV} \]
+
+yields after substitution;
+
+\[\int\limits_V {\left[ {\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla u} \right) + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t)} \right]dV}  = 0\]
+
+Assuming a continuous integrand, the arbitrariness of $V$ implies;
+
+\[
+\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla u} \right) + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t) = 0
+\]
+
+Letting;
+
+\[L() \equiv  - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla } \right) + q(\vec x)\]
+
+the generalized set of partial differential equations can be written like;
+
+\begin{equation}
+\rho (\vec x)\frac{{\partial u(\vec x,t)}}{{\partial t}} + Lu(\vec x,t) = \rho (\vec x)F(\vec x,t)
+\label{GenPDE}
+\end{equation}
+
+Hyperbolic;
+\[\rho (\vec x)\frac{{{\partial ^2}u(\vec x,t)}}{{\partial {t^2}}} + Lu(\vec x,t) = 0\]
+Parabolic;
+\[\rho (\vec x)\frac{{\partial u(\vec x,t)}}{{\partial t}} + Lu(\vec x,t) = 0\]
+Elliptic;
+\[Lu(\vec x,t) = \rho (\vec x)F(\vec x,t)\]
+
 %%
 \subsection{Variational formulation}
-%%
-\todo{Add Variational formulation definition.}
-According to Wikipedia \cite{wiki:variational_principle}
+In this section we formulate the boundary value problem using the approach of the calculus of variations in which the governing PDEs and boundary conditions are obtained after finding the minimum (or maximum) of a functional according to a variational principle\footnote{According to Wikipedia \cite{wiki:variational_principle}
 
 \begin{quotation}
 A variational principle is a scientific principle used within the calculus of variations, which develops general methods for finding functions which minimize or maximize the value of quantities that depend upon those functions. For example, to answer this question: ``What is the shape of a chain suspended at both ends?" we can use the variational principle that the shape must minimize the gravitational potential energy.
 
 According to Cornelius Lanczos, any physical law which can be expressed as a variational principle describes an expression which is self-adjoint. These expressions are also called Hermitian. Such an expression describes an invariant under a Hermitian transformation.
-\end{quotation}
+\end{quotation}}.
+%%
+We will see that the weak form (and therfore also the strong form) can be obtained alternatively through the process of finding extreme values for a functional. We will ilustrate this idea for the general case of theory of elasticity and then we will present particular examples.
+
+\subsubsection*{Some vague definitions in the calculus of variations}
+In variational calculus a {\bf functional} can be understood as a "function" having as independent variables or arguments a space of vector functions and producing as a result (or dependent variable) a scalar. For instance, in the particular case of the theory of elasticity such a "function" corresponds to the total potenatial energy functional $\Pi$ given by;
+
+\begin{equation}
+\Pi ({u_i}) = \frac{1}{2}\int\limits_V {{\sigma _{ij}}{\varepsilon _{ij}}dV}  - \int\limits_V {{f_i}{u_i}dV}  - \int\limits_S {t_i^{(n)}{u_i}dS}
+\label{Potential}
+\end{equation}
+
+and where the first term in the L.H.S corresponds to the internal strain energy, while the last two terms are the work done by the external body and traction forces. The above functional has as independent variables the displacement vector and its spatial derivatives. This is indicated by the presence of the displacement vector $u_i$ in the expression $\Pi(u_i)$.
+
+In variational calculus we are interested in finding a function $u_i$ that renders the functional $\Pi$ a maximum or a minimum. In loose terms, the analogous to the differential operator in calculus of functions is now termed the variational operator $\delta$ (i.e., $\delta$ is analogous to $\frac{\partial }{{\partial {x_i}}}$). As such $\delta\Pi$ acts over the function $u_i$ and its derivatives as follows;
+
+\[\delta \Pi  = \frac{{\partial \Pi }}{{\partial {u_i}}}\delta {u_i} + \frac{{\partial \Pi }}{{\partial \left( {\frac{{\partial {u_i}}}{{\partial {x_j}}}} \right)}}\delta \left( {\frac{{\partial {u_i}}}{{\partial {x_j}}}} \right) + ... + \frac{{\partial \Pi }}{{\partial \left( {\frac{{{\partial ^n}{u_i}}}{{\partial {x_j}...\partial {x_k}}}} \right)}}\delta \left( {\frac{{{\partial ^n}{u_i}}}{{\partial {x_j}...\partial {x_k}}}} \right)\].
+
+The following rules apply to the variational operator $\delta$:
+
+\begin{itemize}
+\item For functionals $\Pi$ and $\Phi$ it follows that \[\delta (\Pi  + \Phi ) = \delta \Pi  + \delta \Phi \]
+\item For functionals $\Pi$ and $\Phi$ it follows that \[\delta (\Pi \Phi ) = \delta \Pi \Phi  + \Pi \delta \Phi \]
+\item For a functional $\Pi$ and an integer $n$ it follows that \[\delta ({\Pi ^n}) = n({\Pi ^{n - 1}})\delta \Pi \]
+\item For a functional $\Pi$ it follows that \[\delta \int {\Pi dx}  = \int {\delta \Pi dx} \]
+\end{itemize}
+
+If the variational operator is applied to the functional $\Pi (u_i)$ it produces functions or variations in $u_i$ which are arbitrary and such $\delta {u_i} \in V$ and $\delta {u_i} = 0$ in $S_u$.
+
+In order to find an extreme function in the calculus of variations we proceed like in differential calculus. Here we compute the first variation of the functional $\delta \Pi$ and solve the variational equation;
+
+\begin{equation}
+\delta \Pi  = 0
+\label{vareq}
+\end{equation}
+
+in the unknown function $u_i$. 
+
+In the particular case of the total potential energy functional $\Pi$ this yields;
+
+\begin{equation}
+\int\limits_V {{\sigma _{ij}}\delta {\varepsilon _{ij}}dV}  - \int\limits_V {{f_i}\delta {u_i}dV}  - \int\limits_{{S_t}} {t_i^{(n)}\delta {u_i}dS}  = 0
+\label{ClaPVW}
+\end{equation}
+
+where we recognize the weak form of the BVP stated previously. It becomes evident that the functions $\delta {u_i}$ in \cref{ClaPVW} play the role of the test functions $w_i$ introduced in the weak form. On the other hand, since we have already shown that the weak and strong forms are equivalent we conclude that having the functional and the escential boundary conditions is equivalent to having the strong form of the problem.
+
 
 \subsubsection*{Principle of minimum potential energy}
+In the theory of elasticity the total potential energy $\Pi$ is the result of adding the elastic strain energy which is stored in the body upon deformation and the potential energy (work) imparted to the body by the applied forces. The principle states that the body is in equilibrium when this total potential energy reaches a minimum. This is equivalent to stating that an equilibrium configuration is attained when an infinitesimal variation from the position of minimum potential energy involves null changes in energy. This implies the variational condition:
 
-\subsubsection*{Hu-Washizu Variational Principle}
-Consider the following functional
 \begin{equation}
-\pi^* = \pi  - \intL_V \lambda_{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}  - \intL_{S_u} \lambda_i^u(u_i^{S_u} - \bar{ u}_i)\dd{S}
+\delta \Pi  = 0.
+\label{vareq2}
+\end{equation}
+
+The above principle leads to the so-called principle of virtual displacements stated as follows\footnote{see Bathe pp 156}:
+"The equlibrium of the body requires that for any compatible small virtual displacements satisfying the condition of being zero at $S_u$, imposed on the body in its state of equilibrium, the total internal virtual work is equal to the total external virtual work"
+
+\[\int\limits_V {{\sigma _{ij}}\delta {\varepsilon _{ij}}dV}  - \int\limits_V {{f_i}\delta {u_i}dV}  - \int\limits_{{S_t}} {t_i^{(n)}\delta {u_i}dS}  = 0\]
+
+where ${\delta {u_i}}$ are the virtual displacements and ${\delta {\varepsilon _{ij}}}$ are the corresponding virtual strains.
+
+Comparing the virtual work principle with the weak formulation given in \cref{weak} we identify ${\delta {u_i}}$ with the test functions $w_i$. As such the PVW takes the form of a powerful tool to test if a body is in equilibrium for a given solution (represented by the trial functions). In what follows we ilustrate the use of the principle through some examples corresponding to problems in Bathe's textbook.
+
+\subsubsection*{Problem 3.15}\todo{add the figure corresponding to this problem}
+Establish the differential equation of equilibrium of the problem shown and the boundary conditions. Determine whether the differential operator of the problem is symmetric and positive definite and prove your answer.
+
+\[\Pi  = \frac{1}{2}\int\limits_0^L {{\sigma _{xx}}{\varepsilon _{xx}}A(x)dx} + \frac{1}{2}ku_0^2 - R{u_L} \]
+\[\Pi  = \frac{1}{2}\int\limits_0^L {EA(x){{\left( {\frac{{du}}{{dx}}} \right)}^2}dx + \frac{1}{2}ku_0^2}  - R{u_L}\]
+
+First variation;
+\[\delta \Pi  = \int\limits_0^L {EA(x)\frac{{du}}{{dx}}\frac{{d\delta u}}{{dx}}dx + k{u_0}\delta {u_0}}  - R\delta {u_L}\]
+
+Integrating by parts;
+
+\[\delta \Pi  =  - \int\limits_0^L {\frac{d}{{dx}}\left[ {EA(x)\frac{{du}}{{dx}}} \right]\delta udx + \left. {EA(x)\frac{{du}}{{dx}}\delta u} \right]_0^L + k{u_0}\delta {u_0}}  - R\delta {u_L}\]
+
+from which;
+
+\[\frac{d}{{dx}}\left[ {EA(x)\frac{{du}}{{dx}}} \right] = 0\]
+\[{\left. {EA(x)\frac{{du}}{{dx}}} \right]_{x = 0}} = k{u_0}\]
+\[{\left. {EA(x)\frac{{du}}{{dx}}} \right]_{x = L}} = R\]
+
+
+
+
+
+\subsubsection*{Problem 4.35-The Hu-Washizu Variational Principle}
+Consider the Hu-Washizu functional:
+\begin{equation}
+\Pi^* = \Pi  - \intL_V \lambda_{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}  - \intL_{S_u} \lambda_i^u(u_i^{S_u} - \bar{ u}_i)\dd{S}
 \label{eq:Hu}
 \end{equation}
+
 where
 \begin{itemize}
-\item $\pi$: is the potential energy functional.
+\item $\Pi$: is the potential energy functional.
 \item $L_{ijk}$ is a differential operator such $\varepsilon_{ij} = L_{ijk} u_k$.
 \item $S_u$ surface where essential boundary conditions are prescribed.
 \item $\lambda_{ij}^\varepsilon $ and $\lambda_i^u$ are Lagrange multipliers.
 \end{itemize}
 
+Using the condition $\delta \Pi = 0$ derive for the interior of the body the equlibrium equations;
+
+\[{\sigma _{ij,j}} + {f_i} = 0\]
+
+the strain-displacement relationship;
+
+\[{\varepsilon _{ij}} = {L_{ijk}}{u_k}\]
+
+and the constitutive equation;
+
+\[{\sigma _{ij}} = {C_{ijkl}}{\varepsilon _{kl}}\]
+
+and at the surface of the body the relation between the stress tensor and the applied tractions vector at $S_t$;
+
+\[{t_i} = {\sigma _{ij}}{n_j}\]
+
+the relation between the stress tensor and the unknown tractions vector (or reactions) at $S_u$; 
+
+\[{t_i} = {{\tilde \sigma }_{ij}}{n_j}\]
+
+and the escential boundary condition at $S_u$;
+
+\[{u_i} = {{\tilde u}_i}\]
+
 We want to determine the so-called Euler equations resulting from the condition $\delta \pi^* = 0$. Applying the variational operator we have:
 \begin{equation}
 \begin{aligned}
-\delta \pi *& = \delta \pi  - \intL_V \delta \lambda_{ij}^{\varepsilon}  (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}- \intL_V \lambda_{ij}^\varepsilon (\delta \varepsilon_{ij} - L_{ijk}\delta u_k)\dd{V} \\
+\delta \Pi^*& = \delta \Pi  - \intL_V \delta \lambda_{ij}^{\varepsilon}  (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}- \intL_V \lambda_{ij}^\varepsilon (\delta \varepsilon_{ij} - L_{ijk}\delta u_k)\dd{V} \\
 &-\intL_V \delta \lambda_i^u (u_i^{S_u} - \bar u_i)\dd{S} - \intL_V \lambda _i^u \delta u_i^{S_u} \dd{S}
 \end{aligned}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-\delta \pi * &= \intL_V C_{ijkl} \varepsilon_{kl} \delta  \varepsilon_{ij}\dd{V} - \intL_{S_t} t_i \delta{u_i} \dd{S}  - \intL_V f_i\delta {u_i}\dd{V} - \intL_V \lambda_{ij}^{\varepsilon} \delta \varepsilon_{ij}\dd{V}  + \intL_V \lambda_{ij}^{\varepsilon} L_{ijk}\delta {u_k}\dd{V}\\
+\delta \Pi^* &= \intL_V C_{ijkl} \varepsilon_{kl} \delta  \varepsilon_{ij}\dd{V} - \intL_{S_t} t_i \delta{u_i} \dd{S}  - \intL_V f_i\delta {u_i}\dd{V} - \intL_V \lambda_{ij}^{\varepsilon} \delta \varepsilon_{ij}\dd{V}  + \intL_V \lambda_{ij}^{\varepsilon} L_{ijk}\delta {u_k}\dd{V}\\
 &- \intL_V \delta \lambda_{ij}^{\varepsilon} (\varepsilon_{ij} - L_{ijk} u_k)\dd{V} - \intL_S \delta \lambda_i^u (u_i^{S_u} - \bar {u}_i)dS - \intL_{S_u} \lambda _i^u\delta {u_i}\dd{S} = 0
 \end{aligned}
 \end{equation}
@@ -340,7 +502,7 @@ therefore
 
 
 \begin{align*}
-\delta \pi * &= \intL_V {({C_{ijkl}}{\varepsilon _{kl}} - \lambda _{ij}^\varepsilon )\delta {\varepsilon _{ij}}dV - \intL_{{S_t}} {{t_i}\delta {u_i}dS}  - \intL_V {{f_i}\delta {u_i}dV + } } \intL_{{S_t}} {\lambda _{ij}^\varepsilon \delta {u_i}{{\hat n}_j}dS}  - \intL_V {\lambda _{ij,j}^\varepsilon \delta {u_i}dV}\\
+\delta \Pi^* &= \intL_V {({C_{ijkl}}{\varepsilon _{kl}} - \lambda _{ij}^\varepsilon )\delta {\varepsilon _{ij}}dV - \intL_{{S_t}} {{t_i}\delta {u_i}dS}  - \intL_V {{f_i}\delta {u_i}dV + } } \intL_{{S_t}} {\lambda _{ij}^\varepsilon \delta {u_i}{{\hat n}_j}dS}  - \intL_V {\lambda _{ij,j}^\varepsilon \delta {u_i}dV}\\
 &- \intL_V {\delta \lambda _{ij}^\varepsilon ({\varepsilon _{ij}} - {L_{ijk}}{u_k})dV}  - \intL_{{S_u}} {\delta \lambda _i^u(u_i^{{S_u}} - {{\bar u}_i})dS}  - \intL_{{S_u}} {\lambda _i^u\delta {u_i}dS}  = 0
 \end{align*}
 
@@ -365,7 +527,38 @@ t_i &= \lambda_{ij}^\varepsilon \hat{n}_j\\
 \end{align}
 
 \subsection{Weighted residual methods}
+In the the following derivations we will assume that the actual solution to the geberalized BVP is approximated by the superposition;
+
+\[u(\vec x) = {N^I}(\vec x){u^I}\]
+
+where $I=1,2,...,K$.
+
+Since we are now using an approximation we have the following "unbalanced" condition;
+
+\[Lu(\vec x,t) - \rho (\vec x)F(\vec x,t) = R \ne 0\]
+
+where the term $R$ corresponds to a residual error which is to be distributted trhoughout the solution domain.
+
+
+
 \subsubsection*{Application to the Navier equations}
+
+\[(\lambda  + \mu ){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0\]
+\[{L_{ij}} \equiv (\lambda  + \mu )\frac{{{\partial ^2}}}{{\partial {x_i}\partial {x_j}}} + \mu \frac{{{\partial ^2}}}{{\partial {x_k}\partial {x_k}}}{\delta _{ij}}\]
+\[{r_i} =  - {f_i}\]
+\[{u_i} = N_i^Q{u^Q}\]
+\[{L_{ij}}({u_j}) \equiv (\lambda  + \mu ){(N_j^Q{u^Q})_{,ij}} + \mu {(N_j^Q{u^Q})_{,kk}}{\delta _{ij}}\]
+\[{L_{ij}}({u_j}) \equiv (\lambda  + \mu )N_{j,ij}^Q{u^Q} + \mu N_{i,kk}^Q{u^Q}\]
+\[{L_{ij}}({u_j}) \equiv {L_{ij}}(N_j^Q){u^Q}\]
+
+In the Galerkin scheme we use the trial function as weigthing function.
+
+\[{R_i} \equiv {L_{ij}}(N_j^Q){u^Q} + {f_i}\]
+
+and we state
+
+
+
 \subsubsection*{Application to the acoustic wave equation}
 
 \section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
