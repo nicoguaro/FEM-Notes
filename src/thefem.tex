@@ -659,6 +659,121 @@ Find internal forces
 
 
 \subsection{Basic elements of interpolation theory}
+Let $f(x)$ be a function whose values are known at n discrete points ${x_1, x_2,...,x_n}$. We want to know (interpolate) the value of $f(x)$ at an arbitrary point $x \in \left[ {{x_1},{x_n}} \right]$.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{img/interpol1.pdf}
+\caption{Definition of the natural domain}
+\label{fig:interpol1}
+\end{figure}
+
+The process of interpolation or computation of the unknown value of $f(x)$ using the known values $\left\{ {{f^1},{f^2},...,{f^n}} \right\}$ involves two steps:
+
+\begin{itemize}
+\item[i]  Fitting an interpolating function to the known data points.
+\item[ii] Evaluating the function at the arbitrary point.
+\end{itemize}
+
+We can (i) use all the n-data points and fit an $(n-1)$-th order polynomial (which is cumbersome and difficult to code) or (ii) split the domain in sub-intervals and use local polynomials within each sub-interval. This last approach involves only a couple of polynomials and it is easy to code, however it may have some continuity issues.
+
+In finite element analysis local interpolation is used in order to proceed systematically. Local interpolation uses a finite number of nearest-neighbours and generates interpolated values $f(x)$ that do not in general have continuous first or higher derivatives.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{img/interpol2.pdf}
+\caption{Definition of the natural domain}
+\label{fig:interpol2}
+\end{figure}
+
+\subsubsection{Lagrange interpolation theorem}
+Given a set of n-points $\left\{ {({x^1},{y^1}),...,({x^n},{y^n})} \right\}$ where ${y^n} \equiv f({x^n})$ then: "there exists a unique polynomial $p(x)$ of order at most $(n-1)$ such $p({x^I}) = f({x^I})$ for $I=1,2,...,n$". The polynomial is given by;
+
+\begin{equation}
+p({x^I}) = {L^I}(x)f({x^I})
+\label{pol}
+\end{equation}
+
+for $I=1,2,...,n$ where;
+
+\begin{equation}
+{L^I}(x) = \prod\limits_{\scriptstyle J = 1\hfill\atop
+\scriptstyle I \ne J\hfill}^n {\frac{{(x - {x^J})}}{{({x^I} - {x^J})}}}
+\label{coef}
+\end{equation}
+
+and where it should be noticed that
+
+\[{L^I}({x^J}) = {\delta ^{IJ}}.\]
+
+\subsubsection*{Example for n=3}
+
+Consider the domain $[ - 1,1]$ and the data points at ${x^1} =  - 1.0$, ${x^2} =  + 1.0$ and ${x^3} = 0.0$. We have
+\[{L^1}(x) = \frac{{\left( {x - {x^2}} \right)\left( {x - {x^3}} \right)}}{{\left( {{x^1} - {x^2}} \right)\left( {{x^1} - {x^3}} \right)}} \equiv  - \frac{1}{2}\left( {1 - x} \right)x\]
+\[{L^2}(x) = \frac{{\left( {x - {x^1}} \right)\left( {x - {x^3}} \right)}}{{\left( {{x^2} - {x^1}} \right)\left( {{x^2} - {x^3}} \right)}} \equiv  + \frac{1}{2}\left( {1 + x} \right)x\]
+and
+\[{L^3}(x) = \frac{{\left( {x - {x^1}} \right)\left( {x - {x^2}} \right)}}{{\left( {{x^3} - {x^1}} \right)\left( {{x^3} - {x^2}} \right)}} \equiv 1 - {x^2}.\]
+
+The resulting interpolating polynomials ${L^I}(x)$ and the interpolating function  are shown in \cref{fig:pols} below:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=16cm]{img/func.pdf}
+\caption{Interpolating polynomials and the resulting interpolating function}
+\label{fig:pols}
+\end{figure}
+
+\subsection*{Extension to 2D domains}
+Assume we are now interested in conducting interpolation of a function over a spatial 2-dimensional domain where every point is specified by a position vector of the form $\vec x = x\hat i + y\hat j$. We want to know, via interpolation, the value of a function $f(\vec x)$ at an arbitrary point $\vec x$ provided we know the set of n-points $\left\{ {({{\vec x}^1},{f^1}),...,({{\vec x}^n},{f^n})} \right\}$.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=10cm]{img/element.pdf}
+\caption{Basic square domain}
+\label{fig:element}
+\end{figure}
+
+We first fix $x = {x^A}$ and conduct 1-dimensional interpolation along the $y$ direction as discussed in the previous section as follows (see \cref{fig:onedimn});
+
+\[f({x^A},y) = {L^1}(y){f^1} + {L^4}(y){f^4}\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=10cm]{img/inter1D.pdf}
+\caption{Interpolation along the $y$-direction}
+\label{fig:onedimn}
+\end{figure}
+
+Similarly, we can fix $x = {x^B}$ and interpolate once again along the $y$ direction;
+
+\[f({x^B},y) = {L^2}(y){f^2} + {L^3}(y){f^3}.\]
+
+We now conduct the interpolation along the $x$-direction using the functions $f({x^A},y)$ and $f({x^B},y)$ respectively as follows;
+
+\[f(x,y) = {L^A}(x){f({x^A},y)} + {L^B}(x){f({x^B},y)}.\]
+\[f(x,y) = {L^A}(x)\left\{ {{L^1}(y){f^1} + {L^4}(y)f{}^4} \right\} + {L^B}(x)\left\{ {{L^2}(y){f^2} + {L^3}(y)f{}^3} \right\}\]
+\[f(x,y) = {L^A}(x){L^1}(y){f^1} + {L^A}(x){L^4}(y)f{}^4 + {L^B}(x){L^2}(y){f^2} + {L^B}(x){L^3}(y)f{}^3\]
+
+
+\begin{align*}
+{L^A}(x) & \equiv {L^1}(\xi ) \\
+{L^B}(x) & \equiv {L^2}(\xi ) \\
+{L^1}(y) & \equiv {L^1}(\xi ) \\
+{L^2}(y) & \equiv {L^1}(\xi ) \\
+{L^3}(y) & \equiv {L^2}(\xi ) \\
+{L^4}(y) & \equiv {L^2}(\xi )
+\end{align*}
+
+\[f(x,y) = {N^1}(x,y){f^1} + {N^2}(x,y){f^2} + {N^3}(x,y){f^3} + {N^4}(x,y){f^4}\]
+
+\begin{align*}
+{N^1}(x,y) & = {L^1}(x){L^1}(y) \\
+{N^2}(x,y) & = {L^2}(x){L^1}(y) \\
+{N^3}(x,y) & = {L^2}(x){L^2}(y) \\
+{N^4}(x,y) & = {L^1}(x){L^2}(y)
+\end{align*}
+
 
 \subsection{Formulation of the finite element matrices}
 We now discretize the principle of virtual work repeated below for completeness:
