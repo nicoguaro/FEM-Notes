@@ -1,5 +1,61 @@
 \chapter{The Finite Element Method}
+\section{Boundary value problems}
+In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we will introduce the variational formulation where the governing equations and natural boundary conditions are now obtained after solution of an extremization problem of a so-called functional. It will become evident that the resulting extremization problem is equivalent to the weak form of the problem defined previously.
+%%
+\subsection{Differential formulation}
+Let $ds$ be a differential surface element; $dV$ a differential volume element; $u(\vec x,t)$ a scalar (or vector) function of space and time.
+The flux or rate of flow of the quantity $u(\vec x,t)$ through $ds$ at time $t$ is defined like;
+\[p(\vec x)\vec \nabla u \cdot \hat nds\]
 
+where $p(\vec x)$ is a positive function, assumed known and time independent. Similarly, the time rate of change of $u(\vec x,t)$ in an element $dV$ is given by;
+
+\[\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV\]
+
+where once again $\rho (\vec x)$ is a known, given, time independent positive function. Additional effects occurring in the element $dV$ at the time time can be expressed like;
+
+\[H(\vec x,t)dV \equiv  - q(\vec x)u(\vec x,t) + \hat F(\vec x,t)\]
+
+where $\hat F(\vec x,t) = \rho (\vec x)F(\vec x,t)$. In the above the term $qu$ represent internal effects due to changes proportional to $u$ while $\hat F(\vec x,t)$ are other external inlfuences in the medium.
+
+Balancing the internal and external changes yields;
+
+\[\int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV = \int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds} }  + \int\limits_V {H(\vec x,t)dV} \]
+
+or equivalently;
+
+\[\int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV = \int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds} }  - \int\limits_V {q(\vec x)u(\vec x,t)dV}  + \int\limits_V {\rho (\vec x)F(\vec x,t)dV} \]
+
+using the divergence theorem as
+
+\[\int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds}  = \int\limits_V {\vec \nabla  \cdot \left( {p\vec \nabla u} \right)dV} \]
+
+yields after substitution;
+
+\[\int\limits_V {\left[ {\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla u} \right) + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t)} \right]dV}  = 0\]
+
+Assuming a continuous integrand, the arbitrariness of $V$ implies;
+
+\[
+\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla u} \right) + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t) = 0
+\]
+
+Letting;
+
+\[L() \equiv  - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla } \right) + q(\vec x)\]
+
+the generalized set of partial differential equations can be written like;
+
+\begin{equation}
+\rho (\vec x)\frac{{\partial u(\vec x,t)}}{{\partial t}} + Lu(\vec x,t) = \rho (\vec x)F(\vec x,t)
+\label{GenPDE}
+\end{equation}
+
+Hyperbolic;
+\[\rho (\vec x)\frac{{{\partial ^2}u(\vec x,t)}}{{\partial {t^2}}} + Lu(\vec x,t) = 0\]
+Parabolic;
+\[\rho (\vec x)\frac{{\partial u(\vec x,t)}}{{\partial t}} + Lu(\vec x,t) = 0\]
+Elliptic;
+\[Lu(\vec x,t) = \rho (\vec x)F(\vec x,t)\]
 \section{Brief review of the linearized theory of elasticity model}
 Here we present a brief description of the boundary value problem governing the response of an elastic body. For a full discussion of the model and its mathematical aspects the reader is referred to \cite{shames1997elastic}.
 
@@ -279,63 +335,7 @@ From the condition $u=0$ at $x=\ell\cos(\phi)$ we have that $A=-\dfrac{S}{E} K_{
 Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
 \[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
 
-\section{Boundary value problems}
-In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we will introduce the variational formulation where the governing equations and natural boundary conditions are now obtained after solution of an extremization problem of a so-called functional. It will become evident that the resulting extremization problem is equivalent to the weak form of the problem defined previously.
-%%
-\subsection{Differential formulation}
-Let $ds$ be a differential surface element; $dV$ a differential volume element; $u(\vec x,t)$ a scalar (or vector) function of space and time.
-The flux or rate of flow of the quantity $u(\vec x,t)$ through $ds$ at time $t$ is defined like;
-\[p(\vec x)\vec \nabla u \cdot \hat nds\]
 
-where $p(\vec x)$ is a positive function, assumed known and time independent. Similarly, the time rate of change of $u(\vec x,t)$ in an element $dV$ is given by;
-
-\[\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV\]
-
-where once again $\rho (\vec x)$ is a known, given, time independent positive function. Additional effects occurring in the element $dV$ at the time time can be expressed like;
-
-\[H(\vec x,t)dV \equiv  - q(\vec x)u(\vec x,t) + \hat F(\vec x,t)\]
-
-where $\hat F(\vec x,t) = \rho (\vec x)F(\vec x,t)$. In the above the term $qu$ represent internal effects due to changes proportional to $u$ while $\hat F(\vec x,t)$ are other external inlfuences in the medium.
-
-Balancing the internal and external changes yields;
-
-\[\int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV = \int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds} }  + \int\limits_V {H(\vec x,t)dV} \]
-
-or equivalently;
-
-\[\int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV = \int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds} }  - \int\limits_V {q(\vec x)u(\vec x,t)dV}  + \int\limits_V {\rho (\vec x)F(\vec x,t)dV} \]
-
-using the divergence theorem as
-
-\[\int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds}  = \int\limits_V {\vec \nabla  \cdot \left( {p\vec \nabla u} \right)dV} \]
-
-yields after substitution;
-
-\[\int\limits_V {\left[ {\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla u} \right) + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t)} \right]dV}  = 0\]
-
-Assuming a continuous integrand, the arbitrariness of $V$ implies;
-
-\[
-\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla u} \right) + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t) = 0
-\]
-
-Letting;
-
-\[L() \equiv  - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla } \right) + q(\vec x)\]
-
-the generalized set of partial differential equations can be written like;
-
-\begin{equation}
-\rho (\vec x)\frac{{\partial u(\vec x,t)}}{{\partial t}} + Lu(\vec x,t) = \rho (\vec x)F(\vec x,t)
-\label{GenPDE}
-\end{equation}
-
-Hyperbolic;
-\[\rho (\vec x)\frac{{{\partial ^2}u(\vec x,t)}}{{\partial {t^2}}} + Lu(\vec x,t) = 0\]
-Parabolic;
-\[\rho (\vec x)\frac{{\partial u(\vec x,t)}}{{\partial t}} + Lu(\vec x,t) = 0\]
-Elliptic;
-\[Lu(\vec x,t) = \rho (\vec x)F(\vec x,t)\]
 
 %%
 \subsection{Variational formulation}
