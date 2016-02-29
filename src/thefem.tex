@@ -1,8 +1,8 @@
 \chapter{The Finite Element Method}
 \section{Boundary value problems}
-In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we will introduce the variational formulation where the governing equations and natural boundary conditions are now obtained after solution of an extremization problem of a so-called functional. It will become evident that the resulting extremization problem is equivalent to the weak form of the problem defined previously.
+In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we formally re-state these equations in the so-called strong form. Subsequently we re-write and prove an equivalent form of the balance law in the form of an integral representation highly friendly for a numerical solution. Since in the integral description of the poblem the order of the derivatives in the field functions decreases by one, the resulting statement is called a weak formulation. 
 %%
-\subsection{Differential formulation}
+\subsection{Differential formulation-Generalized balance law}
 Let $ds$ be a differential surface element; $dV$ a differential volume element; $u(\vec x,t)$ a scalar (or vector) function of space and time.
 The flux or rate of flow of the quantity $u(\vec x,t)$ through $ds$ at time $t$ is defined like;
 \[p(\vec x)\vec \nabla u \cdot \hat nds\]
@@ -50,12 +50,99 @@ the generalized set of partial differential equations can be written like;
 \label{GenPDE}
 \end{equation}
 
-Hyperbolic;
+\begin{itemize}
+\item Hyperbolic;
 \[\rho (\vec x)\frac{{{\partial ^2}u(\vec x,t)}}{{\partial {t^2}}} + Lu(\vec x,t) = 0\]
-Parabolic;
+
+\item Parabolic;
 \[\rho (\vec x)\frac{{\partial u(\vec x,t)}}{{\partial t}} + Lu(\vec x,t) = 0\]
-Elliptic;
+
+\item Elliptic;
 \[Lu(\vec x,t) = \rho (\vec x)F(\vec x,t)\]
+ 
+\end{itemize}
+
+It can be shown that $L()$ satisfies symmetry;
+
+\[\int\limits_V {L(u)vdV = } \int\limits_V {L(v)u} dV\]
+
+and positive definitness;
+
+\[\int\limits_V {L(u)udV}  > 0\]
+
+\subsection*{Strong form}
+Given $\rho (\vec x)$,$q(\vec x)$, $p(\vec x)$, $F(\vec x,t)$ and $\bar u$ find $u(\vec x , t):V \to \mathbb{R}$ such:
+\[
+\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left[ {p(\vec x)\vec \nabla u} \right] + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t) = 0
+ \quad \forall \vec x \in V \]
+ 
+
+
+and
+
+\[u = \bar u \quad for \quad {\vec x} \quad in \quad S_u\]
+
+\[p(\vec x){u_{,i}}{{\hat n}_i} = B(\vec x,t) \quad for \quad {\vec x} \quad in \quad S_t\].
+
+In the FEM we will look for approximate solutions to $u$ subject to the following conditions:
+
+\[u = \bar u \quad for \quad {\vec x} \quad in \quad S_u\] (Escential boundary conditions)
+
+and
+
+\[{\int\limits_S {\left( {\frac{{\partial u}}{{\partial {x_j}}}} \right)} ^2}dS < \infty \] which corresponds to the functions being square integrable. This is space is denoted by $\mathbb{H}$ .
+
+The space of functions satisfying the above two conditions will be denoted by $\zeta $ and termed the space of trial functions, formally defined like:
+
+\[\zeta  = \left\{ {u \mid u \in \mathbb{H},u = \bar u \quad for \quad \vec x \quad in \quad S_u} \right\}\]
+
+On the other hand, in order to validate (or test) the correctness of the approximated or propossed trial functions $u$ it is also necessary to introduce test functions $w$ which are arbitrary except that they satisfy the following conditions:
+
+\[w = 0 \quad for \quad {\vec x} \quad in \quad S_u\] 
+
+and
+
+\[{\int\limits_S {\left( {\frac{{\partial w}}{{\partial {x_j}}}} \right)} ^2}dS < \infty \] which corresponds to the functions being square integrable. The space of functions satisfying the above two conditions will be denoted by $\pounds$ and termed the space of test functions, formally defined like:
+
+\[\pounds  = \left\{ {w \mid u \in \mathbb{H},w = 0 \quad for \quad \vec x \quad in \quad S_u} \right\}\]
+
+\subsection*{Weak form}
+Given $\rho (\vec x)$,$q(\vec x)$, $p(\vec x)$, $F(\vec x,t)$ and $\bar u$ find $u(\vec x , t):V \to \mathbb{R}$ and $\forall w \quad \in \quad \pounds $ such:
+
+\[\int\limits_V {[p(\vec x)u{,_i}]} {w_{,i}}dV - \int\limits_{{S_t}} {B(\vec x,t)wdS}  + \int\limits_V {q(\vec x)u(\vec x,t)wdV}  + \int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}wdV - \int\limits_V {\rho (\vec x)F(\vec x,t)wdV = 0} } \]
+
+and
+
+\[u = \bar u \quad for \quad {\vec x} \quad in \quad S_u\]
+
+\subsection*{Equivalence between the strong and weak forms}
+
+\begin{multline}
+- \int\limits_V {{{[p(\vec x)u{,_i}]}_{,i}}wdV}  + \int\limits_{{S_t}} {[p(\vec x)u{,_i}]} {{\hat n}_i}wdS - \int\limits_{{S_t}} {B(\vec x,t)wdS} \\
+  + \int\limits_V {q(\vec x)u(\vec x,t)wdV}  + \int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}wdV - \int\limits_V {\rho (\vec x)F(\vec x,t)wdV = 0} }
+\end{multline}
+
+Grouping together common terms yields;
+
+\[\int\limits_V {\left\{ {\rho (\vec x)\frac{{\partial u}}{{\partial t}} - {{[p(\vec x)u{,_i}]}_{,i}} + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t)} \right\}} wdV + \int\limits_{{S_t}} {\left\{ {[p(\vec x)u{,_i}]{{\hat n}_i} - B(\vec x,t)} \right\}} wdS = 0\]
+
+from which;
+
+\[\rho (\vec x)\frac{{\partial u}}{{\partial t}} - {[p(\vec x)u{,_i}]_{,i}} + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t) = 0\]
+
+and
+
+\[p(\vec x){u_{,i}}{{\hat n}_i} = B(\vec x,t)  \quad for \quad {\vec x} \quad in \quad S_t\]
+
+
+
+
+
+
+
+
+
+
 \section{Brief review of the linearized theory of elasticity model}
 Here we present a brief description of the boundary value problem governing the response of an elastic body. For a full discussion of the model and its mathematical aspects the reader is referred to \cite{shames1997elastic}.
 
@@ -145,7 +232,7 @@ In \cref{eq:navier_2} the boundary conditions specified by the traction vector $
 \item The FEM is formulated starting from a statement equivalent to $\{ S \}$ in which we use trial functions until certain prescribed conditions are met.
 \item We will look for solutions $u_i$ subject to the following conditions:
 \begin{align*}
-&u_i = \bar u_i\\
+&u_i = \bar u_i \qquad \text{in} \qquad S_u\\
 &\intL_S \left(\pdv{u_i}{x_j} \right)^2 dS < \infty
 \end{align*}
 
@@ -171,7 +258,7 @@ Here we will show that the equilibrium statement represented in the differential
 
 Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \mathbb{R}$ and $\forall {w_i} \in V$ such:
 
-\[\intL_V \sigma _{ij,j} w_{i,j}\, dV - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, dS = 0\]
+\[\intL_V \sigma _{ij} w_{i,j}\, dV - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, dS = 0\]
 
 \subsubsection*{Proof 1:}
 Let $u_i \in \varsigma $ be a solution to $\{S\}$ and let $w_i \in V $. Forming the inner product of the equilibrium statement given in \cref{eq:pde} with $w_i$ and forcing the integral over the domain to be zero we have
@@ -186,7 +273,7 @@ expanding the terms in the integrand and integrating by parts the first term on 
 since $w_i \in V$ it follows that $w_i = 0$ in $S_u$ from which
 
 \begin{equation}\label{weak}
-\intL_V \sigma _{ij,j} w_{i,j}\, dV - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, dS = 0
+\intL_V \sigma _{ij} w_{i,j}\, dV - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, dS = 0
 \end{equation}
 
 Now, considering that $u_i$ is solution of the strong form $\{S\}$ it must satisfy $u_i = \bar u_{i} \quad \in \quad S_u$ and as a result $u_i \in \varsigma$. On the other hand, since $u_i$ satisfies \cref{weak} $\forall {w_i} \in V$ we have that $u_i$ satisfies the definition of weak solution specified in $\{ W \}$.
@@ -257,13 +344,13 @@ and the following stress solution:
 \begin{equation}
 \begin{aligned}
 \sigma_{xx}& = S \cot(\phi)\\
-\sigma_{xx}& = -S\tan(\phi)\\
+\sigma_{yy}& = -S\tan(\phi)\\
 \tau_{xy}& = 0.
 \end{aligned}
 \label{eq:solution}
 \end{equation}
 
-In \cref{eq:solution} the condition $\tau_{xy}=0$ is due to symmetrie in the problem.
+In \cref{eq:solution} the condition $\tau_{xy}=0$ is due to the symmetrie in the problem.
 
 \subsubsection*{Traction boundary conditions}
 Let us verify that the above stress solution satisfies the traction BC using the expression:
@@ -305,6 +392,18 @@ t_{y} &= +S\sin(\phi) \enspace .
 
 \subsubsection*{Strain field}
 The strain field can be obtained after using the stress solution found in \cref{eq:solution} together with the constituive law given by \cref{eq:Hooke} which for a plane strain idalization takes the form:
+
+\begin{equation}
+\begin{aligned}
+{\epsilon _{xx}}& = \frac{1}{E}({\sigma _{xx}} - \nu {\sigma _{yy}}) \\
+{\epsilon _{yy}}& = \frac{1}{E}({\sigma _{yy}} - \nu {\sigma _{xx}}) \\
+{\gamma _{xy}}& = \frac{{{\tau _{xy}}}}{\mu }
+\end{aligned}
+\label{eq:cons model}
+\end{equation}
+
+which for the particular case yields;
+
 
 \begin{equation}
 \begin{aligned}
@@ -410,7 +509,7 @@ where ${\delta {u_i}}$ are the virtual displacements and ${\delta {\varepsilon _
 
 Comparing the virtual work principle with the weak formulation given in \cref{weak} we identify ${\delta {u_i}}$ with the test functions $w_i$. As such the PVW takes the form of a powerful tool to test if a body is in equilibrium for a given solution (represented by the trial functions). In what follows we ilustrate the use of the principle through some examples corresponding to problems in Bathe's textbook.
 
-\subsubsection*{Problem 3.15}\todo{add the figure corresponding to this problem}
+\subsubsection*{Problem 3.15 (In Bathe's book)}\todo{add the figure corresponding to this problem}
 Establish the differential equation of equilibrium of the problem shown and the boundary conditions. Determine whether the differential operator of the problem is symmetric and positive definite and prove your answer.
 
 \[\Pi  = \frac{1}{2}\int\limits_0^L {{\sigma _{xx}}{\varepsilon _{xx}}A(x)dx} + \frac{1}{2}ku_0^2 - R{u_L} \]
