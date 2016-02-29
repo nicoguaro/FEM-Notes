@@ -1,24 +1,25 @@
 %Chapter "Periodic media"
 %
+\graphicspath{ {./img/Periodic/} }
 \chapter{Periodic media problems}
 
 A periodic material is defined as the repetition of a given motif in one, two or three dimensions. This motif refers to heterogeneities at micro-structural level and it can contains several materials and diverse geometries. These materials can be solids or fluids.
 
-A periodic material is completely described by a lattice and a elementary unit, that is termed \emph{elementary cell}. The lattice is defined by a vector base, and the dimension of thi base is the number of direction for the periodicity.  This set is called lattice \emph{base vectors}, and they allow to build the whole material applying successive translation operations \cite{book:brillouin2003}. For periodic material in 3D, we will denote the base vectors as $\mathbf{a}_1$, $\mathbf{a}_2$ and $\mathbf{a}_3$ (see Figure \ref{fig:periodic_3D}). In the case of 2D periodicity, we can have a material that is infinite or finite in the third dimension (see Figure \ref{fig:periodic_2D}), we denote the vectors as $\mathbf{a}_1$ and $\mathbf{a}_2$. There is also possible to have periodic materials in one direction, and this one can be finite or infinite in the other two directions.
+A periodic material is completely described by a lattice and a elementary unit, that is termed \emph{elementary cell}. The lattice is defined by a vector base, and the dimension of the base is the number of direction for the periodicity.  This set is called lattice \emph{base vectors}, and they allow to build the whole material applying successive translation operations \cite{book:brillouin2003}. For periodic material in 3D, we will denote the base vectors as $\mathbf{a}_1$, $\mathbf{a}_2$ and $\mathbf{a}_3$ (see Figure \ref{fig:periodic_3D}). In the case of 2D periodicity, we can have a material that is infinite or finite in the third dimension (see Figure \ref{fig:periodic_2D}), we denote the vectors as $\mathbf{a}_1$ and $\mathbf{a}_2$. There is also possible to have periodic materials in one direction, and this one can be finite or infinite in the other two directions.
 
 The mesh generator \texttt{gmsh} provides an option to link elements in opposite sides.
 \cite{gmsh_manual}. Finite Element Method Magnetic (FEMMM) provides the option of \emph{periodic} boundary conditions, where Multipoint constraints are imposed, this are used for approximation of infinite boundary conditions \cite{FEMM_manual}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[height=8cm]{img/periodic_3D.pdf} 
+\includegraphics[height=8cm]{periodic_3D.pdf} 
 \caption{Depiction of a periodic material in 3D.}
 \label{fig:periodic_3D}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[height=8cm]{img/periodic_2D.pdf} 
+\includegraphics[height=8cm]{periodic_2D.pdf} 
 \caption{Depiction of a periodic material in 2D.}
 \label{fig:periodic_2D}
 \end{figure}
@@ -27,7 +28,7 @@ The mesh generator \texttt{gmsh} provides an option to link elements in opposite
 
 \begin{figure}[h]
 \centering
-\includegraphics[height=9cm]{img/periodic_topology.pdf} 
+\includegraphics[height=9cm]{periodic_topology.pdf} 
 \caption{Topology for a rectangular region with periodic boundary conditions.}
 \label{fig:periodic_topo}
 \end{figure}
@@ -160,18 +161,18 @@ The Bloch-periodic conditions in a Finite Element problem or, more generally, in
 \begin{figure}[h]
 \centering
 	\begin{subfigure}[b]{0.3\textwidth}
-		\includegraphics[width=\textwidth]{img/cell_FEM.pdf}
+		\includegraphics[width=\textwidth]{cell_FEM.pdf}
 		\caption{Original cell.}
 	\end{subfigure}\quad
 %
 	\begin{subfigure}[b]{0.3\textwidth}\qquad
-		\includegraphics[width=\textwidth]{img/cell_FEM-2.pdf}
+		\includegraphics[width=\textwidth]{cell_FEM-2.pdf}
 		\caption{\emph{Reduced} cell.}
 	\end{subfigure}\\
 %
 	\begin{subfigure}[b]{0.7\textwidth}\qquad
 		\centering
-		\includegraphics[width=0.45\textwidth]{img/cell_FEM-nodes.pdf}
+		\includegraphics[width=0.45\textwidth]{cell_FEM-nodes.pdf}
 		\caption{The black circles now correspond to single degrees of freedom. Notice that the nodal numbering does not match the original numbering for groups of degrees of freedom.}
 	\end{subfigure}
 \caption{Relevant sets of DOF for an schematic unitary cell in 2D discretized with several finite elements. Each circle represents a family of degrees of freedom for a typical mesh and not a single degree of freedom. In part a) we show all the degrees of freedom for the unitary cell before imposing the relevant Bloch-periodic boundary conditions. Part b) shows the reduced cell where the white circles enclosed by the dark square represent the \emph{reference} nodes containing the information from the \emph{image} nodes which will be eventually deleted from the system. Part c) shows an example of node grouping for a mesh of $4\times 4$ elements.}
@@ -181,7 +182,7 @@ The Bloch-periodic conditions in a Finite Element problem or, more generally, in
 In three dimension, and periodicity or Bloch-periodicity in the three of them, we can depict the original and reduced cell in Figure \ref{fig:bloch_3D_cell}. It should be highlighted that in 3D it is possible to have periodicity in 1, 2 or 3 dimensions, depending on the nature of the problem of interest.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.65\textwidth]{img/Cube_Bloch_Schematic.pdf}
+	\includegraphics[width=0.65\textwidth]{Cube_Bloch_Schematic.pdf}
 	\caption{Three dimensional unitary cell with a $4\times4\times4$ mesh. It is partitioned into the image DOF and remaining ones. The reduced cell is highlighted.}
 	\label{fig:bloch_3D_cell}
 \end{figure}
@@ -293,22 +294,22 @@ The modification over the mesh is well illustrated in Figure \ref{fig:bloch_inte
 \begin{figure}[H]
 \centering
 	\begin{subfigure}[b]{0.4\textwidth}\qquad
-		\includegraphics[width=\textwidth]{img/periodic-interpolation-a.pdf}
+		\includegraphics[width=\textwidth]{periodic-interpolation-a.pdf}
 		\caption{Neumann conditions. }
 	\end{subfigure}\,
 %
 	\begin{subfigure}[b]{0.4\textwidth}\qquad
-		\includegraphics[width=\textwidth]{img/periodic-interpolation-b.pdf}
+		\includegraphics[width=\textwidth]{periodic-interpolation-b.pdf}
 		\caption{Dirichlet conditions.}
 	\end{subfigure}\\
 %
 	\begin{subfigure}[b]{0.4\textwidth}\qquad
-		\includegraphics[width=\textwidth]{img/periodic-interpolation-c.pdf}
+		\includegraphics[width=\textwidth]{periodic-interpolation-c.pdf}
 		\caption{Periodicity conditions.}
 	\end{subfigure}\,
 %
 	\begin{subfigure}[b]{0.4\textwidth}\qquad
-		\includegraphics[width=\textwidth]{img/periodic-interpolation-d.pdf}
+		\includegraphics[width=\textwidth]{periodic-interpolation-d.pdf}
 		\caption{Bloch-periodicity conditions.}
 	\end{subfigure}
 \caption{Basis functions for linear finite elements.
@@ -364,7 +365,7 @@ The factor $f_j=e^{i\mathbf{k}\cdot \mathbf{x}_j}$, where $\mathbf{x}_j$ are the
 \caption{Imposition of Bloch's conditions using elemental row operations.}\label{algo:bloch_op}
 \end{algorithm}
 
-Another way to impose the Bloch-periodic conditions is to \emph{assemble} the transformation matrix $T$ and compute the matrix multiplications shown in \eqref{eq:transfo_bloch}. After applying this procedure the \emph{image nodes} are removed from the system of equations and they are condensed in the correspondid reference nodes \cite{langlet-thesis, hladky-hennion1992}, and the equation identifiers (equations enumeratino) have changed. The procedure to assemble the matrix $T$ is:
+Another way to impose the Bloch-periodic conditions is to \emph{assemble} the transformation matrix $T$ and compute the matrix multiplications shown in \eqref{eq:transfo_bloch}. After applying this procedure the \emph{image nodes} are removed from the system of equations and they are condensed in the corresponding reference nodes \cite{langlet-thesis, hladky-hennion1992}, and the equation identifiers (equations enumeration) have changed. The procedure to assemble the matrix $T$ is:
 \begin{itemize}
 \item Find the new identifier for the reference nodes after eliminating the image nodes.
 \item For reference and interior nodes correspond a 1 in the matrix. The row is the current identifier and the column is the future one.
@@ -428,7 +429,7 @@ A $\leftarrow$ T$^H$AT
 Following \cite{aberg1997}, we can formulate the problem using just real algebra. This allow to implement the Bloch-periodicity in \emph{standard finite element programs} like Abaqus/Calculix and FEAP \cite{feap_manual,Abaqus_manual,Calculix_manual}, that do not allow to impose conditions with complex valued quantities. The idea is to duplicate the degrees of freedom, i.e., to have two meshes: one for real values and the other one for imaginary ones (see Figure \ref{fig:double_mesh_real})
 \begin{figure}[h]
 \centering
-\includegraphics[height=6cm]{img/cell_FEM-real_algebra.pdf} 
+\includegraphics[height=6cm]{cell_FEM-real_algebra.pdf} 
 \caption{Mesh for the real algebra implementation.}
 \label{fig:double_mesh_real}
 \end{figure}

@@ -1,6 +1,7 @@
+\graphicspath{ {./img/TheFEM/} }
 \chapter{The Finite Element Method}
 \section{Boundary value problems}
-In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we formally re-state these equations in the so-called strong form. Subsequently we re-write and prove an equivalent form of the balance law in the form of an integral representation highly friendly for a numerical solution. Since in the integral description of the poblem the order of the derivatives in the field functions decreases by one, the resulting statement is called a weak formulation. 
+In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we formally re-state these equations in the so-called strong form. Subsequently we re-write and prove an equivalent form of the balance law in the form of an integral representation highly friendly for a numerical solution. Since in the integral description of the problem the order of the derivatives in the field functions decreases by one, the resulting statement is called a weak formulation. 
 %%
 \subsection{Differential formulation-Generalized balance law}
 Let $ds$ be a differential surface element; $dV$ a differential volume element; $u(\vec x,t)$ a scalar (or vector) function of space and time.
@@ -15,7 +16,7 @@ where once again $\rho (\vec x)$ is a known, given, time independent positive fu
 
 \[H(\vec x,t)dV \equiv  - q(\vec x)u(\vec x,t) + \hat F(\vec x,t)\]
 
-where $\hat F(\vec x,t) = \rho (\vec x)F(\vec x,t)$. In the above the term $qu$ represent internal effects due to changes proportional to $u$ while $\hat F(\vec x,t)$ are other external inlfuences in the medium.
+where $\hat F(\vec x,t) = \rho (\vec x)F(\vec x,t)$. In the above the term $qu$ represent internal effects due to changes proportional to $u$ while $\hat F(\vec x,t)$ are other external influences in the medium.
 
 Balancing the internal and external changes yields;
 
@@ -66,7 +67,7 @@ It can be shown that $L()$ satisfies symmetry;
 
 \[\int\limits_V {L(u)vdV = } \int\limits_V {L(v)u} dV\]
 
-and positive definitness;
+and positive definiteness;
 
 \[\int\limits_V {L(u)udV}  > 0\]
 
@@ -86,7 +87,7 @@ and
 
 In the FEM we will look for approximate solutions to $u$ subject to the following conditions:
 
-\[u = \bar u \quad for \quad {\vec x} \quad in \quad S_u\] (Escential boundary conditions)
+\[u = \bar u \quad for \quad {\vec x} \quad in \quad S_u\] (Essential boundary conditions)
 
 and
 
@@ -96,7 +97,7 @@ The space of functions satisfying the above two conditions will be denoted by $\
 
 \[\zeta  = \left\{ {u \mid u \in \mathbb{H},u = \bar u \quad for \quad \vec x \quad in \quad S_u} \right\}\]
 
-On the other hand, in order to validate (or test) the correctness of the approximated or propossed trial functions $u$ it is also necessary to introduce test functions $w$ which are arbitrary except that they satisfy the following conditions:
+On the other hand, in order to validate (or test) the correctness of the approximated or proposed trial functions $u$ it is also necessary to introduce test functions $w$ which are arbitrary except that they satisfy the following conditions:
 
 \[w = 0 \quad for \quad {\vec x} \quad in \quad S_u\] 
 
@@ -169,13 +170,13 @@ t_i^{\hat n} = \sigma_{ij} \hat{n}_{j} \quad \forall \in \vb{x} \in S.
 \varepsilon_{ij} = \frac{1}{2}(u_{i,j} + u_{j,i})
 \end{equation}
 
-where the term $\epsilon_{ij}$ is the symmetric component of the displacements gradient tensor. The components of the strain tensor describe the distrotions and changes in magnitude (volumetric changes) of the material point in the continuum model. Now the simplest stress-strain (constituive) relationship is given by Hooke's law\footnote{Despite the name of \emph{law} used, this relation is not always valid, but is a good approximation for small strains.}
+where the term $\epsilon_{ij}$ is the symmetric component of the displacements gradient tensor. The components of the strain tensor describe the distortions and changes in magnitude (volumetric changes) of the material point in the continuum model. Now the simplest stress-strain (constitutive) relationship is given by Hooke's law\footnote{Despite the name of \emph{law} used, this relation is not always valid, but is a good approximation for small strains.}
 
 \begin{equation} \label{eq:Hooke}
 \sigma_{ij} = 2\mu \varepsilon_{ij} + \lambda \varepsilon_{kk}\delta_{ij} \enspace .
 \end{equation}
 
-where $\mu$ and $\lambda$ are material constants. The problem involves now a total of 18 equations and 18 unknowns can be solved if subjected to properly specified boudnary conditions.
+where $\mu$ and $\lambda$ are material constants. The problem involves now a total of 18 equations and 18 unknowns can be solved if subjected to properly specified boundary conditions.
 
 \subsection*{Displacement formulation}
 Substituting \cref{eq:kin} in \cref{eq:Hooke} and the result in \cref{eq:pde} yields after some manipulation:
@@ -184,7 +185,7 @@ Substituting \cref{eq:kin} in \cref{eq:Hooke} and the result in \cref{eq:pde} yi
 (\lambda  + \mu)u_{j,ij} + \mu u_{i,jj} + {f_i} = \rho \ddot{u}_i \quad \forall \vb{x} \in V,\, t \in \mathbb{R}^{+}.
 \end{equation}
 
-Since \cref{eq:navier} ( simultaneously describing equilibrium, kinematic relations and constituive response) is a second order equation governing the displacemt field possible boundary conditions are in terms of the variable itself or its first oder derivatives. For a well-possed problem the following is a set of valid boundary conditions: 
+Since \cref{eq:navier} ( simultaneously describing equilibrium, kinematic relations and constitutive response) is a second order equation governing the displacement field possible boundary conditions are in terms of the variable itself or its first oder derivatives. For a well-possed problem the following is a set of valid boundary conditions: 
 
 \begin{equation} \label{eq:Wellbcs}
 \begin{split}
@@ -208,7 +209,7 @@ In the particular case in which $u_i$ is not a function of time, we obtain the s
 Notice that the tractions BC 
 \[t_i^{\hat n} = \mu (u_{i,j} + u_{j,i}) \hat{n}_j + \lambda u_{k,k} \delta_{ij}\hat{n}_j \enspace ,\]
 
-actually involves first order displacemts derivative and as such it is a Neumann boundary condition on $u_i$.
+actually involves first order displacements derivative and as such it is a Neumann boundary condition on $u_i$.
 %
 
 \subsection{Equivalence between strong and weak forms}
@@ -254,7 +255,7 @@ In what follows we formally denote the space of these functions by $V$ and defin
 \[V = \left\{ w_i\left| w_i \in H, u_i = w_i=0 \in S_u \right. \right\} \enspace .\]
 
 \subsubsection{Weak form}
-Here we will show that the equilibrium statement represented in the differential formultaionthe problem can be described in an alternative forms. In such description the continuity requirement for the trial functions is weaker than in the strong form leading to the term "weak" statement. Here this alternative representation will be denoted like $\{W\}$ and it reads;
+Here we will show that the equilibrium statement represented in the differential formulation can be described in alternative forms. In such description the continuity requirement for the trial functions is weaker than in the strong form leading to the term "weak" statement. Here this alternative representation will be denoted like $\{W\}$ and it reads;
 
 Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \mathbb{R}$ and $\forall {w_i} \in V$ such:
 
@@ -304,7 +305,7 @@ Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \c
 %
 \begin{figure}[H]
 \centering
-\includegraphics[width=7cm]{img_src/wedge.pdf}
+\includegraphics[width=7cm]{wedge.pdf}
 \caption{2D Self-equilibrated wedge.}
 \label{fig:WEDGE}
 \end{figure}
@@ -350,14 +351,14 @@ and the following stress solution:
 \label{eq:solution}
 \end{equation}
 
-In \cref{eq:solution} the condition $\tau_{xy}=0$ is due to the symmetrie in the problem.
+In \cref{eq:solution} the condition $\tau_{xy}=0$ is due to the symmetries in the problem.
 
 \subsubsection*{Traction boundary conditions}
 Let us verify that the above stress solution satisfies the traction BC using the expression:
 
 \[t_i^{\hat n} = \sigma _{ij} \hat n_{ij}.\]
 
-Donoting the outward normals to the inclined surfaces of the wedge by $\hat{n}^1$,  $\hat{n}^2$, $\hat{n}^3$, $\hat{n}^4$ these are given by;
+Denoting the outward normals to the inclined surfaces of the wedge by $\hat{n}^1$,  $\hat{n}^2$, $\hat{n}^3$, $\hat{n}^4$ these are given by;
 \begin{align*}
 \hat{n}^1 &= -\sin(\phi)\hat{e}_{x}+\cos(\phi)\hat{e}_{y}\\
 \hat{n}^2 &= -\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y}\\
@@ -391,7 +392,7 @@ t_{y} &= +S\sin(\phi) \enspace .
 \end{align*}
 
 \subsubsection*{Strain field}
-The strain field can be obtained after using the stress solution found in \cref{eq:solution} together with the constituive law given by \cref{eq:Hooke} which for a plane strain idalization takes the form:
+The strain field can be obtained after using the stress solution found in \cref{eq:solution} together with the constitutive law given by \cref{eq:Hooke} which for a plane strain idealization takes the form:
 
 \begin{equation}
 \begin{aligned}
@@ -419,7 +420,7 @@ The displacement field is obtained after direct integration of the strains after
 
 \[du_i=\epsilon_{ij}dx_j + \omega_{ij}dx_j\]
 
-and the condition $\omega_{xy}=0$ also due to symmetrie , as follows:
+and the condition $\omega_{xy}=0$ also due to symmetries , as follows:
 
 \begin{align*}
 u &= +\dfrac{S}{E} K_{1}(\nu , \phi)x + A\\
@@ -446,10 +447,10 @@ A variational principle is a scientific principle used within the calculus of va
 According to Cornelius Lanczos, any physical law which can be expressed as a variational principle describes an expression which is self-adjoint. These expressions are also called Hermitian. Such an expression describes an invariant under a Hermitian transformation.
 \end{quotation}}.
 %%
-We will see that the weak form (and therfore also the strong form) can be obtained alternatively through the process of finding extreme values for a functional. We will ilustrate this idea for the general case of theory of elasticity and then we will present particular examples.
+We will see that the weak form (and therefore also the strong form) can be obtained alternatively through the process of finding extreme values for a functional. We will illustrate this idea for the general case of theory of elasticity and then we will present particular examples.
 
 \subsubsection*{Some vague definitions in the calculus of variations}
-In variational calculus a {\bf functional} can be understood as a "function" having as independent variables or arguments a space of vector functions and producing as a result (or dependent variable) a scalar. For instance, in the particular case of the theory of elasticity such a "function" corresponds to the total potenatial energy functional $\Pi$ given by;
+In variational calculus a {\bf functional} can be understood as a "function" having as independent variables or arguments a space of vector functions and producing as a result (or dependent variable) a scalar. For instance, in the particular case of the theory of elasticity such a "function" corresponds to the total potential energy functional $\Pi$ given by;
 
 \begin{equation}
 \Pi ({u_i}) = \frac{1}{2}\int\limits_V {{\sigma _{ij}}{\varepsilon _{ij}}dV}  - \int\limits_V {{f_i}{u_i}dV}  - \int\limits_S {t_i^{(n)}{u_i}dS}
@@ -489,7 +490,7 @@ In the particular case of the total potential energy functional $\Pi$ this yield
 \label{ClaPVW}
 \end{equation}
 
-where we recognize the weak form of the BVP stated previously. It becomes evident that the functions $\delta {u_i}$ in \cref{ClaPVW} play the role of the test functions $w_i$ introduced in the weak form. On the other hand, since we have already shown that the weak and strong forms are equivalent we conclude that having the functional and the escential boundary conditions is equivalent to having the strong form of the problem.
+where we recognize the weak form of the BVP stated previously. It becomes evident that the functions $\delta {u_i}$ in \cref{ClaPVW} play the role of the test functions $w_i$ introduced in the weak form. On the other hand, since we have already shown that the weak and strong forms are equivalent we conclude that having the functional and the essential boundary conditions is equivalent to having the strong form of the problem.
 
 
 \subsubsection*{Principle of minimum potential energy}
@@ -501,16 +502,24 @@ In the theory of elasticity the total potential energy $\Pi$ is the result of ad
 \end{equation}
 
 The above principle leads to the so-called principle of virtual displacements stated as follows\footnote{see Bathe pp 156}:
-"The equlibrium of the body requires that for any compatible small virtual displacements satisfying the condition of being zero at $S_u$, imposed on the body in its state of equilibrium, the total internal virtual work is equal to the total external virtual work"
+"The equilibrium of the body requires that for any compatible small virtual displacements satisfying the condition of being zero at $S_u$, imposed on the body in its state of equilibrium, the total internal virtual work is equal to the total external virtual work"
 
 \[\int\limits_V {{\sigma _{ij}}\delta {\varepsilon _{ij}}dV}  - \int\limits_V {{f_i}\delta {u_i}dV}  - \int\limits_{{S_t}} {t_i^{(n)}\delta {u_i}dS}  = 0\]
 
 where ${\delta {u_i}}$ are the virtual displacements and ${\delta {\varepsilon _{ij}}}$ are the corresponding virtual strains.
 
-Comparing the virtual work principle with the weak formulation given in \cref{weak} we identify ${\delta {u_i}}$ with the test functions $w_i$. As such the PVW takes the form of a powerful tool to test if a body is in equilibrium for a given solution (represented by the trial functions). In what follows we ilustrate the use of the principle through some examples corresponding to problems in Bathe's textbook.
+Comparing the virtual work principle with the weak formulation given in \cref{weak} we identify ${\delta {u_i}}$ with the test functions $w_i$. As such the PVW takes the form of a powerful tool to test if a body is in equilibrium for a given solution (represented by the trial functions). In what follows we illustrate the use of the principle through some examples corresponding to problems in Bathe's textbook.
 
-\subsubsection*{Problem 3.15 (In Bathe's book)}\todo{add the figure corresponding to this problem}
+\subsubsection*{Problem 3.15 (In Bathe's book)}
 Establish the differential equation of equilibrium of the problem shown and the boundary conditions. Determine whether the differential operator of the problem is symmetric and positive definite and prove your answer.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=10cm]{{Bathe3.15}.pdf}
+\caption{Rod with varying cross-sectional area. The Young's modulus is E.}
+\label{fig:bathe3.15}
+\end{figure}
+
 
 \[\Pi  = \frac{1}{2}\int\limits_0^L {{\sigma _{xx}}{\varepsilon _{xx}}A(x)dx} + \frac{1}{2}ku_0^2 - R{u_L} \]
 \[\Pi  = \frac{1}{2}\int\limits_0^L {EA(x){{\left( {\frac{{du}}{{dx}}} \right)}^2}dx + \frac{1}{2}ku_0^2}  - R{u_L}\]
@@ -547,7 +556,7 @@ where
 \item $\lambda_{ij}^\varepsilon $ and $\lambda_i^u$ are Lagrange multipliers.
 \end{itemize}
 
-Using the condition $\delta \Pi = 0$ derive for the interior of the body the equlibrium equations;
+Using the condition $\delta \Pi = 0$ derive for the interior of the body the equilibrium equations;
 
 \[{\sigma _{ij,j}} + {f_i} = 0\]
 
@@ -567,7 +576,7 @@ the relation between the stress tensor and the unknown tractions vector (or reac
 
 \[{t_i} = {{\tilde \sigma }_{ij}}{n_j}\]
 
-and the escential boundary condition at $S_u$;
+and the essential boundary condition at $S_u$;
 
 \[{u_i} = {{\tilde u}_i}\]
 
@@ -626,7 +635,7 @@ t_i &= \lambda_{ij}^\varepsilon \hat{n}_j\\
 \end{align}
 
 \subsection{Weighted residual methods}
-In the the following derivations we will assume that the actual solution to the geberalized BVP is approximated by the superposition;
+In the the following derivations we will assume that the actual solution to the generalized BVP is approximated by the superposition;
 
 \[u(\vec x) = {N^I}(\vec x){u^I}\]
 
@@ -636,7 +645,7 @@ Since we are now using an approximation we have the following "unbalanced" condi
 
 \[Lu(\vec x,t) - \rho (\vec x)F(\vec x,t) = R \ne 0\]
 
-where the term $R$ corresponds to a residual error which is to be distributted trhoughout the solution domain.
+where the term $R$ corresponds to a residual error which is to be distributed throughout the solution domain.
 
 
 
@@ -650,7 +659,7 @@ where the term $R$ corresponds to a residual error which is to be distributted t
 \[{L_{ij}}({u_j}) \equiv (\lambda  + \mu )N_{j,ij}^Q{u^Q} + \mu N_{i,kk}^Q{u^Q}\]
 \[{L_{ij}}({u_j}) \equiv {L_{ij}}(N_j^Q){u^Q}\]
 
-In the Galerkin scheme we use the trial function as weigthing function.
+In the Galerkin scheme we use the trial function as weighting function.
 
 \[{R_i} \equiv {L_{ij}}(N_j^Q){u^Q} + {f_i}\]
 
@@ -662,12 +671,12 @@ and we state
 
 \section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
 \subsection*{A simple spring-mass system}
-The simple problem of a spring-mass system considered next resembles most of the algorithmic aspects of a finite element code with the advantage that the problem is already a discrete mechanical system. The problem consists of an assamblage of masses joined by different springs submitted to time varying loads. Each spring plays the role of a finite element and each mass is analogous to a nodal point in a finite element algorithm. For instance the full system may be like the one shown in \cref{fig:bathe}:
+The simple problem of a spring-mass system considered next resembles most of the algorithmic aspects of a finite element code with the advantage that the problem is already a discrete mechanical system. The problem consists of an assemblage of masses joined by different springs submitted to time varying loads. Each spring plays the role of a finite element and each mass is analogous to a nodal point in a finite element algorithm. For instance the full system may be like the one shown in \cref{fig:bathe}:
 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=10cm]{img/spring_system.pdf}
+\includegraphics[width=10cm]{spring_system.pdf}
 \caption{Typical assemblage of springs and masses.}
 \label{fig:bathe}
 \end{figure}
@@ -677,7 +686,7 @@ Consider a typical spring (finite element) like the one shown in \cref{fig:sprin
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=10cm]{img/springel.pdf}
+\includegraphics[width=10cm]{springel.pdf}
 \caption{Typical spring element.}
 \label{fig:springel}
 \end{figure}
@@ -690,7 +699,7 @@ and from equilibrium we have;
 
 \[{f_1} + {f_2} = 0\]
 
-which yields the following force-displacement relationship for a tyical spring element:
+which yields the following force-displacement relationship for a typical spring element:
 
 \begin{equation}
 \left\{ {\begin{array}{*{20}{c}}
@@ -720,8 +729,8 @@ which can be written in terms of displacements using \cref{Kspring} like;
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=8cm]{img/dcl_mass.pdf}
-\caption{Free body diagram for a typical mass connceted to springs $i$ and $i+1$.}
+\includegraphics[width=8cm]{dcl_mass.pdf}
+\caption{Free body diagram for a typical mass connected to springs $i$ and $i+1$.}
 \label{fig:dclmass}
 \end{figure}
 
@@ -732,12 +741,12 @@ Considering now the complete system of masses and springs leads to a system of l
 \label{global}
 \end{equation}
 
-where each equation represents the equilibrium of a given mass. The system given by \cref{global} can be solved in the displacements $U_G$. The pseudo-code shown in \cref{springsalg} presents all the steps required to sove the problem in the context of the finite element method. In that code the so-called DME operator is an equation assembly array indicating how each element contributes to the global stiffness and mass matrix.
+where each equation represents the equilibrium of a given mass. The system given by \cref{global} can be solved in the displacements $U_G$. The pseudo-code shown in \cref{springsalg} presents all the steps required to solve the problem in the context of the finite element method. In that code the so-called DME operator is an equation assembly array indicating how each element contributes to the global stiffness and mass matrix.
 
 
 \begin{algorithm}[H]
  \SetAlgoLined
- \KwData{Problem paramters; NUMNP, NUMEL, NMATP}
+ \KwData{Problem parameters; NUMNP, NUMEL, NMATP}
  \KwResult{Displacements and spring forces}
  Create $DM$E operator\;
  Assemble $K^G$, $F^G$\;
@@ -776,7 +785,7 @@ The process of interpolation or computation of the unknown value of $f(x)$ using
 
 We can (i) use all the n-data points and fit an $(n-1)$-th order polynomial (which is cumbersome and difficult to code) or (ii) split the domain in sub-intervals and use local polynomials within each sub-interval. This last approach involves only a couple of polynomials and it is easy to code, however it may have some continuity issues.
 
-In finite element analysis local interpolation is used in order to proceed systematically. Local interpolation uses a finite number of nearest-neighbours and generates interpolated values $f(x)$ that do not in general have continuous first or higher derivatives.
+In finite element analysis local interpolation is used in order to proceed systematically. Local interpolation uses a finite number of nearest-neighbors and generates interpolated values $f(x)$ that do not in general have continuous first or higher derivatives.
 
 \begin{figure}[h]
 \centering
@@ -817,7 +826,7 @@ The resulting interpolating polynomials ${L^I}(x)$ and the interpolating functio
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=16cm]{img/func.pdf}
+\includegraphics[width=16cm]{func.pdf}
 \caption{Interpolating polynomials and the resulting interpolating function}
 \label{fig:pols}
 \end{figure}
@@ -828,7 +837,7 @@ Assume we are now interested in conducting interpolation of a function over a sp
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=10cm]{img/element.pdf}
+\includegraphics[width=10cm]{element.pdf}
 \caption{Basic square domain}
 \label{fig:element}
 \end{figure}
@@ -839,7 +848,7 @@ We first fix $x = {x^A}$ and conduct 1-dimensional interpolation along the $y$ d
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=10cm]{img/inter1D.pdf}
+\includegraphics[width=10cm]{inter1D.pdf}
 \caption{Interpolation along the $y$-direction}
 \label{fig:onedimn}
 \end{figure}
@@ -881,13 +890,13 @@ We now discretize the principle of virtual work repeated below for completeness:
 \intL_V \sigma_{ij} \delta u_{i,j} dV - \intL_V f_i \delta u_i dV - \intL_{S_t} t_i^n \delta u_i dS = 0.
 \end{equation}
 
-For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping subdomains over each one of which we will approximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been casted into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows;
+For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping sub-domains over each one of which we will approximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been cast into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows;
 
 \begin{equation}\label{pvw_dis}
 \sum_{e=1}^{NEL} \intL_{V^e} \sigma_{ij} \delta u_{i,j} d{V^e} - \intL_V f_i \delta u_i d{V^e} - \intL_{S_t} t_i^n \delta u_id{S^e} = 0 
 \end{equation}
 
-For easiness consider a single subdomain
+For easiness consider a single sub-domain
 \begin{equation} \label{pvw_sing}
 \intL_V \sigma_{ij} \delta u_{i,j} dV - \intL_V f_i\delta u_idV - \intL_{S_t} t_i^n \delta u_i dS = 0.
 \end{equation}
@@ -934,7 +943,7 @@ First assume that the actual physical domain $V_0(\vb{x})$ is the result of a de
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{img/figure1.pdf}
+\includegraphics[width=8cm]{figure1.pdf}
 \caption{Definition of the natural domain}
 \label{fig:natural domain}
 \end{figure}
@@ -973,7 +982,7 @@ where $\hat{u}^K$ represents a vector of nodal points displacements, see \cref{f
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=4cm]{img/figure2.pdf}
+\includegraphics[width=4cm]{figure2.pdf}
 \caption{General interpolation strategy in the natural domain}
 \label{fig:interpol nat dom}
 \end{figure}
@@ -1045,7 +1054,7 @@ K^{KP}=\intL_{V_0(\vb{r})} \hat{B}_{ij}^K(\vb{r}) C_{ijkl} \hat{B}_{kl}^P(\vb{r}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=6cm]{img/figure3.pdf}
+\includegraphics[width=6cm]{figure3.pdf}
 \caption{Natural domain of integration}
 \label{fig:Nat domain}
 \end{figure}
@@ -1064,7 +1073,7 @@ and where NGPTS corresponds to the number of integration points, $\alpha_j$ is a
  
 \begin{figure}[h]
 \centering
-\includegraphics[width=6cm]{img/figure4.pdf}
+\includegraphics[width=6cm]{figure4.pdf}
 \caption{Natural integration domain showing quadrature evaluation nodes}
 \label{fig:integration domain}
 \end{figure}	 
