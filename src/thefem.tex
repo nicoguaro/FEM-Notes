@@ -882,6 +882,87 @@ We now conduct the interpolation along the $x$-direction using the functions $f(
 {N^4}(x,y) & = {L^1}(x){L^2}(y)
 \end{align*}
 
+See Figure \ref{fig:four-nodes-interp} for the shape functions of a 4-nodes element.
+\begin{figure}[H]
+\centering
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-4-nodes-1.pdf}
+		\caption{Shape function ${N^1(x,y)=\frac{1}{4}(1-x)(1-y)}$. }
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-4-nodes-2.pdf}
+		\caption{Shape function ${N^2(x,y)=\frac{1}{4}(1+x)(1-y)}$.}
+	\end{subfigure}\\
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-4-nodes-3.pdf}
+		\caption{Shape function ${N^3(x,y)=\frac{1}{4}(1+x)(1+y)}$.}
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-4-nodes-4.pdf}
+		\caption{Shape function ${N^4(x,y)=\frac{1}{4}(1-x)(1+y)}$.}
+	\end{subfigure}
+\caption{Shape functions for a 4-nodes element.}
+\label{fig:four-nodes-interp}
+\end{figure}
+
+See Figure \ref{fig:nine-nodes-interp} for the shape functions of a 9-nodes element.
+\begin{figure}[H]
+\centering
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-9-nodes-1.pdf}
+		\caption{Shape function $N^1(x,y)$. }
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-9-nodes-2.pdf}
+		\caption{Shape function $N^2(x,y)$.}
+	\end{subfigure}\\
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-9-nodes-3.pdf}
+		\caption{Shape function $N^3(x,y)$.}
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-9-nodes-4.pdf}
+		\caption{Shape function $N^4(x,y)$.}
+	\end{subfigure}\\
+	%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-9-nodes-5.pdf}
+		\caption{Shape function $N^5(x,y)$.}
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-9-nodes-6.pdf}
+		\caption{Shape function $N^6(x,y)$.}
+	\end{subfigure}
+	\caption{Shape functions for a 9-nodes element.}
+\end{figure}
+
+\begin{figure}
+	\ContinuedFloat
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-9-nodes-7.pdf}
+		\caption{Shape function $N^7(x,y)$.}
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-9-nodes-8.pdf}
+		\caption{Shape function $N^8(x,y)$.}
+	\end{subfigure}\\
+	%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{shape_func-9-nodes-9.pdf}
+		\caption{Shape function $N^9(x,y)$.}
+	\end{subfigure}
+\caption{Shape functions for a 9-nodes element.}
+\label{fig:nine-nodes-interp}
+\end{figure}
 
 \subsection{Formulation of the finite element matrices}
 We now discretize the principle of virtual work repeated below for completeness:
