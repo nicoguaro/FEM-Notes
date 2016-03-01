@@ -4,144 +4,96 @@
 In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we formally re-state these equations in the so-called strong form. Subsequently we re-write and prove an equivalent form of the balance law in the form of an integral representation highly friendly for a numerical solution. Since in the integral description of the problem the order of the derivatives in the field functions decreases by one, the resulting statement is called a weak formulation. 
 %%
 \subsection{Differential formulation-Generalized balance law}
-Let $ds$ be a differential surface element; $dV$ a differential volume element; $u(\vec x,t)$ a scalar (or vector) function of space and time.
-The flux or rate of flow of the quantity $u(\vec x,t)$ through $ds$ at time $t$ is defined like;
-\[p(\vec x)\vec \nabla u \cdot \hat nds\]
+Let $ds$ be a differential surface element; $\dd V$ a differential volume element; $u(\vb{x},t)$ a scalar (or vector) function of space and time.
+The flux or rate of flow of the quantity $u(\vb x, t)$ through $\dd s$ at time $t$ is defined like
+\[p(\vb x)\grad u \cdot \hat n \dd s \enspace ,\]
+where $p(\vb x)$ is a positive function, assumed known and time independent. Similarly, the time rate of change of $u(\vb x, t)$ in an element $\dd V$ is given by
+\[\rho (\vb x)\pdv{u}{t} \dd V \enspace ,\]
+where once again $\rho (\vb x)$ is a known, given, time independent positive function. Additional effects occurring in the element $\dd V$ at the time time can be expressed like
+\[H(\vb x, t)\dd V \equiv  - q(\vb x)u(\vb x, t) + \hat F(\vb x,t)\]
+where $\hat F(\vb x, t) = \rho (\vb x)F(\vb x, t)$. In the above the term $q u$ represent internal effects due to changes proportional to $u$ while $\hat F(\vb x, t)$ are other external influences in the medium.
 
-where $p(\vec x)$ is a positive function, assumed known and time independent. Similarly, the time rate of change of $u(\vec x,t)$ in an element $dV$ is given by;
+Balancing the internal and external changes yields
+\[\int\limits_V \rho (\vb x)\pdv{u}{t}\dd V = \int\limits_S p(\vb x)\vb \grad u \cdot \hat n\dd s  + \int\limits_V H(\vb x, t)\dd V \enspace ,\]
+or equivalently
+\[\int\limits_V \rho (\vb x)\pdv{u}{t}\dd V = \int\limits_S p(\vb x)\vb \grad u \cdot \hat n\dd s   - \int\limits_V q(\vb x)u(\vb x, t)\dd V  + \int\limits_V \rho (\vb x)F(\vb x, t)\dd V \enspace .\]
 
-\[\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV\]
+Using the divergence theorem as
+\[\int\limits_S p(\vb x) \grad u \cdot \hat n \dd s  = \int\limits_V \vb \div  (p\vb \grad u)\dd V\]
+yields after substitution
+\[\int\limits_V \left[\rho (\vb x)\pdv{u}{t} - \div (p(\vb x)\grad u) + q(\vb x)u(\vb x, t) - \rho (\vb x)F(\vb x, t)\right]\dd V  = 0\]
+Assuming a continuous integrand, the arbitrariness of $V$ implies
+\[\rho (\vb x)\pdv{u}{t} - \div(p(\vb x)\grad u) + q(\vb x)u(\vb x, t) - \rho (\vb x)F(\vb x, t) = 0\]
 
-where once again $\rho (\vec x)$ is a known, given, time independent positive function. Additional effects occurring in the element $dV$ at the time time can be expressed like;
-
-\[H(\vec x,t)dV \equiv  - q(\vec x)u(\vec x,t) + \hat F(\vec x,t)\]
-
-where $\hat F(\vec x,t) = \rho (\vec x)F(\vec x,t)$. In the above the term $qu$ represent internal effects due to changes proportional to $u$ while $\hat F(\vec x,t)$ are other external influences in the medium.
-
-Balancing the internal and external changes yields;
-
-\[\int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV = \int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds} }  + \int\limits_V {H(\vec x,t)dV} \]
-
-or equivalently;
-
-\[\int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}dV = \int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds} }  - \int\limits_V {q(\vec x)u(\vec x,t)dV}  + \int\limits_V {\rho (\vec x)F(\vec x,t)dV} \]
-
-using the divergence theorem as
-
-\[\int\limits_S {p(\vec x)\vec \nabla u \cdot \hat nds}  = \int\limits_V {\vec \nabla  \cdot \left( {p\vec \nabla u} \right)dV} \]
-
-yields after substitution;
-
-\[\int\limits_V {\left[ {\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla u} \right) + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t)} \right]dV}  = 0\]
-
-Assuming a continuous integrand, the arbitrariness of $V$ implies;
-
-\[
-\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla u} \right) + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t) = 0
-\]
-
-Letting;
-
-\[L() \equiv  - \vec \nabla  \cdot \left( {p(\vec x)\vec \nabla } \right) + q(\vec x)\]
-
-the generalized set of partial differential equations can be written like;
-
+Letting
+\[\mathcal{L} \equiv  - \div p(\vb x)\grad + q(\vb x)\]
+the generalized set of partial differential equations can be written like
 \begin{equation}
-\rho (\vec x)\frac{{\partial u(\vec x,t)}}{{\partial t}} + Lu(\vec x,t) = \rho (\vec x)F(\vec x,t)
-\label{GenPDE}
+\rho(\vb x) \pdv{u(\vb x, t)}{t} + \mathcal{L}u(\vb x, t) = \rho (\vb x)F(\vb x, t) \enspace .
+\label{eq:GenPDE}
 \end{equation}
 
+And they are categorized as:
 \begin{itemize}
-\item Hyperbolic;
-\[\rho (\vec x)\frac{{{\partial ^2}u(\vec x,t)}}{{\partial {t^2}}} + Lu(\vec x,t) = 0\]
+    \item Hyperbolic;
+    \[\rho(\vb x) \pdv[2]{u(\vb x, t)}{t} + \mathcal{L}u(\vb x,t) = 0\]
 
-\item Parabolic;
-\[\rho (\vec x)\frac{{\partial u(\vec x,t)}}{{\partial t}} + Lu(\vec x,t) = 0\]
+    \item Parabolic; and
+    \[\rho(\vb x) \pdv{u(\vb x,t)}{t} + \mathcal{L}u(\vb x, t) = 0\]
 
-\item Elliptic;
-\[Lu(\vec x,t) = \rho (\vec x)F(\vec x,t)\]
- 
+    \item Elliptic
+    \[\mathcal{L}u(\vb x, t) = \rho (\vb x)F(\vb x, t) \enspace .\]
 \end{itemize}
 
-It can be shown that $L()$ satisfies symmetry;
-
-\[\int\limits_V {L(u)vdV = } \int\limits_V {L(v)u} dV\]
-
-and positive definiteness;
-
-\[\int\limits_V {L(u)udV}  > 0\]
+It can be shown that $\mathcal{L}$ satisfies the \emph{symmetry} condition
+\[\int\limits_V \mathcal{L}(u)v\dd V =  \int\limits_V \mathcal{L}(v)u \dd V\]
+and positive definiteness \cite{book:sepulveda_fismat, book:arfken}
+\[\int\limits_V \mathcal{L}(u)u\dd V  > 0, \quad \forall u \enspace .\]
 
 \subsection*{Strong form}
-Given $\rho (\vec x)$,$q(\vec x)$, $p(\vec x)$, $F(\vec x,t)$ and $\bar u$ find $u(\vec x , t):V \to \mathbb{R}$ such:
-\[
-\rho (\vec x)\frac{{\partial u}}{{\partial t}} - \vec \nabla  \cdot \left[ {p(\vec x)\vec \nabla u} \right] + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t) = 0
- \quad \forall \vec x \in V \]
- 
-
-
+Given $\rho(\vb x)$, $q(\vb x)$, $p(\vb x)$, $F(\vb x, t)$ and $\bar u$ find $u(\vb x , t):V \to \mathbb{R}$ such:
+\[\rho(\vb x) \pdv{u}{t} - \div \left[p(\vb x) \grad u\right] + q(\vb x) u(\vb x, t) - \rho(\vb x) F(\vb x, t) = 0 \quad \forall \vb x \in V \]
 and
+\begin{align*}
+    &u = \bar u \quad \forall \vb x \in S_u\\
+    &p(\vb x)u_{,i} \hat n_i= B(\vb x,t)\quad \forall \vb x \in  S_t \enspace .
+\end{align*}
 
-\[u = \bar u \quad for \quad {\vec x} \quad in \quad S_u\]
-
-\[p(\vec x){u_{,i}}{{\hat n}_i} = B(\vec x,t) \quad for \quad {\vec x} \quad in \quad S_t\].
 
 In the FEM we will look for approximate solutions to $u$ subject to the following conditions:
-
-\[u = \bar u \quad for \quad {\vec x} \quad in \quad S_u\] (Essential boundary conditions)
-
+\[u = \bar u \quad \forall \vb x \in S_u \quad \text{(Essential boundary conditions)}\] 
 and
+\[\int\limits_S \left(\pdv{u}{x_j}\right)^2 \dd S < \infty \enspace ,\]
+which corresponds to the functions being square integrable. We will denote this space by $\mathbb{H}$ .
 
-\[{\int\limits_S {\left( {\frac{{\partial u}}{{\partial {x_j}}}} \right)} ^2}dS < \infty \] which corresponds to the functions being square integrable. This is space is denoted by $\mathbb{H}$ .
+The space of functions satisfying the above two conditions will be denoted by $\zeta$ and termed the space of trial functions, formally defined like:
+\[\zeta  = \left\{ u \mid u \in \mathbb{H},u = \bar u \quad \forall\vb x  \in S_u \right\}\]
 
-The space of functions satisfying the above two conditions will be denoted by $\zeta $ and termed the space of trial functions, formally defined like:
-
-\[\zeta  = \left\{ {u \mid u \in \mathbb{H},u = \bar u \quad for \quad \vec x \quad in \quad S_u} \right\}\]
-
-On the other hand, in order to validate (or test) the correctness of the approximated or proposed trial functions $u$ it is also necessary to introduce test functions $w$ which are arbitrary except that they satisfy the following conditions:
-
-\[w = 0 \quad for \quad {\vec x} \quad in \quad S_u\] 
-
+On the other hand, to validate (or test) the correctness of the approximated or proposed trial functions $u$ it is also necessary to introduce test functions $w$ which are arbitrary except that they satisfy the following conditions:
+\[w = 0\quad \forall \vb x \in S_u\] 
 and
-
-\[{\int\limits_S {\left( {\frac{{\partial w}}{{\partial {x_j}}}} \right)} ^2}dS < \infty \] which corresponds to the functions being square integrable. The space of functions satisfying the above two conditions will be denoted by $\pounds$ and termed the space of test functions, formally defined like:
-
-\[\pounds  = \left\{ {w \mid u \in \mathbb{H},w = 0 \quad for \quad \vec x \quad in \quad S_u} \right\}\]
+\[\int\limits_S \left(\pdv{w}{x_j}\right)^2 \dd S < \infty \enspace ,\]
+which corresponds to the functions being square integrable. The space of functions satisfying the above two conditions will be denoted by $\pounds$ and termed the space of test functions, formally defined like:
+\[\pounds  = \left\{w \mid w \in \mathbb{H},w = 0 \quad \forall \vb x \in S_u\right\}\]
 
 \subsection*{Weak form}
-Given $\rho (\vec x)$,$q(\vec x)$, $p(\vec x)$, $F(\vec x,t)$ and $\bar u$ find $u(\vec x , t):V \to \mathbb{R}$ and $\forall w \quad \in \quad \pounds $ such:
-
-\[\int\limits_V {[p(\vec x)u{,_i}]} {w_{,i}}dV - \int\limits_{{S_t}} {B(\vec x,t)wdS}  + \int\limits_V {q(\vec x)u(\vec x,t)wdV}  + \int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}wdV - \int\limits_V {\rho (\vec x)F(\vec x,t)wdV = 0} } \]
-
+Given $\rho(\vb x)$, $q(\vb x)$, $p(\vb x)$, $F(\vb x, t)$ and $\bar u$ find $u(\vb x , t):V \to \mathbb{R}$ and $\forall w \in \pounds$ such:
+\[\int\limits_V p(\vb x) u_{,i}\, w_{,i}\dd V - \int\limits_{S_t} B(\vb x, t)w \dd S  + \int\limits_V q(\vb x)u(\vb x, t)w\dd V  + \int\limits_V \rho(\vb x)\pdv{u}{t}w \dd V - \int\limits_V \rho(\vb x) F(\vb x, t)w\dd V = 0\]
 and
-
-\[u = \bar u \quad for \quad {\vec x} \quad in \quad S_u\]
+\[u = \bar u\quad \forall\vb x \in S_u \enspace .\]
 
 \subsection*{Equivalence between the strong and weak forms}
-
 \begin{multline}
-- \int\limits_V {{{[p(\vec x)u{,_i}]}_{,i}}wdV}  + \int\limits_{{S_t}} {[p(\vec x)u{,_i}]} {{\hat n}_i}wdS - \int\limits_{{S_t}} {B(\vec x,t)wdS} \\
-  + \int\limits_V {q(\vec x)u(\vec x,t)wdV}  + \int\limits_V {\rho (\vec x)\frac{{\partial u}}{{\partial t}}wdV - \int\limits_V {\rho (\vec x)F(\vec x,t)wdV = 0} }
+    -\int\limits_V [p(\vb x)u_{,i}]_{,i}w \dd V + \int\limits_{S_t} [p(\vb x)u_{,i}] \hat n_i w\dd S - \int\limits_{S_t} B(\vb x, t)w\dd S\\
+    + \int\limits_V q(\vb x)u(\vb x, t)w \dd V  + \int\limits_V \rho(\vec x)\pdv{u}{t}w\dd V - \int\limits_V \rho(\vb x)F(\vb x, t)w\dd V = 0 
 \end{multline}
 
-Grouping together common terms yields;
-
-\[\int\limits_V {\left\{ {\rho (\vec x)\frac{{\partial u}}{{\partial t}} - {{[p(\vec x)u{,_i}]}_{,i}} + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t)} \right\}} wdV + \int\limits_{{S_t}} {\left\{ {[p(\vec x)u{,_i}]{{\hat n}_i} - B(\vec x,t)} \right\}} wdS = 0\]
-
-from which;
-
-\[\rho (\vec x)\frac{{\partial u}}{{\partial t}} - {[p(\vec x)u{,_i}]_{,i}} + q(\vec x)u(\vec x,t) - \rho (\vec x)F(\vec x,t) = 0\]
-
+Grouping together common terms yields
+\[\int\limits_V \left\{\rho(\vb x)\pdv{u}{t} - [p(\vb x)u_{,i}]_{,i} + q(\vb x)u(\vb x, t) - \rho(\vb x)F(\vb x, t)\right\} w\dd V + \int \limits_{S_t} \left\{[p(\vb x)u_{,i}]\hat n_i - B(\vb x, t) \right\} w\dd S = 0\]
+from which
+\[\rho(\vb x)\pdv{u}{t} - [p(\vb x)u_{,i}]_{,i} + q(\vb x)u(\vb x, t) - \rho(\vb x)F(\vb x, t) = 0\]
 and
-
-\[p(\vec x){u_{,i}}{{\hat n}_i} = B(\vec x,t)  \quad for \quad {\vec x} \quad in \quad S_t\]
-
-
-
-
-
-
-
-
+\[p(\vb x)u_{,i}\hat n_i = B(\vb x, t)  \quad\forall \vb x \in S_t \enspace .\]
 
 
 \section{Brief review of the linearized theory of elasticity model}
@@ -273,11 +225,11 @@ expanding the terms in the integrand and integrating by parts the first term on 
 
 since $w_i \in V$ it follows that $w_i = 0$ in $S_u$ from which
 
-\begin{equation}\label{weak}
+\begin{equation}\label{eq:weak}
 \intL_V \sigma _{ij} w_{i,j}\, dV - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, dS = 0
 \end{equation}
 
-Now, considering that $u_i$ is solution of the strong form $\{S\}$ it must satisfy $u_i = \bar u_{i} \quad \in \quad S_u$ and as a result $u_i \in \varsigma$. On the other hand, since $u_i$ satisfies \cref{weak} $\forall {w_i} \in V$ we have that $u_i$ satisfies the definition of weak solution specified in $\{ W \}$.
+Now, considering that $u_i$ is solution of the strong form $\{S\}$ it must satisfy $u_i = \bar u_{i} \quad \in \quad S_u$ and as a result $u_i \in \varsigma$. On the other hand, since $u_i$ satisfies \cref{eq:weak} $\forall {w_i} \in V$ we have that $u_i$ satisfies the definition of weak solution specified in $\{ W \}$.
 
 \subsubsection*{Proof 2:}
 Let $u_i$ be a solution of $\{W\}$ and thus $u_i \in \varsigma$ which means that
@@ -436,7 +388,6 @@ Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
 \[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
 
 
-
 %%
 \subsection{Variational formulation}
 In this section we formulate the boundary value problem using the approach of the calculus of variations in which the governing PDEs and boundary conditions are obtained after finding the minimum (or maximum) of a functional according to a variational principle\footnote{According to Wikipedia \cite{wiki:variational_principle}
@@ -450,95 +401,74 @@ According to Cornelius Lanczos, any physical law which can be expressed as a var
 We will see that the weak form (and therefore also the strong form) can be obtained alternatively through the process of finding extreme values for a functional. We will illustrate this idea for the general case of theory of elasticity and then we will present particular examples.
 
 \subsubsection*{Some vague definitions in the calculus of variations}
-In variational calculus a {\bf functional} can be understood as a "function" having as independent variables or arguments a space of vector functions and producing as a result (or dependent variable) a scalar. For instance, in the particular case of the theory of elasticity such a "function" corresponds to the total potential energy functional $\Pi$ given by;
-
-\begin{equation}
-\Pi ({u_i}) = \frac{1}{2}\int\limits_V {{\sigma _{ij}}{\varepsilon _{ij}}dV}  - \int\limits_V {{f_i}{u_i}dV}  - \int\limits_S {t_i^{(n)}{u_i}dS}
-\label{Potential}
+In variational calculus a {\bf functional} can be understood as a ``function" having as independent variables or arguments a space of vector functions and producing as a result (or dependent variable) a scalar. For instance, in the particular case of the theory of elasticity such a ``function" corresponds to the total potential energy functional $\Pi$ given by;
+\begin{equation}\label{eq:Potential}
+    \Pi(u_i) = \frac{1}{2}\int\limits_V \sigma_{ij}\varepsilon_{ij}\dd V  - \int\limits_V f_i\, u_i\dd V  - \int\limits_S t_i^{(n)} u_i\dd S
 \end{equation}
+and where the first term in the left hand side corresponds to the internal strain energy, while the last two terms are the work done by the external body and traction forces. The above functional has as independent variables the displacement vector and its spatial derivatives. This is indicated by the presence of the displacement vector $u_i$ in the expression $\Pi(u_i)$.
 
-and where the first term in the L.H.S corresponds to the internal strain energy, while the last two terms are the work done by the external body and traction forces. The above functional has as independent variables the displacement vector and its spatial derivatives. This is indicated by the presence of the displacement vector $u_i$ in the expression $\Pi(u_i)$.
-
-In variational calculus we are interested in finding a function $u_i$ that renders the functional $\Pi$ a maximum or a minimum. In loose terms, the analogous to the differential operator in calculus of functions is now termed the variational operator $\delta$ (i.e., $\delta$ is analogous to $\frac{\partial }{{\partial {x_i}}}$). As such $\delta\Pi$ acts over the function $u_i$ and its derivatives as follows;
-
-\[\delta \Pi  = \frac{{\partial \Pi }}{{\partial {u_i}}}\delta {u_i} + \frac{{\partial \Pi }}{{\partial \left( {\frac{{\partial {u_i}}}{{\partial {x_j}}}} \right)}}\delta \left( {\frac{{\partial {u_i}}}{{\partial {x_j}}}} \right) + ... + \frac{{\partial \Pi }}{{\partial \left( {\frac{{{\partial ^n}{u_i}}}{{\partial {x_j}...\partial {x_k}}}} \right)}}\delta \left( {\frac{{{\partial ^n}{u_i}}}{{\partial {x_j}...\partial {x_k}}}} \right)\].
+In variational calculus we are interested in finding a function $u_i$ that renders the functional $\Pi$ a maximum or a minimum. In loose terms, the analogous to the differential operator in calculus of functions is now termed the variational operator $\delta$ (i.e., $\delta$ is analogous to $\pdv{x_i}$). As such $\delta\Pi$ acts over the function $u_i$ and its derivatives as follows
+\[\delta \Pi  = \pdv{\Pi}{u_i}\delta u_i + \pdv{\Pi}{\left( \pdv{u_i}{x_j}\right)} \delta\left(\pdv{u_i}{x_j}\right) + \cdots + \pdv{\Pi}{\left( \pdv{^{n}u_i}{x_j \cdots \partial x_k}\right)} \delta\left( \pdv{^{n}u_i}{x_j \cdots \partial x_k}\right) \enspace .\]
 
 The following rules apply to the variational operator $\delta$:
-
 \begin{itemize}
 \item For functionals $\Pi$ and $\Phi$ it follows that \[\delta (\Pi  + \Phi ) = \delta \Pi  + \delta \Phi \]
 \item For functionals $\Pi$ and $\Phi$ it follows that \[\delta (\Pi \Phi ) = \delta \Pi \Phi  + \Pi \delta \Phi \]
 \item For a functional $\Pi$ and an integer $n$ it follows that \[\delta ({\Pi ^n}) = n({\Pi ^{n - 1}})\delta \Pi \]
-\item For a functional $\Pi$ it follows that \[\delta \int {\Pi dx}  = \int {\delta \Pi dx} \]
+\item For a functional $\Pi$ it follows that \[\delta \int {\Pi \dd x}  = \int {\delta \Pi \dd x} \]
 \end{itemize}
 
 If the variational operator is applied to the functional $\Pi (u_i)$ it produces functions or variations in $u_i$ which are arbitrary and such $\delta {u_i} \in V$ and $\delta {u_i} = 0$ in $S_u$.
 
-In order to find an extreme function in the calculus of variations we proceed like in differential calculus. Here we compute the first variation of the functional $\delta \Pi$ and solve the variational equation;
-
-\begin{equation}
-\delta \Pi  = 0
-\label{vareq}
+To find an extreme function in the calculus of variations we proceed like in differential calculus. Here we compute the first variation of the functional $\delta \Pi$ and solve the variational equation
+\begin{equation}\label{eq:vareq}
+    \delta \Pi  = 0
 \end{equation}
-
 in the unknown function $u_i$. 
 
-In the particular case of the total potential energy functional $\Pi$ this yields;
-
-\begin{equation}
-\int\limits_V {{\sigma _{ij}}\delta {\varepsilon _{ij}}dV}  - \int\limits_V {{f_i}\delta {u_i}dV}  - \int\limits_{{S_t}} {t_i^{(n)}\delta {u_i}dS}  = 0
-\label{ClaPVW}
+In the particular case of the total potential energy functional $\Pi$ this yields
+\begin{equation}\label{eq:ClaPVW}
+    \int\limits_V \sigma _{ij}\delta \varepsilon_{ij}\dd V  - \int\limits_V f_i \delta u_i \dd V  - \int\limits_{S_t} t_i^{(n)} \delta u_i\dd S  = 0
 \end{equation}
-
-where we recognize the weak form of the BVP stated previously. It becomes evident that the functions $\delta {u_i}$ in \cref{ClaPVW} play the role of the test functions $w_i$ introduced in the weak form. On the other hand, since we have already shown that the weak and strong forms are equivalent we conclude that having the functional and the essential boundary conditions is equivalent to having the strong form of the problem.
+where we recognize the weak form of the BVP stated previously. It becomes evident that the functions $\delta {u_i}$ in \cref{eq:ClaPVW} play the role of the test functions $w_i$ introduced in the weak form. On the other hand, since we have already shown that the weak and strong forms are equivalent we conclude that having the functional and the essential boundary conditions is equivalent to having the strong form of the problem.
 
 
 \subsubsection*{Principle of minimum potential energy}
 In the theory of elasticity the total potential energy $\Pi$ is the result of adding the elastic strain energy which is stored in the body upon deformation and the potential energy (work) imparted to the body by the applied forces. The principle states that the body is in equilibrium when this total potential energy reaches a minimum. This is equivalent to stating that an equilibrium configuration is attained when an infinitesimal variation from the position of minimum potential energy involves null changes in energy. This implies the variational condition:
-
-\begin{equation}
-\delta \Pi  = 0.
-\label{vareq2}
+\begin{equation}\label{vareq2}
+    \delta \Pi  = 0.
 \end{equation}
 
 The above principle leads to the so-called principle of virtual displacements stated as follows\footnote{see Bathe pp 156}:
-"The equilibrium of the body requires that for any compatible small virtual displacements satisfying the condition of being zero at $S_u$, imposed on the body in its state of equilibrium, the total internal virtual work is equal to the total external virtual work"
+``The equilibrium of the body requires that for any compatible small virtual displacements satisfying the condition of being zero at $S_u$, imposed on the body in its state of equilibrium, the total internal virtual work is equal to the total external virtual work"
+\[\int\limits_V \sigma _{ij}\delta \varepsilon_{ij}\dd V  - \int\limits_V f_i\delta u_i\dd V  - \int\limits_{S_t} t_i^{(n)}\delta u_i\dd S  = 0\]
+where $\delta {u_i}$ are the virtual displacements and $\delta \varepsilon_{ij}$ are the corresponding virtual strains.
 
-\[\int\limits_V {{\sigma _{ij}}\delta {\varepsilon _{ij}}dV}  - \int\limits_V {{f_i}\delta {u_i}dV}  - \int\limits_{{S_t}} {t_i^{(n)}\delta {u_i}dS}  = 0\]
-
-where ${\delta {u_i}}$ are the virtual displacements and ${\delta {\varepsilon _{ij}}}$ are the corresponding virtual strains.
-
-Comparing the virtual work principle with the weak formulation given in \cref{weak} we identify ${\delta {u_i}}$ with the test functions $w_i$. As such the PVW takes the form of a powerful tool to test if a body is in equilibrium for a given solution (represented by the trial functions). In what follows we illustrate the use of the principle through some examples corresponding to problems in Bathe's textbook.
+Comparing the virtual work principle with the weak formulation given in \cref{eq:weak} we identify $\delta u_i$ with the test functions $w_i$. As such the PVW takes the form of a powerful tool to test if a body is in equilibrium for a given solution (represented by the trial functions). In what follows we illustrate the use of the principle through some examples corresponding to problems in Bathe's textbook.
 
 \subsubsection*{Problem 3.15 (In Bathe's book)}
 Establish the differential equation of equilibrium of the problem shown and the boundary conditions. Determine whether the differential operator of the problem is symmetric and positive definite and prove your answer.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=10cm]{{Bathe3.15}.pdf}
-\caption{Rod with varying cross-sectional area. The Young's modulus is E.}
-\label{fig:bathe3.15}
+    \centering
+    \includegraphics[width=10cm]{{Bathe3.15}.pdf}
+    \caption{Rod with varying cross-sectional area. The Young's modulus is E.}
+    \label{fig:bathe3.15}
 \end{figure}
 
 
 \[\Pi  = \frac{1}{2}\int\limits_0^L {{\sigma _{xx}}{\varepsilon _{xx}}A(x)dx} + \frac{1}{2}ku_0^2 - R{u_L} \]
 \[\Pi  = \frac{1}{2}\int\limits_0^L {EA(x){{\left( {\frac{{du}}{{dx}}} \right)}^2}dx + \frac{1}{2}ku_0^2}  - R{u_L}\]
 
-First variation;
+The first variation is
 \[\delta \Pi  = \int\limits_0^L {EA(x)\frac{{du}}{{dx}}\frac{{d\delta u}}{{dx}}dx + k{u_0}\delta {u_0}}  - R\delta {u_L}\]
 
-Integrating by parts;
-
+Integrating by parts
 \[\delta \Pi  =  - \int\limits_0^L {\frac{d}{{dx}}\left[ {EA(x)\frac{{du}}{{dx}}} \right]\delta udx + \left. {EA(x)\frac{{du}}{{dx}}\delta u} \right]_0^L + k{u_0}\delta {u_0}}  - R\delta {u_L}\]
-
-from which;
-
+from which
 \[\frac{d}{{dx}}\left[ {EA(x)\frac{{du}}{{dx}}} \right] = 0\]
 \[{\left. {EA(x)\frac{{du}}{{dx}}} \right]_{x = 0}} = k{u_0}\]
 \[{\left. {EA(x)\frac{{du}}{{dx}}} \right]_{x = L}} = R\]
-
-
-
 
 
 \subsubsection*{Problem 4.35-The Hu-Washizu Variational Principle}
@@ -686,7 +616,7 @@ Consider a typical spring (finite element) like the one shown in \cref{fig:sprin
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=10cm]{springel.pdf}
+\includegraphics[width=8cm]{springel.pdf}
 \caption{Typical spring element.}
 \label{fig:springel}
 \end{figure}
