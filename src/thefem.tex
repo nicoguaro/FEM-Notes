@@ -4,24 +4,24 @@
 In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we formally re-state these equations in the so-called strong form. Subsequently we re-write and prove an equivalent form of the balance law in the form of an integral representation highly friendly for a numerical solution. Since in the integral description of the problem the order of the derivatives in the field functions decreases by one, the resulting statement is called a weak formulation. 
 %%
 \subsection{Differential formulation-Generalized balance law}
-Let $ds$ be a differential surface element; $\dd V$ a differential volume element; $u(\vb{x},t)$ a scalar (or vector) function of space and time.
-The flux or rate of flow of the quantity $u(\vb x, t)$ through $\dd s$ at time $t$ is defined like
-\[p(\vb x)\grad u \cdot \hat n \dd s \enspace ,\]
-where $p(\vb x)$ is a positive function, assumed known and time independent. Similarly, the time rate of change of $u(\vb x, t)$ in an element $\dd V$ is given by
-\[\rho (\vb x)\pdv{u}{t} \dd V \enspace ,\]
-where once again $\rho (\vb x)$ is a known, given, time independent positive function. Additional effects occurring in the element $\dd V$ at the time time can be expressed like
-\[H(\vb x, t)\dd V \equiv  - q(\vb x)u(\vb x, t) + \hat F(\vb x,t)\]
+Let $ds$ be a differential surface element; $\dd{V}$ a differential volume element; $u(\vb{x},t)$ a scalar (or vector) function of space and time.
+The flux or rate of flow of the quantity $u(\vb x, t)$ through $\dd{S}$ at time $t$ is defined like
+\[p(\vb x)\grad u \cdot \hat n \dd{S} \enspace ,\]
+where $p(\vb x)$ is a positive function, assumed known and time independent. Similarly, the time rate of change of $u(\vb x, t)$ in an element $\dd{V}$ is given by
+\[\rho (\vb x)\pdv{u}{t} \dd{V} \enspace ,\]
+where once again $\rho (\vb x)$ is a known, given, time independent positive function. Additional effects occurring in the element $\dd{V}$ at the time time can be expressed like
+\[H(\vb x, t)\dd{V} \equiv  - q(\vb x)u(\vb x, t) + \hat F(\vb x,t)\]
 where $\hat F(\vb x, t) = \rho (\vb x)F(\vb x, t)$. In the above the term $q u$ represent internal effects due to changes proportional to $u$ while $\hat F(\vb x, t)$ are other external influences in the medium.
 
 Balancing the internal and external changes yields
-\[\int\limits_V \rho (\vb x)\pdv{u}{t}\dd V = \int\limits_S p(\vb x)\vb \grad u \cdot \hat n\dd s  + \int\limits_V H(\vb x, t)\dd V \enspace ,\]
+\[\int\limits_V \rho (\vb x)\pdv{u}{t}\dd{V} = \int\limits_S p(\vb x)\vb \grad u \cdot \hat n\dd{S}  + \int\limits_V H(\vb x, t)\dd{V} \enspace ,\]
 or equivalently
-\[\int\limits_V \rho (\vb x)\pdv{u}{t}\dd V = \int\limits_S p(\vb x)\vb \grad u \cdot \hat n\dd s   - \int\limits_V q(\vb x)u(\vb x, t)\dd V  + \int\limits_V \rho (\vb x)F(\vb x, t)\dd V \enspace .\]
+\[\int\limits_V \rho (\vb x)\pdv{u}{t}\dd{V} = \int\limits_S p(\vb x)\vb \grad u \cdot \hat n\dd{S}   - \int\limits_V q(\vb x)u(\vb x, t)\dd{V}  + \int\limits_V \rho (\vb x)F(\vb x, t)\dd{V} \enspace .\]
 
 Using the divergence theorem as
-\[\int\limits_S p(\vb x) \grad u \cdot \hat n \dd s  = \int\limits_V \vb \div  (p\vb \grad u)\dd V\]
+\[\int\limits_S p(\vb x) \grad u \cdot \hat n \dd{S}  = \int\limits_V \vb \div  (p\vb \grad u)\dd{V}\]
 yields after substitution
-\[\int\limits_V \left[\rho (\vb x)\pdv{u}{t} - \div (p(\vb x)\grad u) + q(\vb x)u(\vb x, t) - \rho (\vb x)F(\vb x, t)\right]\dd V  = 0\]
+\[\int\limits_V \left[\rho (\vb x)\pdv{u}{t} - \div (p(\vb x)\grad u) + q(\vb x)u(\vb x, t) - \rho (\vb x)F(\vb x, t)\right]\dd{V}  = 0\]
 Assuming a continuous integrand, the arbitrariness of $V$ implies
 \[\rho (\vb x)\pdv{u}{t} - \div(p(\vb x)\grad u) + q(\vb x)u(\vb x, t) - \rho (\vb x)F(\vb x, t) = 0\]
 
@@ -46,9 +46,9 @@ And they are categorized as:
 \end{itemize}
 
 It can be shown that $\mathcal{L}$ satisfies the \emph{symmetry} condition
-\[\int\limits_V \mathcal{L}(u)v\dd V =  \int\limits_V \mathcal{L}(v)u \dd V\]
+\[\int\limits_V \mathcal{L}(u)v\dd{V} =  \int\limits_V \mathcal{L}(v)u \dd{V}\]
 and positive definiteness \cite{book:sepulveda_fismat, book:arfken}
-\[\int\limits_V \mathcal{L}(u)u\dd V  > 0, \quad \forall u \enspace .\]
+\[\int\limits_V \mathcal{L}(u)u\dd{V}  > 0, \quad \forall u \enspace .\]
 
 \subsection*{Strong form}
 Given $\rho(\vb x)$, $q(\vb x)$, $p(\vb x)$, $F(\vb x, t)$ and $\bar u$ find $u(\vb x , t):V \to \mathbb{R}$ such:
@@ -63,7 +63,7 @@ and
 In the FEM we will look for approximate solutions to $u$ subject to the following conditions:
 \[u = \bar u \quad \forall \vb x \in S_u \quad \text{(Essential boundary conditions)}\] 
 and
-\[\int\limits_S \left(\pdv{u}{x_j}\right)^2 \dd S < \infty \enspace ,\]
+\[\int\limits_S \left(\pdv{u}{x_j}\right)^2 \dd{S} < \infty \enspace ,\]
 which corresponds to the functions being square integrable. We will denote this space by $\mathbb{H}$ .
 
 The space of functions satisfying the above two conditions will be denoted by $\zeta$ and termed the space of trial functions, formally defined like:
@@ -72,24 +72,24 @@ The space of functions satisfying the above two conditions will be denoted by $\
 On the other hand, to validate (or test) the correctness of the approximated or proposed trial functions $u$ it is also necessary to introduce test functions $w$ which are arbitrary except that they satisfy the following conditions:
 \[w = 0\quad \forall \vb x \in S_u\] 
 and
-\[\int\limits_S \left(\pdv{w}{x_j}\right)^2 \dd S < \infty \enspace ,\]
+\[\int\limits_S \left(\pdv{w}{x_j}\right)^2 \dd{S} < \infty \enspace ,\]
 which corresponds to the functions being square integrable. The space of functions satisfying the above two conditions will be denoted by $\pounds$ and termed the space of test functions, formally defined like:
 \[\pounds  = \left\{w \mid w \in \mathbb{H},w = 0 \quad \forall \vb x \in S_u\right\}\]
 
 \subsection*{Weak form}
 Given $\rho(\vb x)$, $q(\vb x)$, $p(\vb x)$, $F(\vb x, t)$ and $\bar u$ find $u(\vb x , t):V \to \mathbb{R}$ and $\forall w \in \pounds$ such:
-\[\int\limits_V p(\vb x) u_{,i}\, w_{,i}\dd V - \int\limits_{S_t} B(\vb x, t)w \dd S  + \int\limits_V q(\vb x)u(\vb x, t)w\dd V  + \int\limits_V \rho(\vb x)\pdv{u}{t}w \dd V - \int\limits_V \rho(\vb x) F(\vb x, t)w\dd V = 0\]
+\[\int\limits_V p(\vb x) u_{,i}\, w_{,i}\dd{V} - \int\limits_{S_t} B(\vb x, t)w \dd{S}  + \int\limits_V q(\vb x)u(\vb x, t)w\dd{V}  + \int\limits_V \rho(\vb x)\pdv{u}{t}w \dd{V} - \int\limits_V \rho(\vb x) F(\vb x, t)w\dd{V} = 0\]
 and
 \[u = \bar u\quad \forall\vb x \in S_u \enspace .\]
 
 \subsection*{Equivalence between the strong and weak forms}
 \begin{multline}
-    -\int\limits_V [p(\vb x)u_{,i}]_{,i}w \dd V + \int\limits_{S_t} [p(\vb x)u_{,i}] \hat n_i w\dd S - \int\limits_{S_t} B(\vb x, t)w\dd S\\
-    + \int\limits_V q(\vb x)u(\vb x, t)w \dd V  + \int\limits_V \rho(\vec x)\pdv{u}{t}w\dd V - \int\limits_V \rho(\vb x)F(\vb x, t)w\dd V = 0 
+    -\int\limits_V [p(\vb x)u_{,i}]_{,i}w \dd{V} + \int\limits_{S_t} [p(\vb x)u_{,i}] \hat n_i w\dd{S} - \int\limits_{S_t} B(\vb x, t)w\dd{S}\\
+    + \int\limits_V q(\vb x)u(\vb x, t)w \dd{V}  + \int\limits_V \rho(\vec x)\pdv{u}{t}w\dd{V} - \int\limits_V \rho(\vb x)F(\vb x, t)w\dd{V} = 0 
 \end{multline}
 
 Grouping together common terms yields
-\[\int\limits_V \left\{\rho(\vb x)\pdv{u}{t} - [p(\vb x)u_{,i}]_{,i} + q(\vb x)u(\vb x, t) - \rho(\vb x)F(\vb x, t)\right\} w\dd V + \int \limits_{S_t} \left\{[p(\vb x)u_{,i}]\hat n_i - B(\vb x, t) \right\} w\dd S = 0\]
+\[\int\limits_V \left\{\rho(\vb x)\pdv{u}{t} - [p(\vb x)u_{,i}]_{,i} + q(\vb x)u(\vb x, t) - \rho(\vb x)F(\vb x, t)\right\} w\dd{V} + \int \limits_{S_t} \left\{[p(\vb x)u_{,i}]\hat n_i - B(\vb x, t) \right\} w\dd{S} = 0\]
 from which
 \[\rho(\vb x)\pdv{u}{t} - [p(\vb x)u_{,i}]_{,i} + q(\vb x)u(\vb x, t) - \rho(\vb x)F(\vb x, t) = 0\]
 and
@@ -348,9 +348,9 @@ The strain field can be obtained after using the stress solution found in \cref{
 
 \begin{equation}
 \begin{aligned}
-{\epsilon _{xx}}& = \frac{1}{E}({\sigma _{xx}} - \nu {\sigma _{yy}}) \\
-{\epsilon _{yy}}& = \frac{1}{E}({\sigma _{yy}} - \nu {\sigma _{xx}}) \\
-{\gamma _{xy}}& = \frac{{{\tau _{xy}}}}{\mu }
+\epsilon_{xx}& = \frac{1}{E}(\sigma_{xx} - \nu \sigma_{yy}) \\
+\epsilon_{yy}& = \frac{1}{E}(\sigma_{yy} - \nu \sigma_{xx}) \\
+\gamma_{xy}& = \frac{\tau _{xy}}{\mu}
 \end{aligned}
 \label{eq:cons model}
 \end{equation}
@@ -403,24 +403,24 @@ We will see that the weak form (and therefore also the strong form) can be obtai
 \subsubsection*{Some vague definitions in the calculus of variations}
 In variational calculus a {\bf functional} can be understood as a ``function" having as independent variables or arguments a space of vector functions and producing as a result (or dependent variable) a scalar. For instance, in the particular case of the theory of elasticity such a ``function" corresponds to the total potential energy functional $\Pi$ given by;
 \begin{equation}\label{eq:Potential}
-    \Pi(u_i) = \frac{1}{2}\int\limits_V \sigma_{ij}\varepsilon_{ij}\dd V  - \int\limits_V f_i\, u_i\dd V  - \int\limits_S t_i^{(n)} u_i\dd S
+    \Pi(u_i) = \frac{1}{2}\int\limits_V \sigma_{ij}\varepsilon_{ij}\dd{V}  - \int\limits_V f_i\, u_i\dd{V}  - \int\limits_S t_i^{(n)} u_i\dd{S}
 \end{equation}
 and where the first term in the left hand side corresponds to the internal strain energy, while the last two terms are the work done by the external body and traction forces. The above functional has as independent variables the displacement vector and its spatial derivatives. This is indicated by the presence of the displacement vector $u_i$ in the expression $\Pi(u_i)$.
 
-In variational calculus we are interested in finding a function $u_i$ that renders the functional $\Pi$ a maximum or a minimum. In loose terms, the analogous to the differential operator in calculus of functions is now termed the variational operator $\delta$ (i.e., $\delta$ is analogous to $\pdv{x_i}$). As such $\delta\Pi$ acts over the function $u_i$ and its derivatives as follows
-\[\delta \Pi  = \pdv{\Pi}{u_i}\delta u_i + \pdv{\Pi}{\left( \pdv{u_i}{x_j}\right)} \delta\left(\pdv{u_i}{x_j}\right) + \cdots + \pdv{\Pi}{\left( \pdv{^{n}u_i}{x_j \cdots \partial x_k}\right)} \delta\left( \pdv{^{n}u_i}{x_j \cdots \partial x_k}\right) \enspace .\]
+In variational calculus we are interested in finding a function $u_i$ that renders the functional $\Pi$ a maximum or a minimum. In loose terms, the analogous to the differential operator in calculus of functions is now termed the variational operator $\var$ (i.e., $\var$ is analogous to $\pdv{x_i}$). As such $\var{\Pi}$ acts over the function $u_i$ and its derivatives as follows
+\[\var{\Pi}  = \pdv{\Pi}{u_i}\var{u_i} + \pdv{\Pi}{\left( \pdv{u_i}{x_j}\right)} \delta\left(\pdv{u_i}{x_j}\right) + \cdots + \pdv{\Pi}{\left( \pdv{^{n}u_i}{x_j \cdots \partial x_k}\right)} \delta\left( \pdv{^{n}u_i}{x_j \cdots \partial x_k}\right) \enspace .\]
 
 The following rules apply to the variational operator $\delta$:
 \begin{itemize}
-\item For functionals $\Pi$ and $\Phi$ it follows that \[\delta (\Pi  + \Phi ) = \delta \Pi  + \delta \Phi \]
-\item For functionals $\Pi$ and $\Phi$ it follows that \[\delta (\Pi \Phi ) = \delta \Pi \Phi  + \Pi \delta \Phi \]
-\item For a functional $\Pi$ and an integer $n$ it follows that \[\delta ({\Pi ^n}) = n({\Pi ^{n - 1}})\delta \Pi \]
-\item For a functional $\Pi$ it follows that \[\delta \int {\Pi \dd x}  = \int {\delta \Pi \dd x} \]
+\item For functionals $\Pi$ and $\Phi$ it follows that \[\var(\Pi  + \Phi) = \var{\Pi}  + \var{\Phi}\]
+\item For functionals $\Pi$ and $\Phi$ it follows that \[\var(\Pi \Phi ) = \var{\Pi} \Phi  + \Pi \var{\Phi}\]
+\item For a functional $\Pi$ and an integer $n$ it follows that \[\var(\Pi^n) = n(\Pi^{n - 1})\var{\Pi}\]
+\item For a functional $\Pi$ it follows that \[\var{\int \Pi \dd{x}}  = \int \var{\Pi} \dd{x} \]
 \end{itemize}
 
-If the variational operator is applied to the functional $\Pi (u_i)$ it produces functions or variations in $u_i$ which are arbitrary and such $\delta {u_i} \in V$ and $\delta {u_i} = 0$ in $S_u$.
+If the variational operator is applied to the functional $\Pi(u_i)$ it produces functions or variations in $u_i$ which are arbitrary and such $\var{u_i} \in V$ and $\var{u_i} = 0$ in $S_u$.
 
-To find an extreme function in the calculus of variations we proceed like in differential calculus. Here we compute the first variation of the functional $\delta \Pi$ and solve the variational equation
+To find an extreme function in the calculus of variations we proceed like in differential calculus. Here we compute the first variation of the functional $\var{\Pi}$ and solve the variational equation
 \begin{equation}\label{eq:vareq}
     \delta \Pi  = 0
 \end{equation}
@@ -428,7 +428,7 @@ in the unknown function $u_i$.
 
 In the particular case of the total potential energy functional $\Pi$ this yields
 \begin{equation}\label{eq:ClaPVW}
-    \int\limits_V \sigma _{ij}\delta \varepsilon_{ij}\dd V  - \int\limits_V f_i \delta u_i \dd V  - \int\limits_{S_t} t_i^{(n)} \delta u_i\dd S  = 0
+    \int\limits_V \sigma _{ij}\var{\varepsilon_{ij}}\dd{V}  - \int\limits_V f_i var{u_i} \dd{V}  - \int\limits_{S_t} t_i^{(n)} \var{u_i}\dd{S}  = 0
 \end{equation}
 where we recognize the weak form of the BVP stated previously. It becomes evident that the functions $\delta {u_i}$ in \cref{eq:ClaPVW} play the role of the test functions $w_i$ introduced in the weak form. On the other hand, since we have already shown that the weak and strong forms are equivalent we conclude that having the functional and the essential boundary conditions is equivalent to having the strong form of the problem.
 
@@ -441,13 +441,13 @@ In the theory of elasticity the total potential energy $\Pi$ is the result of ad
 
 The above principle leads to the so-called principle of virtual displacements stated as follows\footnote{see Bathe pp 156}:
 ``The equilibrium of the body requires that for any compatible small virtual displacements satisfying the condition of being zero at $S_u$, imposed on the body in its state of equilibrium, the total internal virtual work is equal to the total external virtual work"
-\[\int\limits_V \sigma _{ij}\delta \varepsilon_{ij}\dd V  - \int\limits_V f_i\delta u_i\dd V  - \int\limits_{S_t} t_i^{(n)}\delta u_i\dd S  = 0\]
-where $\delta {u_i}$ are the virtual displacements and $\delta \varepsilon_{ij}$ are the corresponding virtual strains.
+\[\int\limits_V \sigma _{ij}\var{\varepsilon_{ij}}\dd{V}  - \int\limits_V f_i\delta u_i\dd{V}  - \int\limits_{S_t} t_i^{(n)}\var{u_i}\dd{S}  = 0\]
+where $\var{u_i}$ are the virtual displacements and $\var{ \varepsilon_{ij}}$ are the corresponding virtual strains.
 
-Comparing the virtual work principle with the weak formulation given in \cref{eq:weak} we identify $\delta u_i$ with the test functions $w_i$. As such the PVW takes the form of a powerful tool to test if a body is in equilibrium for a given solution (represented by the trial functions). In what follows we illustrate the use of the principle through some examples corresponding to problems in Bathe's textbook.
+Comparing the virtual work principle with the weak formulation given in \cref{eq:weak} we identify $\var{u_i}$ with the test functions $w_i$. As such the PVW takes the form of a powerful tool to test if a body is in equilibrium for a given solution (represented by the trial functions). In what follows we illustrate the use of the principle through some examples corresponding to problems in Bathe's textbook.
 
-\subsubsection*{Problem 3.15 (In Bathe's book)}
-Establish the differential equation of equilibrium of the problem shown and the boundary conditions. Determine whether the differential operator of the problem is symmetric and positive definite and prove your answer.
+\subsubsection*{Problem 3.15 from Finite Element Procedures}
+Establish the differential equation of equilibrium of the problem shown and the boundary conditions. Determine whether the differential operator of the problem is symmetric and positive definite and prove your answer.\cite{book:bathe}
 
 \begin{figure}[H]
     \centering
@@ -457,18 +457,22 @@ Establish the differential equation of equilibrium of the problem shown and the 
 \end{figure}
 
 
-\[\Pi  = \frac{1}{2}\int\limits_0^L {{\sigma _{xx}}{\varepsilon _{xx}}A(x)dx} + \frac{1}{2}ku_0^2 - R{u_L} \]
-\[\Pi  = \frac{1}{2}\int\limits_0^L {EA(x){{\left( {\frac{{du}}{{dx}}} \right)}^2}dx + \frac{1}{2}ku_0^2}  - R{u_L}\]
+\begin{align*}
+\Pi &= \frac{1}{2}\int\limits_0^L \sigma_{xx}\varepsilon_{xx}A(x)\dd{x} + \frac{1}{2}ku_0^2 - R u_L \\
+ &= \frac{1}{2}\int\limits_0^L EA(x)\left( \dv{u}{x}\right)^2 \dd{x} + \frac{1}{2}ku_0^2  - R u_L \enspace.
+\end{align*}
 
-The first variation is
-\[\delta \Pi  = \int\limits_0^L {EA(x)\frac{{du}}{{dx}}\frac{{d\delta u}}{{dx}}dx + k{u_0}\delta {u_0}}  - R\delta {u_L}\]
+The first variation for this functional is
+\[\var{\Pi}  = \int\limits_0^L EA(x)\dv{u}{x}\dv{\var{u}}{x}\dd{x} + k u_0\var{u_0}  - R\var{u_L} \enspace .\]
 
-Integrating by parts
-\[\delta \Pi  =  - \int\limits_0^L {\frac{d}{{dx}}\left[ {EA(x)\frac{{du}}{{dx}}} \right]\delta udx + \left. {EA(x)\frac{{du}}{{dx}}\delta u} \right]_0^L + k{u_0}\delta {u_0}}  - R\delta {u_L}\]
+If we integrate by parts, we obtain
+\[\var{\Pi}  =  - \int\limits_0^L \dv{x}\left[EA(x)\dv{u}{x}\right]\var{u}\dd{x} + \left. EA(x)\dv{u}{x}\var{u} \right|_0^L + k{u_0}\var{u_0}  - R\var{u_L}\]
 from which
-\[\frac{d}{{dx}}\left[ {EA(x)\frac{{du}}{{dx}}} \right] = 0\]
-\[{\left. {EA(x)\frac{{du}}{{dx}}} \right]_{x = 0}} = k{u_0}\]
-\[{\left. {EA(x)\frac{{du}}{{dx}}} \right]_{x = L}} = R\]
+\begin{align*}
+&\dv{x}\left[EA(x)\dv{u}{x}\right] = 0\\
+&\left. EA(x)\dv{u}{x}\right|_{x=0} = k u_0\\
+&\left. EA(x)\dv{u}{x}\right|_{x=L} = R
+\end{align*}
 
 
 \subsubsection*{Problem 4.35-The Hu-Washizu Variational Principle}
@@ -486,124 +490,97 @@ where
 \item $\lambda_{ij}^\varepsilon $ and $\lambda_i^u$ are Lagrange multipliers.
 \end{itemize}
 
-Using the condition $\delta \Pi = 0$ derive for the interior of the body the equilibrium equations;
-
-\[{\sigma _{ij,j}} + {f_i} = 0\]
-
-the strain-displacement relationship;
-
-\[{\varepsilon _{ij}} = {L_{ijk}}{u_k}\]
-
-and the constitutive equation;
-
-\[{\sigma _{ij}} = {C_{ijkl}}{\varepsilon _{kl}}\]
-
-and at the surface of the body the relation between the stress tensor and the applied tractions vector at $S_t$;
-
-\[{t_i} = {\sigma _{ij}}{n_j}\]
-
-the relation between the stress tensor and the unknown tractions vector (or reactions) at $S_u$; 
-
-\[{t_i} = {{\tilde \sigma }_{ij}}{n_j}\]
-
-and the essential boundary condition at $S_u$;
-
-\[{u_i} = {{\tilde u}_i}\]
-
-We want to determine the so-called Euler equations resulting from the condition $\delta \pi^* = 0$. Applying the variational operator we have:
+Using the condition $\var{\Pi} = 0$ derive for the interior of the body the equilibrium equations
+\[\sigma_{ij,j} + f_i = 0\]
+the strain-displacement relationship
+\[\varepsilon_{ij} = L_{ijk} u_k\]
+and the constitutive equation
+\[\sigma_{ij} = C_{ijkl} \varepsilon_{kl}\]
+and at the surface of the body the relation between the stress tensor and the applied tractions vector at $S_t$
+\[t_i = \sigma_{ij} n_j\]
+the relation between the stress tensor and the unknown tractions vector (or reactions) at $S_u$
+\[t_i = \tilde{\sigma_{ij}} n_j\]
+and the essential boundary condition at $S_u$
+\[u_i = \tilde{u}_i\]
+We want to determine the so-called Euler equations resulting from the condition $\var{\Pi}^* = 0$. Applying the variational operator we have:
 \begin{equation}
 \begin{aligned}
-\delta \Pi^*& = \delta \Pi  - \intL_V \delta \lambda_{ij}^{\varepsilon}  (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}- \intL_V \lambda_{ij}^\varepsilon (\delta \varepsilon_{ij} - L_{ijk}\delta u_k)\dd{V} \\
-&-\intL_V \delta \lambda_i^u (u_i^{S_u} - \bar u_i)\dd{S} - \intL_V \lambda _i^u \delta u_i^{S_u} \dd{S}
+\var{\Pi}^*& = \var{\Pi}  - \intL_V \var{\lambda}_{ij}^{\varepsilon}  (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}- \intL_V \lambda_{ij}^\varepsilon (\var{\varepsilon}_{ij} - L_{ijk}\var{u}_k)\dd{V} \\
+&-\intL_V \var{\lambda}_i^u (u_i^{S_u} - \bar u_i)\dd{S} - \intL_V \lambda _i^u \var{u}_i^{S_u} \dd{S}
 \end{aligned}
 \end{equation}
-
+and
 \begin{equation}
 \begin{aligned}
-\delta \Pi^* &= \intL_V C_{ijkl} \varepsilon_{kl} \delta  \varepsilon_{ij}\dd{V} - \intL_{S_t} t_i \delta{u_i} \dd{S}  - \intL_V f_i\delta {u_i}\dd{V} - \intL_V \lambda_{ij}^{\varepsilon} \delta \varepsilon_{ij}\dd{V}  + \intL_V \lambda_{ij}^{\varepsilon} L_{ijk}\delta {u_k}\dd{V}\\
-&- \intL_V \delta \lambda_{ij}^{\varepsilon} (\varepsilon_{ij} - L_{ijk} u_k)\dd{V} - \intL_S \delta \lambda_i^u (u_i^{S_u} - \bar {u}_i)dS - \intL_{S_u} \lambda _i^u\delta {u_i}\dd{S} = 0
+\var{\Pi}^* &= \intL_V C_{ijkl} \varepsilon_{kl} \var{ \varepsilon}_{ij}\dd{V} - \intL_{S_t} t_i \var{u_i} \dd{S}  - \intL_V f_i \var{u_i}\dd{V} - \intL_V \lambda_{ij}^{\varepsilon} \var{\varepsilon}_{ij}\dd{V}  + \intL_V \lambda_{ij}^{\varepsilon} L_{ijk}\var{u_k}\dd{V}\\
+&- \intL_V \delta \lambda_{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V} - \intL_S \var{\lambda}_i^u (u_i^{S_u} - \bar {u}_i)\dd{S} - \intL_{S_u} \lambda _i^u\var{u_i}\dd{S} = 0
 \end{aligned}
 \end{equation}
-
 using
+\[\intL_V (\lambda_{ij}^\varepsilon \var{u_i}){,_j}\dd{V} =  \intL_V \lambda_{ij}^\varepsilon \var{u}_{i,j}\dd{V}  + \intL_V \lambda_{ij,j}^\varepsilon \var{u_i}\dd{V} \]
 
-\[\intL_V {(\lambda _{ij}^\varepsilon \delta {u_i}){,_j}dV = } \intL_V {\lambda _{ij}^\varepsilon \delta {u_{i,j}}dV}  + \intL_V {\lambda _{ij,j}^\varepsilon \delta {u_i}dV} \]
-
-in the above we can write
-
+In the above we can write
 \begin{align*}
-\intL_V {\lambda _{ij}^\varepsilon {L_{ijk}}\delta {u_k}dV} & = \intL_V {{{(\lambda _{ij}^\varepsilon \delta {u_i})}_{,j}}dV}  - \intL_V {\lambda _{ij,j}^\varepsilon \delta {u_i}dV}\\
-& = \intL_{{S_t}} {\lambda _{ij}^\varepsilon \delta {u_i}{{\hat n}_j}dS}  - \intL_V {\lambda _{ij,j}^\varepsilon \delta {u_i}dV}
+\intL_V \lambda_{ij}^\varepsilon L_{ijk}\var{u_k}\dd{V} & = \intL_V (\lambda_{ij}^\varepsilon \var{u_i})_{,j}\dd{V} - \intL_V \lambda_{ij,j}^\varepsilon \delta {u_i}\dd{V}\\
+& = \intL_{S_t} \lambda_{ij}^\varepsilon \var{u_i}\hat {n}_j\dd{S}  - \intL_V \lambda_{ij,j}^\varepsilon \var{u_i}\dd{V}
 \end{align*}
-
 therefore
-
-
 \begin{align*}
-\delta \Pi^* &= \intL_V {({C_{ijkl}}{\varepsilon _{kl}} - \lambda _{ij}^\varepsilon )\delta {\varepsilon _{ij}}dV - \intL_{{S_t}} {{t_i}\delta {u_i}dS}  - \intL_V {{f_i}\delta {u_i}dV + } } \intL_{{S_t}} {\lambda _{ij}^\varepsilon \delta {u_i}{{\hat n}_j}dS}  - \intL_V {\lambda _{ij,j}^\varepsilon \delta {u_i}dV}\\
-&- \intL_V {\delta \lambda _{ij}^\varepsilon ({\varepsilon _{ij}} - {L_{ijk}}{u_k})dV}  - \intL_{{S_u}} {\delta \lambda _i^u(u_i^{{S_u}} - {{\bar u}_i})dS}  - \intL_{{S_u}} {\lambda _i^u\delta {u_i}dS}  = 0
+\delta \Pi^* &= \intL_V (C_{ijkl}\varepsilon_{kl} - \lambda_{ij}^\varepsilon) \var{\varepsilon}_{ij}\dd{V} - \intL_{S_t} t_i \var{u}_i\dd{S} - \intL_V f_i \var{u}_i\dd{V} + \intL_{S_t} \lambda_{ij}^\varepsilon \var{u_i}\hat{n}_j\dd{S}  - \intL_V \lambda_{ij,j}^\varepsilon \delta {u_i}\dd{V}\\
+&- \intL_V \delta \lambda _{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}  - \intL_{S_u} \var{\lambda}_i^u (u_i^{S_u} - \bar{u}_i)\dd{S} - \intL_{S_u} \lambda_i^u \var{u_i} \dd{S}  = 0\\
+&= \intL_V (C_{ijkl}\varepsilon_{kl} - \lambda_{ij}^\varepsilon) \var{\varepsilon}_{ij}\dd{V}
++ \intL_{S_t} (\lambda_{ij}^\varepsilon \hat{n}_j - t_i)\delta {u_i}\dd{S}\\
+&- \intL_V (\lambda_{ij,j}^\varepsilon  + f_i) \var{u_i}\dd{V}
+- \intL_V (\varepsilon_{ij} - L_{ijk} u_k) \var{\lambda} _{ij}^\varepsilon\dd{V}
+- \intL_{S_u} (u_i^{S_u} - \bar{u}_i) \var{\lambda}_i^u\dd{S}  - \cancel{\intL_{S_u} \lambda _i^u \var{u}_i^{S_u}\dd{S}} = 0
 \end{align*}
 
-
-\begin{align*}
-&\intL_V {({C_{ijkl}}{\varepsilon _{kl}} - \lambda _{ij}^\varepsilon )\delta {\varepsilon _{ij}}dV
-+ \intL_{{S_t}} {(\lambda _{ij}^\varepsilon {{\hat n}_j} - {t_i})\delta {u_i}dS}  - }\\
-&\intL_V {(\lambda _{ij,j}^\varepsilon  + {f_i})\delta {u_i}dV}
-- \intL_V {({\varepsilon _{ij}} - {L_{ijk}}{u_k})\delta \lambda _{ij}^\varepsilon dV}
-- \intL_{{S_u}} {(u_i^{{S_u}} - {{\bar u}_i})\delta \lambda _i^udS}  - \cancel{\intL_{{S_u}} {\lambda _i^u\delta u_i^{{S_u}}dS} = } 0
-\end{align*}
-
-
-Now, imposing the conditions $\delta {\varepsilon _{ij}} \neq 0$, $\delta \lambda _{ij}^\varepsilon  \neq 0$, $\delta {u_i} \neq 0$ in $S_t$, $\delta {u_i} \neq 0$ in $V$ and $\delta \lambda _i^u \neq 0$ in $S_u$ we have
-%
+Now, imposing the conditions $\var{\varepsilon}_{ij} \neq 0$, $\var{\lambda}_{ij}^\varepsilon  \neq 0$, $var{u}_i \neq 0$ in $S_t$, $\var{u}_i \neq 0$ in $V$ and $\var{\lambda}_i^u \neq 0$ in $S_u$ we have
 \begin{align}
-&\lambda _{ij}^\varepsilon  = C_{ijkl} \varepsilon_{kl}\\
-&\varepsilon_{ij} = {L_{ijk}}{u_k}\\
+&\lambda_{ij}^\varepsilon  = C_{ijkl} \varepsilon_{kl}\\
+&\varepsilon_{ij} = L_{ijk} u_k\\
 t_i &= \lambda_{ij}^\varepsilon \hat{n}_j\\
-&\lambda _{ij,j}^\varepsilon  + {f_i} = 0\\
-&u_i^{S_u} = \bar{u}_i
+&\lambda_{ij,j}^\varepsilon  + {f_i} = 0\\
+&u_i^{S_u} = \bar{u}_i \enspace .
 \end{align}
 
 \subsection{Weighted residual methods}
-In the the following derivations we will assume that the actual solution to the generalized BVP is approximated by the superposition;
-
-\[u(\vec x) = {N^I}(\vec x){u^I}\]
-
+In the the following derivations we will assume that the actual solution to the generalized BVP is approximated by the superposition
+\[u(\vb{x}) = {N^I}(\vb{x}){u^I}\]
 where $I=1,2,...,K$.
 
-Since we are now using an approximation we have the following "unbalanced" condition;
-
-\[Lu(\vec x,t) - \rho (\vec x)F(\vec x,t) = R \ne 0\]
-
+Since we are now using an approximation we have the following ``unbalanced" condition
+\[Lu(\vb{x},t) - \rho (\vb{x})F(\vb{x}, t) = R \ne 0\]
 where the term $R$ corresponds to a residual error which is to be distributed throughout the solution domain.
 
 
-
 \subsubsection*{Application to the Navier equations}
+In this case the differential equations are written as
+\[(\lambda  + \mu ){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \enspace .\]
 
-\[(\lambda  + \mu ){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0\]
-\[{L_{ij}} \equiv (\lambda  + \mu )\frac{{{\partial ^2}}}{{\partial {x_i}\partial {x_j}}} + \mu \frac{{{\partial ^2}}}{{\partial {x_k}\partial {x_k}}}{\delta _{ij}}\]
-\[{r_i} =  - {f_i}\]
-\[{u_i} = N_i^Q{u^Q}\]
-\[{L_{ij}}({u_j}) \equiv (\lambda  + \mu ){(N_j^Q{u^Q})_{,ij}} + \mu {(N_j^Q{u^Q})_{,kk}}{\delta _{ij}}\]
-\[{L_{ij}}({u_j}) \equiv (\lambda  + \mu )N_{j,ij}^Q{u^Q} + \mu N_{i,kk}^Q{u^Q}\]
-\[{L_{ij}}({u_j}) \equiv {L_{ij}}(N_j^Q){u^Q}\]
+We can write the differential operator as
+\[L_{ij} \equiv (\lambda  + \mu )\pdv[2]{}{x_i}{x_j} + \mu \pdv[2]{}{x_k}{x_k}\delta_{ij}\]
+
+\begin{align*}
+&r_i =  - f_i\\
+&u_i = N_i^Q u^Q\\
+&L_{ij}(u_j) \equiv (\lambda  + \mu )(N_j^Q{u^Q})_{,ij} + \mu (N_j^Q{u^Q})_{,kk}\delta_{ij}\\
+&L_{ij}(u_j) \equiv (\lambda  + \mu )N_{j,ij}^Q u^Q + \mu N_{i,kk}^Q u^Q\\
+&L_{ij}(u_j) \equiv L_{ij}(N_j^Q) u^Q \enspace .
+\end{align*}
 
 In the Galerkin scheme we use the trial function as weighting function.
-
-\[{R_i} \equiv {L_{ij}}(N_j^Q){u^Q} + {f_i}\]
-
-and we state
+\[R_i \equiv L_{ij}(N_j^Q) u^Q + f_i\]
+and we state \dots
 
 
 
 \subsubsection*{Application to the acoustic wave equation}
 
 \section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
+
 \subsection*{A simple spring-mass system}
-The simple problem of a spring-mass system considered next resembles most of the algorithmic aspects of a finite element code with the advantage that the problem is already a discrete mechanical system. The problem consists of an assemblage of masses joined by different springs submitted to time varying loads. Each spring plays the role of a finite element and each mass is analogous to a nodal point in a finite element algorithm. For instance the full system may be like the one shown in \cref{fig:bathe}:
-
-
+The simple problem of a spring-mass system considered next resembles most of the algorithmic aspects of a finite element code with the advantage that the problem is already a discrete mechanical system. The problem consists of an assemblage of masses joined by different springs submitted to time varying loads. Each spring plays the role of a finite element and each mass is analogous to a nodal point in a finite element algorithm. For instance the full system may be like the one shown in \cref{fig:bathe}
 \begin{figure}[H]
 \centering
 \includegraphics[width=10cm]{spring_system.pdf}
@@ -613,7 +590,6 @@ The simple problem of a spring-mass system considered next resembles most of the
 
 
 Consider a typical spring (finite element) like the one shown in \cref{fig:springel}
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=8cm]{springel.pdf}
@@ -621,40 +597,34 @@ Consider a typical spring (finite element) like the one shown in \cref{fig:sprin
 \label{fig:springel}
 \end{figure}
 
-The relation between the force and the relative displacement can be written like;
-
-\[{f_1} = K({u_1} - {u_2})\]
-
-and from equilibrium we have;
-
-\[{f_1} + {f_2} = 0\]
-
+The relation between the force and the relative displacement can be written like
+\[f_1 = K(u_1 - u_2)\]
+and from equilibrium we have
+\[f_1 + f_2 = 0\]
 which yields the following force-displacement relationship for a typical spring element:
-
 \begin{equation}
-\left\{ {\begin{array}{*{20}{c}}
-{{f_1}}\\
-{{f_2}}
-\end{array}} \right\} = K\left[ {\begin{array}{*{20}{c}}
-{1.0}&{ - 1.0}\\
-{ - 1.0}&{1.0}
-\end{array}} \right]\left\{ {\begin{array}{*{20}{c}}
-{{u_1}}\\
-{{u_2}}
-\end{array}} \right\}
-\label{Kspring}
+    \begin{Bmatrix}
+        f_1\\
+        f_2
+    \end{Bmatrix} =
+    K\begin{bmatrix}
+          1.0 & -1.0\\
+        - 1.0 & 1.0
+    \end{bmatrix}
+    \begin{Bmatrix}
+        u_1\\
+        u_2
+    \end{Bmatrix}
+    \label{eq:Kspring}
 \end{equation}
 
-On the other hand, the equilibrium equation for a typical mass with displacement $u_j$  (see \cref{fig:dclmass}) and attached to springs $i$ and $i+1$ read;
-
+On the other hand, the equilibrium equation for a typical mass with displacement $u_j$  (see \cref{fig:dclmass}) and attached to springs $i$ and $i+1$ reads
 \begin{equation}
-f_2^i + f_1^{i + 1} + {m_j}\frac{{d{V_j}}}{{dt}} = {P_j}.
-\label{equilmass}
+f_2^i + f_1^{i + 1} + m_j \dv{V_j}{t} = P_j.
+\label{eq:equilmass}
 \end{equation}
-
-which can be written in terms of displacements using \cref{Kspring} like;
-
-\[({K^i} + {K^{i + 1}}){u_j} - {K^i}{u_{j - 1}} - {K^{i + 1}}{u_{j + 1}} + {m_j}\frac{{d{V_j}}}{{dt}} = {P_j}.\]
+which can be written in terms of displacements using \cref{eq:Kspring} like
+\[(K^i + K^{i + 1}) u_j - K^i u_{j - 1} - K^{i + 1} u_{j + 1} + m_j\dv{V_j}{t} = P_j .\]
 
 
 \begin{figure}[H]
@@ -664,35 +634,29 @@ which can be written in terms of displacements using \cref{Kspring} like;
 \label{fig:dclmass}
 \end{figure}
 
-Considering now the complete system of masses and springs leads to a system of linear equations of the form;
-
+Considering now the complete system of masses and springs leads to a system of linear equations of the form
 \begin{equation}
 \left[ {{K_G}} \right]\left\{ {{U_G}} \right\} + \left[ M \right]\left\{ {{A_G}} \right\} = \left\{ {{F_G}} \right\}.
-\label{global}
+\label{eq:global}
 \end{equation}
+where each equation represents the equilibrium of a given mass.
 
-where each equation represents the equilibrium of a given mass. The system given by \cref{global} can be solved in the displacements $U_G$. The pseudo-code shown in \cref{springsalg} presents all the steps required to solve the problem in the context of the finite element method. In that code the so-called DME operator is an equation assembly array indicating how each element contributes to the global stiffness and mass matrix.
+The system given by \cref{eq:global} can be solved in the displacements $U_G$. The pseudo-code shown in \cref{algo:springs} presents all the steps required to solve the problem in the context of the finite element method. In that code the so-called DME operator is an equation assembly array indicating how each element contributes to the global stiffness and mass matrix.
 
-
-\begin{algorithm}[H]
- \SetAlgoLined
- \KwData{Problem parameters; NUMNP, NUMEL, NMATP}
- \KwResult{Displacements and spring forces}
- Create $DM$E operator\;
- Assemble $K^G$, $F^G$\;
-\While{$j \leq 1, NUMEL$}{
-\[
-\begin{aligned}
-K^G \leftarrow K^G+K^i\\
-F^G \leftarrow F^G+F^i\\
-\end{aligned}
-\]
-}
-Impose BCs\;
-Solve $[K^G]U=F^G$\\
-Find internal forces
-\caption{Springs Algorithm}
-\label{springsalg}
+\begin{algorithm}[H]\label{algo:springs}
+    \SetAlgoLined
+    \KwData{Problem parameters; NUMNP, NUMEL, NMATP}
+    \KwResult{Displacements and spring forces}
+    Create $DM$E operator\;
+    Assemble $K^G$, $F^G$\;
+    \While{$j \leq 1, NUMEL$}{
+        $K^G \leftarrow K^G+K^i$\\
+        $F^G \leftarrow F^G+F^i$\\
+    }
+    Impose BCs\;
+    Solve $[K^G]U=F^G$\\
+    Find internal forces
+    \caption{Springs Algorithm.}    
 \end{algorithm}
 
 
@@ -725,56 +689,43 @@ In finite element analysis local interpolation is used in order to proceed syste
 \end{figure}
 
 \subsubsection{Lagrange interpolation theorem}
-Given a set of n-points $\left\{ {({x^1},{y^1}),...,({x^n},{y^n})} \right\}$ where ${y^n} \equiv f({x^n})$ then: "there exists a unique polynomial $p(x)$ of order at most $(n-1)$ such $p({x^I}) = f({x^I})$ for $I=1,2,...,n$". The polynomial is given by;
-
-\begin{equation}
-p({x^I}) = {L^I}(x)f({x^I})
-\label{pol}
+Given a set of n-points $\{ (x^1, y^1),\cdots,(x^n, y^n)\}$ where $y^n \equiv f({x^n})$ then: ``there exists a unique polynomial $p(x)$ of order at most $(n-1)$ such $p(x^I) = f(x^I)$ for $I=1,2,\cdots,n$". The polynomial is given by;
+\begin{equation}\label{eq:pol}
+  p(x^I) = L^I(x) f(x^I)  
 \end{equation}
-
-for $I=1,2,...,n$ where;
-
-\begin{equation}
-{L^I}(x) = \prod\limits_{\scriptstyle J = 1\hfill\atop
-\scriptstyle I \ne J\hfill}^n {\frac{{(x - {x^J})}}{{({x^I} - {x^J})}}}
-\label{coef}
+for $I=1,2,...,n$ where
+\begin{equation}\label{eq:coef}
+  L^I(x) = \prod_{\substack{J = 1\\ I \ne J}}^n \frac{(x - x^J)}{(x^I - x^J)}
 \end{equation}
-
 and where it should be noticed that
-
-\[{L^I}({x^J}) = {\delta ^{IJ}}.\]
+\[L^I(x^J) = \delta^{IJ}.\]
 
 \subsubsection*{Example for n=3}
-
 Consider the domain $[ - 1,1]$ and the data points at ${x^1} =  - 1.0$, ${x^2} =  + 1.0$ and ${x^3} = 0.0$. We have
-\[{L^1}(x) = \frac{{\left( {x - {x^2}} \right)\left( {x - {x^3}} \right)}}{{\left( {{x^1} - {x^2}} \right)\left( {{x^1} - {x^3}} \right)}} \equiv  - \frac{1}{2}\left( {1 - x} \right)x\]
-\[{L^2}(x) = \frac{{\left( {x - {x^1}} \right)\left( {x - {x^3}} \right)}}{{\left( {{x^2} - {x^1}} \right)\left( {{x^2} - {x^3}} \right)}} \equiv  + \frac{1}{2}\left( {1 + x} \right)x\]
+\begin{align*}
+& L^1(x) = \frac{(x - x^2)(x - x^3)}{(x^1 - x^2)(x^1-x^3)} \equiv  - \frac{1}{2}(1 - )x\\
+& L^2(x) = \frac{(x - x^1)(x - x^3)}{(x^2 - x^1)(x^2 - x^3)} \equiv  + \frac{1}{2}(1 + x)x
+\end{align*}
 and
-\[{L^3}(x) = \frac{{\left( {x - {x^1}} \right)\left( {x - {x^2}} \right)}}{{\left( {{x^3} - {x^1}} \right)\left( {{x^3} - {x^2}} \right)}} \equiv 1 - {x^2}.\]
+\[L^3(x) = \frac{(x - x^1)(x - x^2)}{(x^3 - x^1)(x^3 - x^2)} \equiv 1 - x^2.\]
 
-The resulting interpolating polynomials ${L^I}(x)$ and the interpolating function  are shown in \cref{fig:pols} below:
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=16cm]{func.pdf}
-\caption{Interpolating polynomials and the resulting interpolating function}
-\label{fig:pols}
+The resulting interpolating polynomials $L^I(x)$ and the interpolating function  are shown in \cref{fig:pols} below
+\begin{figure}[H]\label{fig:pols}
+  \centering
+  \includegraphics[width=16cm]{func.pdf}
+  \caption{Interpolating polynomials and the resulting interpolating function}
 \end{figure}
 
 \subsection*{Extension to 2D domains}
-Assume we are now interested in conducting interpolation of a function over a spatial 2-dimensional domain where every point is specified by a position vector of the form $\vec x = x\hat i + y\hat j$. We want to know, via interpolation, the value of a function $f(\vec x)$ at an arbitrary point $\vec x$ provided we know the set of n-points $\left\{ {({{\vec x}^1},{f^1}),...,({{\vec x}^n},{f^n})} \right\}$.
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=10cm]{element.pdf}
-\caption{Basic square domain}
-\label{fig:element}
+Assume we are now interested in conducting interpolation of a function over a spatial 2-dimensional domain where every point is specified by a position vector of the form $\vb{x} = x \hat{\imath} + y\hat{\jmath}$. We want to know, via interpolation, the value of a function $f(\vb{x})$ at an arbitrary point $\vb{x}$ provided we know the set of n-points $\{(\vb{x}^1, f^1),\cdots,(\vb{x}^n, f^n)\}$.
+\begin{figure}[H]\label{fig:element}
+  \centering
+  \includegraphics[width=10cm]{element.pdf}
+  \caption{Basic square domain}
 \end{figure}
 
-We first fix $x = {x^A}$ and conduct 1-dimensional interpolation along the $y$ direction as discussed in the previous section as follows (see \cref{fig:onedimn});
-
-\[f({x^A},y) = {L^1}(y){f^1} + {L^4}(y){f^4}\]
+We first fix $x = x^A$ and conduct 1-dimensional interpolation along the $y$ direction as discussed in the previous section as follows (see \cref{fig:onedimn})
+\[f(x^A,y) = L^1(y)f^1 + L^4(y)f^4\]
 
 \begin{figure}[H]
 \centering
@@ -783,33 +734,33 @@ We first fix $x = {x^A}$ and conduct 1-dimensional interpolation along the $y$ d
 \label{fig:onedimn}
 \end{figure}
 
-Similarly, we can fix $x = {x^B}$ and interpolate once again along the $y$ direction;
+Similarly, we can fix $x = x^B$ and interpolate once again along the $y$ direction
+\[f(x^B,y) = L^2(y)f^2 + L^3(y)f^3.\]
 
-\[f({x^B},y) = {L^2}(y){f^2} + {L^3}(y){f^3}.\]
-
-We now conduct the interpolation along the $x$-direction using the functions $f({x^A},y)$ and $f({x^B},y)$ respectively as follows;
-
-\[f(x,y) = {L^A}(x){f({x^A},y)} + {L^B}(x){f({x^B},y)}.\]
-\[f(x,y) = {L^A}(x)\left\{ {{L^1}(y){f^1} + {L^4}(y)f{}^4} \right\} + {L^B}(x)\left\{ {{L^2}(y){f^2} + {L^3}(y)f{}^3} \right\}\]
-\[f(x,y) = {L^A}(x){L^1}(y){f^1} + {L^A}(x){L^4}(y)f{}^4 + {L^B}(x){L^2}(y){f^2} + {L^B}(x){L^3}(y)f{}^3\]
-
-
+We now conduct the interpolation along the $x$-direction using the functions $f(x^A,y)$ and $f(x^B,y)$ respectively as follows
 \begin{align*}
-{L^A}(x) & \equiv {L^1}(\xi ) \\
-{L^B}(x) & \equiv {L^2}(\xi ) \\
-{L^1}(y) & \equiv {L^1}(\xi ) \\
-{L^2}(y) & \equiv {L^1}(\xi ) \\
-{L^3}(y) & \equiv {L^2}(\xi ) \\
-{L^4}(y) & \equiv {L^2}(\xi )
+  &f(x,y) = L^A(x) f(x^A,y) + L^B(x)f(x^B,y)\\
+  &f(x,y) = L^A(x)\{L^1(y)f^1 + L^4(y)f^4\} + L^B(x)\{L^2(y)f^2 + L^3(y)f^3\}\\
+  &f(x,y) = L^A(x)L^1(y)f^1 + L^A(x)L^4(y)f^4 + L^B(x)L^2(y)f^2 + L^B(x)L^3(y)f^3 \enspace ,
+\end{align*}
+where
+\begin{align*}
+L^A(x) & \equiv L^1(x)\\
+L^B(x) & \equiv L^2(x)\\
+L^1(y) & \equiv L^1(y)\\
+L^2(y) & \equiv L^1(y)\\
+L^3(y) & \equiv L^2(y)\\
+L^4(y) & \equiv L^2(x) \enspace .
 \end{align*}
 
-\[f(x,y) = {N^1}(x,y){f^1} + {N^2}(x,y){f^2} + {N^3}(x,y){f^3} + {N^4}(x,y){f^4}\]
-
+The function of two variables is then written as the product of one-dimensional interpolations
+\[f(x,y) = N^1(x,y)f^1 + N^2(x,y)f^2 + N^3(x,y)f^3 + N^4(x,y)f^4\]
+with
 \begin{align*}
-{N^1}(x,y) & = {L^1}(x){L^1}(y) \\
-{N^2}(x,y) & = {L^2}(x){L^1}(y) \\
-{N^3}(x,y) & = {L^2}(x){L^2}(y) \\
-{N^4}(x,y) & = {L^1}(x){L^2}(y)
+N^1(x,y) & = L^1(x)L^1(y)\\
+N^2(x,y) & = L^2(x)L^1(y)\\
+N^3(x,y) & = L^2(x)L^2(y)\\
+N^4(x,y) & = L^1(x)L^2(y) \enspace .
 \end{align*}
 
 See Figure \ref{fig:four-nodes-interp} for the shape functions of a 4-nodes element.
@@ -871,8 +822,9 @@ See Figure \ref{fig:nine-nodes-interp} for the shape functions of a 9-nodes elem
 		\caption{Shape function $N^6(x,y)$.}
 	\end{subfigure}
 	\caption{Shape functions for a 9-nodes element.}
+	\label{fig:nine-nodes-interp}
 \end{figure}
-
+%
 \begin{figure}
 	\ContinuedFloat
 	\centering
@@ -890,25 +842,22 @@ See Figure \ref{fig:nine-nodes-interp} for the shape functions of a 9-nodes elem
 		\includegraphics[width=\textwidth]{shape_func-9-nodes-9.pdf}
 		\caption{Shape function $N^9(x,y)$.}
 	\end{subfigure}
-\caption{Shape functions for a 9-nodes element.}
-\label{fig:nine-nodes-interp}
+\caption{Shape functions for a 9-nodes element. (Continued)}
 \end{figure}
 
 \subsection{Formulation of the finite element matrices}
 We now discretize the principle of virtual work repeated below for completeness:
-
 \begin{equation} \label{pvw_2}
-\intL_V \sigma_{ij} \delta u_{i,j} dV - \intL_V f_i \delta u_i dV - \intL_{S_t} t_i^n \delta u_i dS = 0.
+\intL_V \sigma_{ij} \delta u_{i,j} \dd{V} - \intL_V f_i \delta u_i \dd{V} - \intL_{S_t} t_i^n \delta u_i \dd{S} = 0.
 \end{equation}
 
-For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping sub-domains over each one of which we will approximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been cast into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows;
-
+For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping sub-domains over each one of which we will approximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been cast into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows
 \begin{equation}\label{pvw_dis}
-\sum_{e=1}^{NEL} \intL_{V^e} \sigma_{ij} \delta u_{i,j} d{V^e} - \intL_V f_i \delta u_i d{V^e} - \intL_{S_t} t_i^n \delta u_id{S^e} = 0 
+\sum_{e=1}^{NEL} \intL_{V^e} \sigma_{ij} \var{u}_{i,j} \dd{V^e} - \intL_V f_i \var{u}_i \dd{V^e} - \intL_{S_t} t_i^n \var{u}_i\dd{S^e} = 0 
 \end{equation}
 
 For easiness consider a single sub-domain
-\begin{equation} \label{pvw_sing}
+\begin{equation}\label{pvw_sing}
 \intL_V \sigma_{ij} \delta u_{i,j} dV - \intL_V f_i\delta u_idV - \intL_{S_t} t_i^n \delta u_i dS = 0.
 \end{equation}
 
@@ -918,7 +867,6 @@ or in more general form
 \begin{equation} \label{bas_interpol}
 {u_i}(\vb x) = N_i^Q(\vb x){u^Q}
 \end{equation}
-
 and where the caption superscripts indicate summation over the number of nodes of the element while the subscript refers to the physical character of the variable being interpolated.
 
 \begin{align*}
@@ -937,13 +885,14 @@ and where the caption superscripts indicate summation over the number of nodes o
 &K^{QP} u^P = f_V^Q + f_c^Q
 \end{align*}
 
+
 \subsubsection{Formulation in the physical space}
+
+
 \subsubsection{Formulation in the natural space: the continuum mechanics analogy}
 In typical finite element equilibrium equations we need to perform integration over the reference element domain $V_0(\vb{x})$ corresponding to originally arbitrarily shaped sub-domains as created during the meshing process.  In order to proceed with this integration it is useful to consider the following continuum mechanics analogy.
 
-First assume that the actual physical domain $V_0(\vb{x})$ is the result of a deformation process imparted upon the natural domain as shown in \cref{fig:natural domain}. In this analogy, the physical domain $V_0(\vb{x})$ is regarded like a ``deformed'' configuration at an imaginary time $t=t$, while the natural ``undeformed'' domain $V(\vb{r})$   is treated like a reference undeformed configurations at time $t=0$. Both configurations are assumed to be connected through a deformation process;
-
-
+First assume that the actual physical domain $V_0(\vb{x})$ is the result of a deformation process imparted upon the natural domain as shown in \cref{fig:natural domain}. In this analogy, the physical domain $V_0(\vb{x})$ is regarded like a ``deformed'' configuration at an imaginary time $t=t$, while the natural ``undeformed'' domain $V(\vb{r})$   is treated like a reference undeformed configurations at time $t=0$. Both configurations are assumed to be connected through a deformation process
 \begin{equation}
 \begin{aligned}
 \vb{X}&=\vb{X}(\vb{r})\\
@@ -951,24 +900,19 @@ First assume that the actual physical domain $V_0(\vb{x})$ is the result of a de
 \end{aligned}
 \label{eq:motion}
 \end{equation}
-
 \begin{figure}[h]
 \centering
 \includegraphics[width=8cm]{figure1.pdf}
 \caption{Definition of the natural domain}
 \label{fig:natural domain}
-\end{figure}
+\end{figure} 
 
- 
-
-In \cref{eq:motion} we can understand $\vb{r}$ like a material (Lagrangian) variable and $\vb{X}$ like a spatial (or Eulerian) variable. Using the continuum mechanics analogy it is clear that the ``deformation'' process at the continuum level is fully characterized by the ``deformation'' gradient or Jacobian of the transformation \cref{eq:motion} and defined according to;
-
+In \cref{eq:motion} we can understand $\vb{r}$ like a material (Lagrangian) variable and $\vb{X}$ like a spatial (or Eulerian) variable. Using the continuum mechanics analogy it is clear that the ``deformation'' process at the continuum level is fully characterized by the ``deformation'' gradient or Jacobian of the transformation \cref{eq:motion} and defined according to
 \begin{equation}
-dX_i=\dfrac{\partial X_i}{\partial r_J}dr_J\equiv J_{iJ}dr_{J}
+\dd{X}_i=\pdv{X_i}{r_J}\dd{r}_J\equiv J_{iJ}\dd{r}_{J}
 \label{eq:gradient}
 \end{equation}
-
-where $dr_{J}$ and $dX_i$ represent material vectors in the original and deformed configuration. From \cref{eq:gradient} it is evident that the Jacobian contains all the information describing the change of the physical sub-domain with respect to the natural element. For the element integration process we will assume that every element $V(\vb{r})$ in the natural domain deforms into the physical element $V_0(\vb{X})$, thus allowing us to write typical terms like the ones in the material stiffness matrix
+where $\dd{r}_{J}$ and $\dd{X}_i$ represent material vectors in the original and deformed configuration. From \cref{eq:gradient} it is evident that the Jacobian contains all the information describing the change of the physical sub-domain with respect to the natural element. For the element integration process we will assume that every element $V(\vb{r})$ in the natural domain deforms into the physical element $V_0(\vb{X})$, thus allowing us to write typical terms like the ones in the material stiffness matrix
 \begin{equation}
 \intL_{V(\vb{X})} \hat{B}_{ij}^K(\vb{X}) C_{ijkl} \hat{B}_{kl}^P(\vb{X}) dV(\vb{X})\equiv \intL_{V_0(\vb{r})} \hat{B}_{ij}^K(\vb{r}) C_{ijkl} \hat{B}_{kl}^P(\vb{r})J dV_0(\vb{r})
 \label{eq:matmatrix}
@@ -1141,14 +1085,14 @@ v^Q\\
 \end{equation}
 
 \begin{algorithm}[H]
-\SetAlgoLined
-\KwData{Nodal coordinates $x^Q$}
-\KwResult{Strain-displacement interpolator $B_{ij}^Q$ }
-Compute Jacobian ${J_{iJ}} = \pdv{N_i^Q}{r_J}{\hat x}^Q$\\
-Invert Jacobian  ${J_{iJ}} \to J_{iJ}^{ - 1}$\\
-Compute fundamental interpolator $L_{ij}^Q = J_{jP}^{ - 1}\pdv{N_i^Q}{r_P}$\\
-Assemble $B_{ij}^Q = \frac{1}{2}\left( {L_{ij}^Q + L_{ji}^Q} \right)$ 
-\caption{Strain-displacement interpolator}
+    \SetAlgoLined
+    \KwData{Nodal coordinates $x^Q$}
+    \KwResult{Strain-displacement interpolator $B_{ij}^Q$ }
+    Compute Jacobian ${J_{iJ}} = \pdv{N_i^Q}{r_J}{\hat x}^Q$\\
+    Invert Jacobian  ${J_{iJ}} \to J_{iJ}^{ - 1}$\\
+    Compute fundamental interpolator $L_{ij}^Q = J_{jP}^{ - 1}\pdv{N_i^Q}{r_P}$\\
+    Assemble $B_{ij}^Q = \frac{1}{2}\left( {L_{ij}^Q + L_{ji}^Q} \right)$ 
+    \caption{Strain-displacement interpolator}
 \end{algorithm}
 
 
