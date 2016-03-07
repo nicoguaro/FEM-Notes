@@ -545,13 +545,145 @@ t_i &= \lambda_{ij}^\varepsilon \hat{n}_j\\
 \end{align}
 
 \subsection{Weighted residual methods}
-In the the following derivations we will assume that the actual solution to the generalized BVP is approximated by the superposition
-\[u(\vb{x}) = {N^I}(\vb{x}){u^I}\]
-where $I=1,2,...,K$.
+This section introduces the concept of residual or difference from zero in a differential equation once its solution is aproximated numerically. For that purpose we will take as prototype equation the one obtained as our general model of BVP (see \cref{eq:GenPDE}) and recalled here for completeness:
 
-Since we are now using an approximation we have the following ``unbalanced" condition
-\[Lu(\vb{x},t) - \rho (\vb{x})F(\vb{x}, t) = R \ne 0\]
-where the term $R$ corresponds to a residual error which is to be distributed throughout the solution domain.
+\begin{equation}
+\rho(\vb x) \pdv{u(\vb x, t)}{t} + \mathcal{L}u(\vb x, t) = \rho (\vb x)F(\vb x, t) \enspace .
+\label{eq:GenPDE2}
+\end{equation}
+
+
+We will assume that the actual solution to the generalized BVP given by \cref{eq:GenPDE2} is approximated by the numerically derived solution $\tilde u(\vb{x})$ through a superposition like
+
+\begin{equation}
+\tilde u (\vb{x}) = {N^I}(\vb{x}){u^I}
+\label{basicsuper}
+\end{equation}
+
+where ${N^I}(\vb{x})$ are interpolating functions and $I$ denotes a superposition index  varying like $I=1,2,...,K$ with $K$ being the number of points where the solution is known. In what follows we will use $u(\vb{x})$ instead of $\tilde u (\vb{x})$ but will keep in mind that we are actually using the approximation given by \cref{basicsuper}. Similarly, in order to keep the discussion simple for the time being we will drop the time effects reducing the generailzed P.D.E to the simple form:
+
+\begin{equation}
+\mathcal{L}u(\vb x, t) = \rho (\vb x)F(\vb x, t) \enspace .
+\label{eq:GenPDE3}
+\end{equation}
+
+
+
+Now, since we are using the approximation given by \cref{basicsuper} this equation is not strictly satisifed but instead we will have the following "unbalanced" condition
+
+\[Lu(\vb{x},t) - \rho (\vb{x})F(\vb{x}, t) \equiv R \ne 0\]
+
+where the term $R$ corresponds to a residual error which is to be distributed throughout the solution domain. The so-called weighted residual methods differ in the form in which they distribute the residual between the different $K$ points conforming the computational domain.
+
+Using \cref{basicsuper} in \cref{eq:GenPDE2} and the linearity in the differential operator yields;
+
+\[R = \mathcal{L}({N^P}){u^P} - \rho F.\]
+
+In what follows we will consider different strategies to distribute or weight the residual $R$ over the computational domain.
+
+\subsubsection{Galerkin}
+In the Galerkin scheme the interpolation functions are used also as weighting functions leading to:
+
+\[\int\limits_V {{N^Q}RdV = 0} \]
+
+or explicitly;
+
+\begin{equation}
+\int\limits_V {{N^Q} \mathcal{L} ({N^P})dV} {u^P} = \int\limits_V {{N^Q}\rho FdV}
+\label{Galer}
+\end{equation}
+
+
+
+Imposing \cref{Galer} in the $K$ points conforming the computational domain or equivalently ranging $Q$ from $1$ to $K$ leads to the following system of algebraic equations;
+
+\begin{equation}
+{K^{QP}}{U^P} = {f^Q}
+\label{DGaler}
+\end{equation}
+
+where $U^P$ is a vector that stores the point values of the function $u$ along te $K$ points of the computational domain, while $f^Q$ stores the corresponding point excitations.
+
+\subsubsection{Least squares method}
+In this method the integral of the square of the residual is minimized with respect to the $K$ point parameters or nodal values of the function. Accordingly;
+
+\[\frac{\partial }{{\partial {u^I}}}\int\limits_V {{R^2}dV}  = 0\]
+
+\[\frac{\partial }{{\partial {u^I}}}\int\limits_V {{{[\mathcal{L}({N^P}{u^P}) - \rho F]}^2}dV}  = 0\]
+
+\[\int\limits_V {[\mathcal{L}({N^P}{u^P}) - \rho F]L({N^I})dV}  = 0\]
+
+\[\int\limits_V {L({N^I})L({N^P})dV} {u^P} - \rho \int\limits_V {L({N^I})FdV = 0} \]
+
+which can be written like;
+
+\begin{equation}
+{K^{IP}}{U^P} = {f^I}
+\label{Dsquares}
+\end{equation}
+
+\subsubsection{Collocation method}
+Zero values of the residual are directly imposed over the $K$ points of the computational domain;
+
+\[\mathcal{L}({N^I}){u^I} - \rho F = 0\]
+
+\[L[{N^I}({x^J})]{u^I} - \rho F({x^J}) = 0\]
+
+where $J$ ranges between $1$ and $K$ leading to the system;
+
+\begin{equation}
+{K^{IP}}{U^P} = {f^I}
+\label{DColo}
+\end{equation}
+
+\subsubsection{Subdomian method}
+The zero value of the residual is imposed upon $K$ subdomains.
+
+\[\int\limits_{{V^I}} {\mathcal{L}({N^P})d{V^I}{u^P}}  - \rho \int\limits_{{V^I}} {Fd{V^I}}  = 0 \quad \quad I=1,...,K.\] For instance, for the $N$-th element it follows that ;
+
+\[\int\limits_{{V^N}} {\mathcal{L}({N^P})d{V^N}{u^P}}  - \rho \int\limits_{{V^N}} {Fd{V^N}}  = 0 \quad \quad P=1,...,K.\]
+
+Applying the equation over the $K$ subdomains leads to the discrete system;
+
+
+\begin{equation}
+{K^{IP}}{U^P} = {f^I} \quad \quad I=1,...,K.
+\label{DColo}
+\end{equation}
+
+\subsubsection{Ritz method} It operates directly upon the variational statement of the problem. For a given functional;
+
+\[\Pi  = \Pi ({N^Q}{u^Q})\]
+
+the variational equation reads;
+
+\[\delta \Pi  \equiv \frac{{\partial \Pi }}{{\partial {u^Q}}}\delta {u^Q} = 0\]
+
+from which
+
+\[\frac{{\partial \Pi }}{{\partial {u^Q}}} = 0.\]
+
+\subsubsection*{Application to the Parabolic equation}
+Let us consider the case of the generalized parabolic equation and its discretization following the Galerkin method;
+
+\[\rho(\vb x) \pdv{u(\vb x,t)}{t} + \mathcal{L}u(\vb x, t) = 0\]
+
+which can also be written using indicial notation;
+
+\[\frac{\partial }{{\partial {x_i}}}\left[ {p(x)\frac{{\partial u}}{{\partial {x_i}}}} \right] + q(x)u + \rho \frac{{\partial u}}{{\partial t}} = \rho F.\]
+
+Assuming for simplicity that $p(x)=1$ yields;
+
+\[ - \int\limits_V {{N^P}N_{,ii}^Q} dV{u^Q} + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
+
+\[\int\limits_V {N_{,i}^PN_{,i}^Q} dV{u^Q} - \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
+
+\[\int\limits_V {\left( {N_{,i}^PN_{,i}^Q + q{N^P}{N^Q}} \right)dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{V^Q}}  = \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \rho \int\limits_V {{N^P}FdV} \]
+
+which can be written in discrete form;
+
+\[{K^{PQ}}{U^Q} + {C^{PQ}}{V^Q} = {f^p}\]
+
 
 
 \subsubsection*{Application to the Navier equations}
@@ -564,14 +696,40 @@ We can write the differential operator as
 \begin{align*}
 &r_i =  - f_i\\
 &u_i = N_i^Q u^Q\\
-&L_{ij}(u_j) \equiv (\lambda  + \mu )(N_j^Q{u^Q})_{,ij} + \mu (N_j^Q{u^Q})_{,kk}\delta_{ij}\\
-&L_{ij}(u_j) \equiv (\lambda  + \mu )N_{j,ij}^Q u^Q + \mu N_{i,kk}^Q u^Q\\
-&L_{ij}(u_j) \equiv L_{ij}(N_j^Q) u^Q \enspace .
+&\mathcal{L}_{ij}(u_j) \equiv (\lambda  + \mu )(N_j^Q{u^Q})_{,ij} + \mu (N_j^Q{u^Q})_{,kk}\delta_{ij}\\
+&\mathcal{L}_{ij}(u_j) \equiv (\lambda  + \mu )N_{j,ij}^Q u^Q + \mu N_{i,kk}^Q u^Q\\
+&\mathcal{L}_{ij}(u_j) \equiv \mathcal{L}_{ij}(N_j^Q) u^Q \enspace .
 \end{align*}
 
 In the Galerkin scheme we use the trial function as weighting function.
 \[R_i \equiv L_{ij}(N_j^Q) u^Q + f_i\]
 and we state \dots
+
+\[\int\limits_V {N_i^P{R_i}dV = 0} \quad \quad P=1,2,...,N. \]
+
+\[\int\limits_V {N_i^P{\mathcal{L}_{ij}}(N_j^K)dV{u^K}}  + \int\limits_V {N_i^P{f_i}dV = 0} \]
+
+\[(\lambda  + \mu )\int\limits_V {N_i^PN_{j,ij}^KdV{u^K}}  + \mu \int\limits_V {N_i^PN_{i,kk}^KdV{u^K}}  + \int\limits_V {N_i^P{f_i}dV = 0} \]
+
+integrating by parts;
+
+\begin{align*}
+- (\lambda  + \mu )\int\limits_V {N_{i,j}^PN_{j,i}^KdV{u^K} + (\lambda  + \mu )\int\limits_S {N_i^PN_{j,i}^K{{\hat n}_j}dS{u^K} - \mu \int\limits_V {N_{i,k}^PN_{i,k}^KdV{u^K}} } } \\
++ \mu \int\limits_S {N_i^PN_{i,k}^K{{\hat n}_k}dS{u^K}}  + \int\limits_V {N_i^P{f_i}dV = 0}
+\end{align*}
+
+which can be written like;
+
+
+\[{K^{PQ}}{U^Q} = {F^P}\]
+
+where
+
+\[{K^{PQ}} = (\lambda  + \mu )\int\limits_V {N_{i,j}^PN_{j,i}^QdV}  + \mu \int\limits_V {N_{i,k}^PN_{i,k}^QdV} \]
+
+\[{F^P} = \int\limits_S {N_i^Pt_i^{(\hat n)}dS + \int\limits_V {N_i^P{f_i}dV = 0} } \]
+
+
 
 
 
