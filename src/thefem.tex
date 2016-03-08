@@ -663,7 +663,7 @@ from which
 
 \[\frac{{\partial \Pi }}{{\partial {u^Q}}} = 0.\]
 
-\subsubsection*{Application to the Parabolic equation}
+\subsubsection*{Generalized parabolic equation.}
 Let us consider the case of the generalized parabolic equation and its discretization following the Galerkin method;
 
 \[\rho(\vb x) \pdv{u(\vb x,t)}{t} + \mathcal{L}u(\vb x, t) = 0\]
@@ -686,7 +686,7 @@ which can be written in discrete form;
 
 
 
-\subsubsection*{Application to the Navier equations}
+\subsubsection*{Navier equations.}
 In this case the differential equations are written as
 \[(\lambda  + \mu ){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \enspace .\]
 
@@ -729,11 +729,50 @@ where
 
 \[{F^P} = \int\limits_S {N_i^Pt_i^{(\hat n)}dS + \int\limits_V {N_i^P{f_i}dV = 0} } \]
 
+\subsubsection*{The acoustic wave equation.}
 
+\[\vec \nabla  \cdot \left[ {\frac{1}{\rho }\vec \nabla p(\vb{x})} \right] - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial \rho }}{{\partial t}}} \right) - q(\vb{x}) = 0\]
 
+where we recognize;
 
+\[\mathcal{L}() \equiv \vec \nabla  \cdot \left( {\frac{1}{\rho }\vec \nabla } \right) - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{\partial }{{\partial t}}} \right)\]
 
-\subsubsection*{Application to the acoustic wave equation}
+Let
+
+\[p(x) = {N^K}{p^K}\]
+
+then
+
+\[\mathcal{L}(p) \equiv \vec \nabla  \cdot \left( {\frac{1}{\rho }\vec \nabla {N^K}{p^K}} \right) - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}{p^K}}}{{\partial t}}} \right)\]
+
+or in indicial notation
+
+\[\mathcal{L}(p) \equiv {\left( {\frac{1}{\rho }N_{,i}^K} \right)_{,i}}{p^K} - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right){p^K}\]
+
+which is equivalent to having;
+
+\[\mathcal{L}(p) \equiv \mathcal{L}({N^K}){p^K}\]
+
+using the trial functions as weighting functios and recalling the definition of the residual which in this case reads;
+
+\[R = \mathcal{L}({N^K}){p^K} - q\]
+
+yields;
+
+\[\int\limits_V {{N^J}RdV = 0} \quad \quad J=1,2,...,K \]
+
+\[\int\limits_V {{N^J}L({N^K})dV{p^K}}  - \int\limits_V {{N^J}qdV}  = 0\]
+
+\[\int\limits_V {{N^J}{{\left( {\frac{1}{\rho }N_{,i}^K} \right)}_{,i}}dV{p^K} - \int\limits_V {{N^J}\frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right)dV{p^K}} }  - \int\limits_V {{N^J}qdV}  = 0\]
+
+Integrating by parts the first term on the R.H.S gives us;
+
+\[ - \int\limits_V {N_{,i}^J\frac{1}{\rho }N_{,i}^KdV} {p^K} + \int\limits_S {{N^J}\frac{1}{\rho }N_{,i}^K{{\hat n}_i}dS{p^K}}  = \int\limits_V {{N^J}\frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right)dV{p^K}}  + \int\limits_V {{N^J}qdV} \]
+
+\[\int\limits_V {N_{,i}^J\frac{1}{\rho }N_{,i}^KdV} {p^K} + \int\limits_V {{N^J}\frac{1}{\lambda }{N^K}dV{{\ddot p}^K}}  = \int\limits_S {{N^J}\frac{1}{\rho }N_{,i}^K{{\hat n}_i}dS{p^K}}  + \int\limits_V {{N^J}qdV} \]
+
+\[{K^{JK}}{P^K} + {M^{JK}}{{\ddot P}^K} + {f^J} = 0\]
+
 
 \section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
 
