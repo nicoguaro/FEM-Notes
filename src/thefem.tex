@@ -387,7 +387,6 @@ From the condition $u=0$ at $x=\ell\cos(\phi)$ we have that $A=-\dfrac{S}{E} K_{
 Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
 \[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
 
-
 %%
 \subsection{Variational formulation}
 In this section we formulate the boundary value problem using the approach of the calculus of variations in which the governing PDEs and boundary conditions are obtained after finding the minimum (or maximum) of a functional according to a variational principle\footnote{According to Wikipedia \cite{wiki:variational_principle}
@@ -862,8 +861,8 @@ Let $f(x)$ be a function whose values are known at n discrete points ${x_1, x_2,
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{img/interpol1.pdf}
-\caption{Definition of the natural domain}
+\includegraphics[width=12cm]{img/interpol1.pdf}
+\caption{Global interpolation of a function}
 \label{fig:interpol1}
 \end{figure}
 
@@ -880,8 +879,8 @@ In finite element analysis local interpolation is used in order to proceed syste
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{img/interpol2.pdf}
-\caption{Definition of the natural domain}
+\includegraphics[width=12cm]{img/interpol2.pdf}
+\caption{Local or piecewise interpolation of a function}
 \label{fig:interpol2}
 \end{figure}
 
@@ -907,11 +906,108 @@ and
 \[L^3(x) = \frac{(x - x^1)(x - x^2)}{(x^3 - x^1)(x^3 - x^2)} \equiv 1 - x^2.\]
 
 The resulting interpolating polynomials $L^I(x)$ and the interpolating function  are shown in \cref{fig:pols} below
-\begin{figure}[H]\label{fig:pols}
+\begin{figure}[H]
   \centering
   \includegraphics[width=16cm]{func.pdf}
   \caption{Interpolating polynomials and the resulting interpolating function}
+  \label{fig:pols}
 \end{figure}
+
+\subsubsection*{Example: Interpolation of a function using a global and a local scheme}
+Assume we have known values of the function:
+
+\[f(x) = {x^3} + 4{x^2} - 10\]
+
+in the interval $[-1.0, 1.0]$ and we wish to obtain an interpolated version of the function using different schemes.
+
+
+\begin{figure}[H]
+\centering
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{lineal.pdf}
+		\caption{Interpolation polynomials. }
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{interlin.pdf}
+		\caption{Actual and interpolated function.}
+	\end{subfigure}\\
+%
+\centering
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{quadra.pdf}
+		\caption{Interpolation polynomials.}
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{interqua.pdf}
+		\caption{Actual and interpolated function.}
+	\end{subfigure}\\
+%
+\centering
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{third.pdf}
+		\caption{Interpolation polynomials.}
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{intertri.pdf}
+		\caption{Actual and interpolated function.}
+	\end{subfigure}
+\caption{Lineal interpolation of the function $f(x) = {x^3} + 4{x^2} - 10$.}
+\label{fig:several interpol}
+\end{figure}
+
+\Cref{fig:several interpol} shows the interpolating polynomials and the resulting function for the case of first, second and fourth order polynomials respectively. Similarly, the first order derivative obtained out of the interpolated function is displayed in \cref{fig:first der}. 
+
+\begin{figure}[H]
+\centering
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{deriv2.pdf}
+		\caption{First order derivatives of the interpolation polynomials. }
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{firstder.pdf}
+		\caption{Interpolated first order derivative of the function.}
+	\end{subfigure}\\
+
+\caption{Lineal interpolation of the function $f(x) = {x^3} + 4{x^2} - 10$.}
+\label{fig:first der}
+\end{figure}
+
+We now proceed like in the finite element method and use the local first order polynomials shown in \cref{fig:loc-pols} to interpolate the function under study.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=10cm]{localone.pdf}
+  \caption{Local interpolating polynomials}
+  \label{fig:loc-pols}
+\end{figure}
+
+The resulting function and its numerically obtained first order derivateive are shown in \cref{fig:fully local}. It is clear how the local interpolation destroys the global continuity in the first order derivative while the function itself remains continous.
+
+
+\begin{figure}[H]
+\centering
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{localfun.pdf}
+		\caption{Function interpolated with local first order polynomials. }
+	\end{subfigure}\,
+%
+	\begin{subfigure}[b]{0.45\textwidth}\qquad
+		\includegraphics[width=\textwidth]{localfirst.pdf}
+		\caption{Interpolated first order derivative of the function.}
+	\end{subfigure}\\
+
+\caption{Lineal interpolation of the function $f(x) = {x^3} + 4{x^2} - 10$.}
+\label{fig:fully local}
+\end{figure}
+
+
+
+
+
 
 \subsection*{Extension to 2D domains}
 Assume we are now interested in conducting interpolation of a function over a spatial 2-dimensional domain where every point is specified by a position vector of the form $\vb{x} = x \hat{\imath} + y\hat{\jmath}$. We want to know, via interpolation, the value of a function $f(\vb{x})$ at an arbitrary point $\vb{x}$ provided we know the set of n-points $\{(\vb{x}^1, f^1),\cdots,(\vb{x}^n, f^n)\}$.
