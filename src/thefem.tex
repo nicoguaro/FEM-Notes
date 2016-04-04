@@ -1004,11 +1004,6 @@ The resulting function and its numerically obtained first order derivateive are 
 \label{fig:fully local}
 \end{figure}
 
-
-
-
-
-
 \subsection*{Extension to 2D domains}
 Assume we are now interested in conducting interpolation of a function over a spatial 2-dimensional domain where every point is specified by a position vector of the form $\vb{x} = x \hat{\imath} + y\hat{\jmath}$. We want to know, via interpolation, the value of a function $f(\vb{x})$ at an arbitrary point $\vb{x}$ provided we know the set of n-points $\{(\vb{x}^1, f^1),\cdots,(\vb{x}^n, f^n)\}$.
 \begin{figure}[H]\label{fig:element}
@@ -1118,7 +1113,7 @@ See Figure \ref{fig:nine-nodes-interp} for the shape functions of a 9-nodes elem
 	\label{fig:nine-nodes-interp}
 \end{figure}
 %
-\begin{figure}
+\begin{figure} [H]
 	\ContinuedFloat
 	\centering
 	\begin{subfigure}[b]{0.45\textwidth}\qquad
@@ -1144,42 +1139,243 @@ We now discretize the principle of virtual work repeated below for completeness:
 \intL_V \sigma_{ij} \delta u_{i,j} \dd{V} - \intL_V f_i \delta u_i \dd{V} - \intL_{S_t} t_i^n \delta u_i \dd{S} = 0.
 \end{equation}
 
-For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping sub-domains over each one of which we will approximate the solution in terms of local interpolating functions. Since the PVW (or weak form of the BVP) has been cast into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains as follows
+For that purpose we will divide the complete domain $V$ into $N$-finite non-overlapping sub-domains over each one of which we will approximate the solution in terms of local interpolating functions (see \cref{fig:fully local}). Since the PVW (or weak form of the BVP) has been cast into an integral representation, it is possible to build the total integral considering the contribution of the $N$-sub-domains like:
 \begin{equation}\label{pvw_dis}
 \sum_{e=1}^{NEL} \intL_{V^e} \sigma_{ij} \var{u}_{i,j} \dd{V^e} - \intL_V f_i \var{u}_i \dd{V^e} - \intL_{S_t} t_i^n \var{u}_i\dd{S^e} = 0 
 \end{equation}
 
-For easiness consider a single sub-domain
+For simplicity we consider only a single element or sub-domain, thus;
+
 \begin{equation}\label{pvw_sing}
-\intL_V \sigma_{ij} \delta u_{i,j} dV - \intL_V f_i\delta u_idV - \intL_{S_t} t_i^n \delta u_i dS = 0.
+\intL_V \sigma_{ij} \delta\epsilon_{i,j} dV - \intL_V f_i\delta u_idV - \intL_{S_t} t_i^n \delta u_i dS = 0
 \end{equation}
 
-The involved functions (e.g., displacements, strain, stresses) will be approximated via interpolation of the solution over a determined number of points termed in what follows nodes. Assume for instance that over element $e$ containing $n$ such nodes we know the displacements vector $u_i$. Furthermore, let the displacements for the $p$-node $u^P=[u^P, v^P, w^P]$. Using ideas from interpolation theory it is now possible to approximate the displacements vector over an arbitrary point $\vb{x}$ inside the element as follows
+where it is assumed that the discretized version of each element is later added up (or assembled) into the global equations for the complete model and where we have already used the fact that $\sigma_{ij}$ is symmetric impliying that $\sigma_{ij} \delta u_{i,j} = \sigma_{ij} \delta\epsilon_{i,j}$.
+
+The involved functions (e.g., displacements, strain, stresses) will be approximated via interpolation of the solution over a determined number of points termed in what follows nodes. Assume for instance that over element $e$ containing $n$ such nodes we know the displacements vector $u_i$. For instance, \cref{fig:simple element} below shows a typical square 4-noded element of side $2h$. The rectangular components of the displacement vector at each node are labeled like $[u_1, u_2,...,u_7, u_8]$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=7cm]{lado2h.pdf}
+\caption{Square element of side $2h$.}
+\label{fig:simple element}
+\end{figure}
+
+
+Furthermore, in a more general treatment, we let the displacements for an arbitrary $p$-node of a $3D$ problem $u^P=[u^P, v^P, w^P]$. Using ideas from interpolation theory it is now possible to approximate the displacements vector over an arbitrary point $\vb{x}$ inside the element by;
+
 \[u_i(\vb x) = N_i^1(\vb x)u^1 + N_i^2(\vb x)u^2 + \cdots + N_i^P(\vb x)u^P + \cdots + N_i^n(\vb x)u^n\]
+
 or in more general form
+
 \begin{equation} \label{bas_interpol}
 {u_i}(\vb x) = N_i^Q(\vb x){u^Q}
 \end{equation}
+
 and where the caption superscripts indicate summation over the number of nodes of the element while the subscript refers to the physical character of the variable being interpolated.
 
+Now let us use the kinematic relationshio between strains and displpacements:
+
+\[ \varepsilon_{ij}(\vb x) = \frac{1}{2}( u_{i,j} + u_{j,i} ) \]
+
+together with \cref{bas_interpol}. Carrying the derivatives into the shape functions yields;
+
+\[ \varepsilon_{ij}(\vb x) = \frac{1}{2}\left(\pdv{N_i^Q}{x_j} + \pdv{N_j^Q}{x_i} \right){u^Q} \]
+
+which can be written like
+
+\begin{equation}
+\varepsilon_{ij}(\vb x) = B_{ij}^Q(\vb x){u^Q}
+\label{str-dis}
+\end{equation}
+
+after letting
+
+\[ B_{ij}^Q = \frac{1}{2}\left(\pdv{N_i^Q}{x_j} + \pdv{N_j^Q}{x_i} \right). \]
+
+Proceeding analogously for the virtual fields after using
+
+\[ \delta {u_i} = N_i^Q(\vb x)\delta {u^Q} \] gives us:
+
+
+
+\[ \intL_V C_{ijkl} B_{kl}^P u^P B_{ij}^Q\delta u^Q \dd{V} - \intL_V f_i N_i^Q\delta {u^Q}\dd{V}  - \intL_{S_t} t_i^n N_i^Q\delta {u^Q} \dd{S} = 0 \]
+
+
+
+which can be re-organized into;
+
+\[ \delta {u^Q}\intL_V B_{ij}^Q C_{ijkl} B_{kl}^P\dd{V}{u^P} - \delta {u^Q}\intL_V N_i^Q{f_i}\dd{V}  - \delta {u^Q}\intL_{S_t} N_i^Qt_i^n\dd{S} = 0\]
+
+
+
+
+
+which is the generalized discrete version of the PVW for a single element consistent with \cref{pvw_sing}. Defining the terms corresponding to the integrals like:
+
+
+\begin{equation}
+\begin{aligned}
+{K^{QP}} & = \int\limits_V {{C_{ijkl}}B_{kl}^PB_{ij}^QdV} \\
+f_c^Q    & = \int\limits_S {N_i^Qt_i^ndS} \\
+f_V^Q    & = \int\limits_V {N_i^Q{f_i}dV}
+\label{Rigi_3}
+\end{aligned}
+\end{equation}
+
+
+%\begin{align*}
+%{K^{QP}} & = \int\limits_V {{C_{ijkl}}B_{kl}^PB_{ij}^QdV} \\
+%f_c^Q    & = \int\limits_S {N_i^Qt_i^ndS} \\
+%f_V^Q    & = \int\limits_V {N_i^Q{f_i}dV}
+%\end{align*}
+
+allows us to write:
+
+
+\[ \delta u^Q f_\sigma ^Q - \delta {u^Q}f_V^Q - \delta u^Q f_c^Q = 0. \]
+
+This equation is once again the generalized discrete version of the PVW corresponding to the $Q$-displacement degree of freedom. The equation quantifies the work of the forces along the $Q$-th degree of freedom over the virtual displacements $\delta u^Q$. If we now use the arbitrary character of the virtual field $\delta u^Q $ we can write;
+
+\begin{equation}
+f_\sigma ^Q - f_V^Q - f_c^Q = 0.
+\label{forces}
+\end{equation}
+
+This is now a mechanical equilibrium equation relating the forces along the $Q$-th degree of freedom associated to the internal element stresses $f_\sigma ^Q$; the external body forces $f_V^Q$ and the applied external tractions $f_c^Q$. Introducing the stiffness of the element gives:
+
+\begin{equation}
+K^{QP} u^P = f_V^Q + f_c^Q.
+\label{Discreta}
+\end{equation}
+
+\subsubsection{Formulation for square elements}
+In the previous section we recognized:
+
+\begin{equation}
+\begin{aligned}
+{K^{QP}} & = \int\limits_V {{C_{ijkl}}B_{kl}^PB_{ij}^QdV} \\
+f_c^Q    & = \int\limits_S {N_i^Qt_i^ndS} \\
+f_V^Q    & = \int\limits_V {N_i^Q{f_i}dV}
+\label{Rigi}
+\end{aligned}
+\end{equation}
+
+
+
+as the elemental stiffness matrix and the vectors of consistent contact and body forces for a single element. Let us assume that the domain of the single element is a perfect square of side $2h$ (see \cref{fig:lado2h}), thus;
+
+\begin{equation}
+\begin{aligned}
+K & = \int\limits_{ - h}^{ + h} {\int\limits_{ - h}^{ + h} {{B^T}CBdxdy} } \\
+{f_c} & = \int\limits_{ - h}^{ + h} {{N^T}{t^n}ds} \\
+{f_v} & = \int\limits_{ - h}^{ + h} {\int\limits_{ - h}^{ + h} {{N^T}fdxdy} }
+\label{ele2}
+\end{aligned}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=7cm]{lado2h.pdf}
+\caption{Square element of side $2h$.}
+\label{fig:lado2h}
+\end{figure}
+
+
+and where $N$ and $B$ are the displacements interpolation matrix and the strain-displacements interpolation matrix respectively. For the linear 4-noded element shown in \cref{fig:lado2h} these matrices have the form defined in the following interpolation equations:
+
+
+\[\left\{ {\begin{array}{*{20}{c}}
+{u(\vec x)}\\
+{v(\vec x)}
+\end{array}} \right\} = \left[ {\begin{array}{*{20}{c}}
+{{N^1}(\vec x)}&0&{{N^2}(\vec x)}&0&{{N^3}(\vec x)}&0&{{N^4}(\vec x)}&0\\
+0&{{N^1}(\vec x)}&0&{{N^2}(\vec x)}&0&{{N^3}(\vec x)}&0&{{N^4}(\vec x)}
+\end{array}} \right]\left\{ {\begin{array}{*{20}{c}}
+{{u^1}}\\
+{{u^2}}\\
+{{u^3}}\\
+{{u^4}}\\
+{{u^5}}\\
+{{u^6}}\\
+{{u^7}}\\
+{{u^8}}
+\end{array}} \right\}\]
+
+
+\[\left\{ {\begin{array}{*{20}{c}}
+{\frac{{\partial u}}{{\partial x}}}\\
+{\frac{{\partial v}}{{\partial y}}}\\
+{\frac{{\partial v}}{{\partial x}} + \frac{{\partial u}}{{\partial y}}}
+\end{array}} \right\} = \left[ {\begin{array}{*{20}{c}}
+{\frac{{\partial {N^1}(\vec x)}}{{\partial x}}}&0&{\frac{{\partial {N^2}(\vec x)}}{{\partial x}}}&0&{\frac{{\partial {N^3}(\vec x)}}{{\partial x}}}&0&{\frac{{\partial {N^4}(\vec x)}}{{\partial x}}}&0\\
+0&{\frac{{\partial {N^1}(\vec x)}}{{\partial y}}}&0&{\frac{{\partial {N^2}(\vec x)}}{{\partial y}}}&0&{\frac{{\partial {N^3}(\vec x)}}{{\partial x}}}&0&{\frac{{\partial {N^4}(\vec x)}}{{\partial x}}}\\
+{\frac{{\partial {N^1}(\vec x)}}{{\partial x}}}&{\frac{{\partial {N^1}(\vec x)}}{{\partial y}}}&{\frac{{\partial {N^2}(\vec x)}}{{\partial x}}}&{\frac{{\partial {N^2}(\vec x)}}{{\partial y}}}&{\frac{{\partial {N^3}(\vec x)}}{{\partial x}}}&{\frac{{\partial {N^3}(\vec x)}}{{\partial y}}}&{\frac{{\partial {N^4}(\vec x)}}{{\partial x}}}&{\frac{{\partial {N^4}(\vec x)}}{{\partial y}}}
+\end{array}} \right]\left\{ {\begin{array}{*{20}{c}}
+{{u^1}}\\
+{{u^2}}\\
+{{u^3}}\\
+{{u^4}}\\
+{{u^5}}\\
+{{u^6}}\\
+{{u^7}}\\
+{{u^8}}
+\end{array}} \right\}\]
+
+with the independent shape functions being:
+
+
 \begin{align*}
-&\varepsilon_{ij}(\vb x) = B_{ij}^Q(\vb x){u^Q}\\
-&\varepsilon_{ij}(\vb x) = \frac{1}{2}( u_{i,j} + u_{j,i} )\\
-&\varepsilon_{ij}(\vb x) = \frac{1}{2}\left(\pdv{N_i^Q}{x_j} + \pdv{N_j^Q}{x_i} \right){u^Q}\\
-&B_{ij}^Q = \frac{1}{2}\left(\pdv{N_i^Q}{x_j} + \pdv{N_j^Q}{x_i} \right)\\
-&\delta {u_i} = N_i^Q(\vb x)\delta {u^Q}\\
-&\intL_V C_{ijkl} B_{kl}^P u^P B_{ij}^Q\delta u^Q \dd{V} - \intL_V f_i N_i^Q\delta {u^Q}\dd{V}  - \intL_{S_t} t_i^n N_i^Q\delta {u^Q} \dd{S} = 0\\
-&\delta {u^Q}\intL_V B_{ij}^Q C_{ijkl} B_{kl}^P\dd{V}{u^P} - \delta {u^Q}\intL_V N_i^Q{f_i}\dd{V}  - \delta {u^Q}\intL_{S_t} N_i^Qt_i^n\dd{S} = 0 \\
-&\delta u^Q f_\sigma ^Q - \delta {u^Q}f_V^Q - \delta u^Q f_c^Q = 0\\
-&f_\sigma ^Q - f_V^Q - f_c^Q = 0\\
-&f_\sigma ^Q = \intL_V B_{ij}^Q C_{ijkl} B_{kl}^P\dd{V} u^P \equiv K^{QP} u^P\\
-&f_V^Q = \intL_V N_i^Q f_i\dd{V} \\
-&f_c^Q = \intL_{S_t} N_i^Qt_i^n \dd{S} \\
-&K^{QP} u^P = f_V^Q + f_c^Q
+{N^1}(x) & = \frac{1}{4}(1 - x)(1 - y) \\
+{N^2}(x) & = \frac{1}{4}(1 + x)(1 - y) \\
+{N^3}(x) & = \frac{1}{4}(1 + x)(1 + y) \\
+{N^4}(x) & = \frac{1}{4}(1 - x)(1 + y)
 \end{align*}
 
 
-\subsubsection{Formulation in the physical space}
+
+
+Notice that in the computation of the stiffness matrix we actually require the spatial derivatives of the shape functions given by;
+
+\begin{align*}
+\frac{{\partial {N^1}(x)}}{{\partial x}} & =  - \frac{1}{4}(1 - y)           &  \frac{{\partial {N^1}(x)}}{{\partial y}} & =  - \frac{1}{4}(1 - x)\\
+\frac{{\partial {N^2}(x)}}{{\partial x}} & =  + \frac{1}{4}(1 - y)           &  \frac{{\partial {N^2}(x)}}{{\partial y}} & =  - \frac{1}{4}(1 + x)\\
+\frac{{\partial {N^3}(x)}}{{\partial x}} & =  + \frac{1}{4}(1 + y)           &  \frac{{\partial {N^3}(x)}}{{\partial y}} & =  + \frac{1}{4}(1 + x)\\
+\frac{{\partial {N^4}(x)}}{{\partial x}} & =  - \frac{1}{4}(1 + y)           &  \frac{{\partial {N^4}(x)}}{{\partial y}} & =  + \frac{1}{4}(1 - y)
+\end{align*}
+
+
+The contribution to the element matrix from a typical nodal point is thus given by;
+
+
+
+\[K = \int\limits_{ - h}^{ + h} {\int\limits_{ - h}^{ + a} {\begin{bmatrix}
+
+ \vdots &  \vdots & \vdots &  \vdots & \vdots & \vdots \\
+ \cdots &  \frac{{\partial {N^K}(x)}}{{\partial x}} & 0   & \frac{{\partial {N^K}(x)}}{{\partial y}} &  \cdots & \cdots \\
+  \cdots &  0 & \frac{{\partial {N^K}(x)}}{{\partial y}}   & \frac{{\partial {N^K}(x)}}{{\partial x}} &  \cdots & \cdots \\
+ \vdots &  \vdots & \vdots &  \vdots & \vdots & \vdots 
+
+\end{bmatrix}
+%
+\begin{bmatrix}
+ A & B &  0\\
+ B & A & 0 \\
+ 0 &  0 & C
+\end{bmatrix}
+%
+\begin{bmatrix}
+ \cdots & \frac{{\partial {N^Q}(x)}}{{\partial x}} & 0  & \cdots \\
+ \cdots & 0 & \frac{{\partial {N^Q}(x)}}{{\partial y}}  & \cdots \\
+ \cdots & \frac{{\partial {N^Q}(x)}}{{\partial y}} & \frac{{\partial {N^Q}(x)}}{{\partial x}}  & \cdots 
+\end{bmatrix} dxdy} } \]
+
+
+while a typical element of the resultant stiffness matrix takes the general form:
+
+\[K \equiv A\int\limits_{ - h}^{ + h} {\int\limits_{ - h}^{ + h} {\frac{{\partial {N^K}}}{{\partial x}}\frac{{\partial {N^Q}}}{{\partial x}}dxdy} }  + C\int\limits_{ - h}^{ + h} {\int\limits_{ - h}^{ + h} {\frac{{\partial {N^K}}}{{\partial y}}\frac{{\partial {N^Q}}}{{\partial x}}dxdy.} } \]
+
+It should be noticed that for the considered perfectly square element the resulting stiffness matrix can be partitioned into factors which depend upon the material properties only and into a single factor which depends on the size $h$. This last contribution can be obtained analytically.
 
 
 \subsubsection{Formulation in the natural space: the continuum mechanics analogy}
