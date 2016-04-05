@@ -26,10 +26,13 @@
 \usepackage{hyperref} % Nice details for pdf
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{physics} % Extra operators and cool stuff
+\usepackage{minted}  % Include fancy code
+
 
 %% Packages setup
 
-\patchcmd\btxselectlanguage{\csname}{\csname TEMPPATCH}{}{} % For babelbib
+% For babelbib
+\patchcmd\btxselectlanguage{\csname}{\csname TEMPPATCH}{}{} 
 
 \geometry{
 	verbose,
@@ -54,6 +57,8 @@
 	pdfpagemode=UseOutlines,
 	pdfstartview=FitH
 }
+
+\usemintedstyle{colorful}
 	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
