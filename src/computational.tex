@@ -2,6 +2,7 @@
 %
 \graphicspath{ {./img/COMPU/} }
 \chapter{Computational aspects}
+\label{chap: Computational Aspects}
 \section{Global assembly}
 In this section we will discuss the fundamental process of building the system of algebraic equations through the addition or assembly of elemental coefficient matrices as described by \cref{eq:assem} where $K^G$ is the global coefficient matrix; $k^i$ is the local elemental matrix for the $i$-th element; $\assem{i=1}{Numel}$ is the assembly operator and $i$ is an element index ranging between $1$ and the total number of elements $Numel$ that conform the finite element model. Notice that the assembly operator is analogous to the sum operator commonly used in the representation of a series of $N$ terms but it contains information indicating the position of each single term from the element coefficient matrix within the global system.
 \begin{equation}\label{eq:assem}
