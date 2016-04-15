@@ -1,0 +1,121 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\title{\textbf{Deformation modes of four-nodes finite elements}}
+\author{Nicolás Guarín-Zapata}
+
+
+\begin{document}
+\maketitle
+
+\section{Plane stress}
+For plane-stress conditions the stiffness matrix of a four-nodes element reads
+\begin{equation}
+  K = \frac{E}{24(1 - \nu^2)} \hat{K}
+\end{equation}
+with
+\begin{equation}
+  \hat{K} = 
+  \begin{bmatrix}
+    12 - 4\nu & 3 \nu + 3 & - 2 \nu - 6 & 9 \nu - 3 & 2 \nu - 6 & - 3 \nu - 3 & 4 \nu & 3 - 9\nu\\
+    3 \nu + 3 & 12 - 4\nu & 3 - 9\nu & 4 \nu & - 3 \nu - 3 & 2 \nu - 6 & 9 \nu - 3 & - 2 \nu - 6\\
+    - 2 \nu - 6 & 3 - 9\nu & 12 - 4\nu & - 3 \nu - 3 & 4 \nu & 9 \nu - 3 & 2 \nu - 6 & 3 \nu + 3\\
+    9 \nu - 3 & 4 \nu & - 3 \nu - 3 & 12 - 4\nu & 3 - 9\nu & - 2 \nu - 6 & 3 \nu + 3 & 2 \nu - 6\\
+    2 \nu - 6 & - 3 \nu - 3 & 4 \nu & 3 - 9\nu & 12 - 4\nu & 3 \nu + 3 & - 2 \nu - 6 & 9 \nu - 3\\
+    - 3 \nu - 3 & 2 \nu - 6 & 9 \nu - 3 & - 2 \nu - 6 & 3 \nu + 3 & 12 - 4\nu & 3 - 9\nu & 4 \nu\\
+    4 \nu & 9 \nu - 3 & 2 \nu - 6 & 3 \nu + 3 & - 2 \nu - 6 & 3 - 9\nu & 12 - 4\nu & - 3 \nu - 3\\
+    3 - 9\nu & - 2 \nu - 6 & 3 \nu + 3 & 2 \nu - 6 & 9 \nu - 3 & 4 \nu & - 3 \nu - 3 & 12 - 4\nu
+  \end{bmatrix} .
+  \label{eq:stiff}
+\end{equation}
+
+The characteristic polynomial is given by
+\[\det(K - \lambda I)= 0\enspace ,\]
+or
+\begin{equation}
+  \frac{\lambda^3(E - \lambda\nu - \lambda)^2 (E + \lambda \nu - \lambda) (\nu E - 3E - 6\nu^2\lambda + 6\lambda)^2}{36 (\nu - 1)^3 (1 + \nu)^4} = 0 \enspace .
+\end{equation}
+
+What gives as eigenvalues
+\[\lambda \in \left\{0,
+	\frac{E(3 - \nu)}{6(1 - \nu^2)},
+	\frac{E}{1 + \nu},
+	\frac{E}{1 - \nu} \right\} \enspace .
+\]
+
+And the corresponding eigenvectors are
+\begin{equation}
+\begin{array}{ll}
+\lambda_1 = 0, 
+	&u^{(1)} = (1, 0, 1, 0, 1, 0, 1, 0)\\
+	&u^{(2)} = (0, 1, 0, 1, 0, 1, 0, 1)\\
+	&u^{(3)} = (0, 1, 0, -1, 2, -1, 2, 1)\\
+\lambda_2 = \frac{E(3 - \nu)}{6(1 - \nu^2)}, 
+	&u^{(4)} = (1, 0, -1, 0, 1, 0, -1, 0)\\
+	&u^{(5)} = (0, 1, 0, -1, 0, 1, 0, -1)\\
+\lambda_3 = \frac{E}{1 + \nu}, 
+	&u^{(6)} = (1, 0, 0, -1, -1, 0, 0, 1)\\
+	&u^{(7)} = (0, 1, 1, 0, 0, -1, -1, 0)\\
+\lambda_4 = \frac{E}{1 - \nu}, 
+	&u^{(8)} = (1, 1, -1, 1, -1, -1, 1, -1)
+\end{array}
+\end{equation}
+
+\section{Plane strain}
+In the case of plane strain the stiffness matrix of a four-nodes element reads
+\begin{equation}
+  K = \frac{E}{24(1 - 2\nu)(1 + \nu)} \hat{K}
+\end{equation}
+with
+\begin{equation}
+  \hat{K} = 
+  \begin{bmatrix}
+    12 - 16\nu & 3 & 4 \nu - 6 & 12 \nu - 3 & 8 \nu - 6 & -3 & 4 \nu & 3 - 12\nu\\
+    3 & 12 - 16\nu & 3 - 12\nu & 4 \nu & -3 & 8 \nu - 6 & 12 \nu - 3 & 4 \nu - 6\\4 \nu - 6 & 3 - 12\nu & 12 - 16\nu & -3 & 4 \nu & 12 \nu - 3 & 8 \nu - 6 & 3\\
+    12 \nu - 3 & 4 \nu & -3 & 12 - 16\nu & 3 - 12\nu & 4 \nu - 6 & 3 & 8 \nu - 6\\
+    8 \nu - 6 & -3 & 4 \nu & 3 - 12\nu & 12 - 16\nu & 3 & 4 \nu - 6 & 12 \nu - 3\\
+    -3 & 8 \nu - 6 & 12 \nu - 3 & 4 \nu - 6 & 3 & 12 - 16\nu & 3 - 12\nu & 4 \nu\\4 \nu & 12 \nu - 3 & 8 \nu - 6 & 3 & 4 \nu - 6 & 3 - 12\nu & 12 - 16\nu & -3\\
+    3 - 12\nu & 4 \nu - 6 & 3 & 8 \nu - 6 & 12 \nu - 3 & 4 \nu & -3 & 12 - 16\nu
+  \end{bmatrix}
+\end{equation}
+
+The characteristic polynomial is given by
+\begin{equation}
+  \frac{\lambda^3 (E - \nu\lambda - \lambda)^2(E + 2\nu^2\lambda + \nu\lambda - \lambda)(4\nu E - 3E - 12\nu^2\lambda - 6\nu\lambda + 6\lambda)^2}{36(\nu + 1)^5\ (2\nu - 1)^3}=0 \enspace .
+\end{equation}
+
+What gives as eigenvalues
+\[\lambda \in \left\{0,
+	\frac{E(3 - 4\nu)}{6(1 - 2\nu)(1 + \nu)},
+	\frac{E}{1 + \nu},
+	\frac{E}{(1 + \nu)(1 - 2\nu)} \right\} \enspace .
+\]
+
+And the corresponding eigenvectors are
+\begin{equation}
+\begin{array}{ll}
+\lambda_1 = 0, 
+	&u^{(1)} = (1, 0, 1, 0, 1, 0, 1, 0)\\
+	&u^{(2)} = (0, 1, 0, 1, 0, 1, 0, 1)\\
+	&u^{(3)} = (0, 1, 0, -1, 2, -1, 2, 1)\\
+\lambda_2 = \frac{E(3 - 4\nu)}{6(1 - 2\nu)(1 + \nu)}, 
+	&u^{(4)} = (1, 0, -1, 0, 1, 0, -1, 0)\\
+	&u^{(5)} = (0, 1, 0, -1, 0, 1, 0, -1)\\
+\lambda_3 = \frac{E}{1 + \nu}, 
+	&u^{(6)} = (1, 0, 0, -1, -1, 0, 0, 1)\\
+	&u^{(7)} = (0, 1, 1, 0, 0, -1, -1, 0)\\
+\lambda_4 = \frac{E}{(1 + \nu)(1 - 2\nu)}, 
+	&u^{(8)} = (1, 1, -1, 1, -1, -1, 1, -1)
+\end{array}
+\end{equation}
+
+As expected, the eigenvectors are the same while the eigenvalues differ.
+
+
+\end{document}
