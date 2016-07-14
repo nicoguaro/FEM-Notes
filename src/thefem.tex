@@ -580,45 +580,35 @@ Using \cref{basicsuper} in \cref{eq:GenPDE2} and the linearity in the differenti
 
 In what follows we will consider different strategies to distribute or weight the residual $R$ over the computational domain.
 
-\subsubsection{Galerkin}
+\subsubsection{Galerkin method}
 In the Galerkin scheme the interpolation functions are used also as weighting functions leading to:
-
 \[\int\limits_V {{N^Q}RdV = 0} \]
-
-or explicitly;
-
+or explicitly
 \begin{equation}
 \int\limits_V {{N^Q} \mathcal{L} ({N^P})dV} {u^P} = \int\limits_V {{N^Q}\rho FdV}
-\label{Galer}
+\label{eq:Galer}
 \end{equation}
 
-
-
-Imposing \cref{Galer} in the $K$ points conforming the computational domain or equivalently ranging $Q$ from $1$ to $K$ leads to the following system of algebraic equations;
-
+Imposing \cref{eq:Galer} in the $K$ points conforming the computational domain or equivalently ranging $Q$ from $1$ to $K$ leads to the following system of algebraic equation
 \begin{equation}
 {K^{QP}}{U^P} = {f^Q}
-\label{DGaler}
+\label{eq:DGaler}
 \end{equation}
 
 where $U^P$ is a vector that stores the point values of the function $u$ along te $K$ points of the computational domain, while $f^Q$ stores the corresponding point excitations.
 
 \subsubsection{Least squares method}
-In this method the integral of the square of the residual is minimized with respect to the $K$ point parameters or nodal values of the function. Accordingly;
-
-\[\frac{\partial }{{\partial {u^I}}}\int\limits_V {{R^2}dV}  = 0\]
-
-\[\frac{\partial }{{\partial {u^I}}}\int\limits_V {{{[\mathcal{L}({N^P}{u^P}) - \rho F]}^2}dV}  = 0\]
-
-\[\int\limits_V {[\mathcal{L}({N^P}{u^P}) - \rho F]L({N^I})dV}  = 0\]
-
-\[\int\limits_V {L({N^I})L({N^P})dV} {u^P} - \rho \int\limits_V {L({N^I})FdV = 0} \]
-
-which can be written like;
-
+In this method the integral of the square of the residual is minimized with respect to the $K$ point parameters or nodal values of the function. Accordingly,
+\begin{align*}
+  &\pdv{u^I}\int\limits_V R^2 \dd{V} = 0\\
+  &\pdv{u^I}\int\limits_V [\mathcal{L}(N^P u^P) - \rho F]^2 \dd{V} = 0\\
+  &\int\limits_V [\mathcal{L} N^P u^P - \rho F] \mathcal{L}(N^I) \dd{V} = 0\\
+  &\int\limits_V \mathcal{L}(N^I) \mathcal{L}(N^P) \dd{V} u^P - \rho \int\limits_V \mathcal{L}(N^I) F \dd{V} = 0
+\end{align*}
+which can be written like
 \begin{equation}
-{K^{IP}}{U^P} = {f^I}
-\label{Dsquares}
+  K^{IP} U^P = f^I
+  \label{eq:Dsquares}
 \end{equation}
 
 \subsubsection{Collocation method}
@@ -632,10 +622,10 @@ where $J$ ranges between $1$ and $K$ leading to the system;
 
 \begin{equation}
 {K^{IP}}{U^P} = {f^I}
-\label{DColo}
+\label{eq:Colo}
 \end{equation}
 
-\subsubsection{Subdomian method}
+\subsubsection{Subdomain method}
 The zero value of the residual is imposed upon $K$ subdomains.
 
 \[\int\limits_{{V^I}} {\mathcal{L}({N^P})d{V^I}{u^P}}  - \rho \int\limits_{{V^I}} {Fd{V^I}}  = 0 \quad \quad I=1,...,K.\] For instance, for the $N$-th element it follows that ;
@@ -643,36 +633,25 @@ The zero value of the residual is imposed upon $K$ subdomains.
 \[\int\limits_{{V^N}} {\mathcal{L}({N^P})d{V^N}{u^P}}  - \rho \int\limits_{{V^N}} {Fd{V^N}}  = 0 \quad \quad P=1,...,K.\]
 
 Applying the equation over the $K$ subdomains leads to the discrete system;
-
-
 \begin{equation}
 {K^{IP}}{U^P} = {f^I} \quad \quad I=1,...,K.
-\label{DColo}
+\label{eq:Sundomain}
 \end{equation}
 
-\subsubsection{Ritz method} It operates directly upon the variational statement of the problem. For a given functional;
-
+\subsubsection{Ritz method} It operates directly upon the variational statement of the problem. For a given functional
 \[\Pi  = \Pi ({N^Q}{u^Q})\]
-
-the variational equation reads;
-
+the variational equation reads
 \[\delta \Pi  \equiv \frac{{\partial \Pi }}{{\partial {u^Q}}}\delta {u^Q} = 0\]
-
 from which
-
 \[\frac{{\partial \Pi }}{{\partial {u^Q}}} = 0.\]
 
 \subsubsection*{Generalized parabolic equation.}
-Let us consider the case of the generalized parabolic equation and its discretization following the Galerkin method;
-
+Let us consider the case of the generalized parabolic equation and its discretization following the Galerkin method
 \[\rho(\vb x) \pdv{u(\vb x,t)}{t} + \mathcal{L}u(\vb x, t) = 0\]
-
-which can also be written using indicial notation;
-
+which can also be written using indicial notation
 \[\frac{\partial }{{\partial {x_i}}}\left[ {p(x)\frac{{\partial u}}{{\partial {x_i}}}} \right] + q(x)u + \rho \frac{{\partial u}}{{\partial t}} = \rho F.\]
 
-Assuming for simplicity that $p(x)=1$ yields;
-
+Assuming for simplicity that $p(x)=1$ yields
 \[ - \int\limits_V {{N^P}N_{,ii}^Q} dV{u^Q} + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
 
 \[\int\limits_V {N_{,i}^PN_{,i}^Q} dV{u^Q} - \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
@@ -1194,26 +1173,12 @@ after letting
 \[ B_{ij}^Q = \frac{1}{2}\left(\pdv{N_i^Q}{x_j} + \pdv{N_j^Q}{x_i} \right). \]
 
 Proceeding analogously for the virtual fields after using
-
-\[ \delta {u_i} = N_i^Q(\vb x)\delta {u^Q} \] gives us:
-
-
-
+\[ \delta {u_i} = N_i^Q(\vb x)\delta {u^Q} \]
+gives us:
 \[ \intL_V C_{ijkl} B_{kl}^P u^P B_{ij}^Q\delta u^Q \dd{V} - \intL_V f_i N_i^Q\delta {u^Q}\dd{V}  - \intL_{S_t} t_i^n N_i^Q\delta {u^Q} \dd{S} = 0 \]
-
-
-
-which can be re-organized into;
-
+which can be re-organized into
 \[ \delta {u^Q}\intL_V B_{ij}^Q C_{ijkl} B_{kl}^P\dd{V}{u^P} - \delta {u^Q}\intL_V N_i^Q{f_i}\dd{V}  - \delta {u^Q}\intL_{S_t} N_i^Qt_i^n\dd{S} = 0\]
-
-
-
-
-
 which is the generalized discrete version of the PVW for a single element consistent with \cref{pvw_sing}. Defining the terms corresponding to the integrals like:
-
-
 \begin{equation}
 \begin{aligned}
 {K^{QP}} & = \int\limits_V {{C_{ijkl}}B_{kl}^PB_{ij}^QdV} \\
@@ -1372,14 +1337,11 @@ The contribution to the element matrix from a typical nodal point is thus given 
 
 
 while a typical element of the resultant stiffness matrix takes the general form:
-
-\[K \equiv A\int\limits_{ - h}^{ + h} {\int\limits_{ - h}^{ + h} {\frac{{\partial {N^K}}}{{\partial x}}\frac{{\partial {N^Q}}}{{\partial x}}dxdy} }  + C\int\limits_{ - h}^{ + h} {\int\limits_{ - h}^{ + h} {\frac{{\partial {N^K}}}{{\partial y}}\frac{{\partial {N^Q}}}{{\partial x}}dxdy.} } \]
-
+\[K \equiv A\int\limits_{- h}^{ + h} \int\limits_{-h}^{+h} \pdv{N^K}{x}\pdv{N^Q}{x}\dd{x}\dd{y}  + C\int\limits_{-h}^{+h} \int\limits_{-h}^{+h}\pdv{N^K}{y}\pdv{N^Q}{x}\dd{x}\dd{y}.\]
 It should be noticed that for the considered perfectly square element the resulting stiffness matrix can be partitioned into factors which depend upon the material properties only and into a single factor which depends on the size $h$. This last contribution can be obtained analytically.
 
 Once the elemental matrices are obtained these are assembled into the final global system of equations. Details of the assembly process are discussed in \autoref{chap: Computational Aspects}. The following Python script computes the stiffness matrix for the 4-noded element.
-
-\inputminted[]{python}{src/stiff_4nodes.py}
+\inputminted[bgcolor=bg]{python}{src/stiff_4nodes.py}
 
 \subsubsection{Formulation in the natural space: the continuum mechanics analogy}
 In typical finite element equilibrium equations we need to perform integration over the reference element domain $V_0(\vb{x})$ corresponding to originally arbitrarily shaped sub-domains as created during the meshing process.  In order to proceed with this integration it is useful to consider the following continuum mechanics analogy.
