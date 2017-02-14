@@ -1,0 +1,67 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGtrac{l+s+sd}{\PYGtracZdq{}\PYGtracZdq{}\PYGtracZdq{}}
+\PYGtrac{l+s+sd}{Compute the stiffness matrix for a 4\PYGtracZhy{}noded square element}
+\PYGtrac{l+s+sd}{\PYGtracZdq{}\PYGtracZdq{}\PYGtracZdq{}}
+\PYGtrac{k+kn}{from} \PYGtrac{n+nn}{\PYGtracZus{}\PYGtracZus{}future\PYGtracZus{}\PYGtracZus{}} \PYGtrac{k+kn}{import} \PYGtrac{n}{division}
+\PYGtrac{k+kn}{import} \PYGtrac{n+nn}{numpy} \PYGtrac{k+kn}{as} \PYGtrac{n+nn}{np}
+\PYGtrac{k+kn}{from} \PYGtrac{n+nn}{sympy} \PYGtrac{k+kn}{import} \PYGtrac{o}{*}
+
+
+\PYGtrac{k}{def} \PYGtrac{n+nf}{umat}\PYGtrac{p}{(}\PYGtrac{n}{nu}\PYGtrac{p}{,}\PYGtrac{n}{E}\PYGtrac{p}{):}
+    \PYGtrac{l+s+sd}{\PYGtracZdq{}\PYGtracZdq{}\PYGtracZdq{}2D Elasticity constitutive matrix\PYGtracZdq{}\PYGtracZdq{}\PYGtracZdq{}}
+    \PYGtrac{n}{C} \PYGtrac{o}{=} \PYGtrac{n}{zeros}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{3}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{3}\PYGtrac{p}{)}
+    \PYGtrac{n}{G} \PYGtrac{o}{=} \PYGtrac{n}{E}\PYGtrac{o}{/}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{\PYGtracZhy{}} \PYGtrac{n}{nu}\PYGtrac{o}{**}\PYGtrac{l+m+mi}{2}\PYGtrac{p}{)}
+    \PYGtrac{n}{mnu} \PYGtrac{o}{=} \PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{\PYGtracZhy{}} \PYGtrac{n}{nu}\PYGtrac{p}{)}\PYGtrac{o}{/}\PYGtrac{l+m+mf}{2.0}
+    \PYGtrac{n}{C}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{0}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{0}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{G}
+    \PYGtrac{n}{C}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{0}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{1}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{nu}\PYGtrac{o}{*}\PYGtrac{n}{G}
+    \PYGtrac{n}{C}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{0}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{C}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{0}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{1}\PYGtrac{p}{]}
+    \PYGtrac{n}{C}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{1}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{G}
+    \PYGtrac{n}{C}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{2}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{2}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{G}\PYGtrac{o}{*}\PYGtrac{n}{mnu}
+
+    \PYGtrac{k}{return} \PYGtrac{n}{C}
+
+
+\PYGtrac{k}{def} \PYGtrac{n+nf}{stdm4}\PYGtrac{p}{(}\PYGtrac{n}{x}\PYGtrac{p}{,}\PYGtrac{n}{y}\PYGtrac{p}{):}
+    \PYGtrac{l+s+sd}{\PYGtracZdq{}\PYGtracZdq{}\PYGtracZdq{}Four noded element strain\PYGtracZhy{}displacement matrix\PYGtracZdq{}\PYGtracZdq{}\PYGtracZdq{}}
+    \PYGtrac{n}{N} \PYGtrac{o}{=} \PYGtrac{n}{zeros}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{4}\PYGtrac{p}{)}
+    \PYGtrac{n}{B} \PYGtrac{o}{=} \PYGtrac{n}{zeros}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{3}\PYGtrac{p}{,}\PYGtrac{l+m+mi}{8}\PYGtrac{p}{)}
+    \PYGtrac{n}{N} \PYGtrac{o}{=} \PYGtrac{n}{S}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{)}\PYGtrac{o}{/}\PYGtrac{l+m+mi}{4}\PYGtrac{o}{*}\PYGtrac{n}{Matrix}\PYGtrac{p}{([}
+         \PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{\PYGtracZhy{}} \PYGtrac{n}{x}\PYGtrac{p}{)}\PYGtrac{o}{*}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{\PYGtracZhy{}} \PYGtrac{n}{y}\PYGtrac{p}{),}
+         \PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{+} \PYGtrac{n}{x}\PYGtrac{p}{)}\PYGtrac{o}{*}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{\PYGtracZhy{}} \PYGtrac{n}{y}\PYGtrac{p}{),}
+         \PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{+} \PYGtrac{n}{x}\PYGtrac{p}{)}\PYGtrac{o}{*}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{+} \PYGtrac{n}{y}\PYGtrac{p}{),}
+         \PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{\PYGtracZhy{}} \PYGtrac{n}{x}\PYGtrac{p}{)}\PYGtrac{o}{*}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{1} \PYGtrac{o}{+} \PYGtrac{n}{y}\PYGtrac{p}{)])}
+    \PYGtrac{n}{dhdx}\PYGtrac{o}{=}\PYGtrac{n}{zeros}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{2}\PYGtrac{p}{,}\PYGtrac{l+m+mi}{4}\PYGtrac{p}{)}
+    \PYGtrac{k}{for} \PYGtrac{n}{i} \PYGtrac{o+ow}{in} \PYGtrac{n+nb}{range}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{4}\PYGtrac{p}{):}
+        \PYGtrac{n}{dhdx}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{0}\PYGtrac{p}{,}\PYGtrac{n}{i}\PYGtrac{p}{]}\PYGtrac{o}{=}\PYGtrac{n}{diff}\PYGtrac{p}{(}\PYGtrac{n}{N}\PYGtrac{p}{[}\PYGtrac{n}{i}\PYGtrac{p}{],}\PYGtrac{n}{x}\PYGtrac{p}{)}
+        \PYGtrac{n}{dhdx}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{,}\PYGtrac{n}{i}\PYGtrac{p}{]}\PYGtrac{o}{=}\PYGtrac{n}{diff}\PYGtrac{p}{(}\PYGtrac{n}{N}\PYGtrac{p}{[}\PYGtrac{n}{i}\PYGtrac{p}{],}\PYGtrac{n}{y}\PYGtrac{p}{)}
+
+    \PYGtrac{k}{for} \PYGtrac{n}{i} \PYGtrac{o+ow}{in} \PYGtrac{n+nb}{range}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{4}\PYGtrac{p}{):}
+        \PYGtrac{n}{B}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{0}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{2}\PYGtrac{o}{*}\PYGtrac{n}{i}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{dhdx}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{0}\PYGtrac{p}{,} \PYGtrac{n}{i}\PYGtrac{p}{]}
+        \PYGtrac{n}{B}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{2}\PYGtrac{o}{*}\PYGtrac{n}{i}\PYGtrac{o}{+}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{dhdx}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{,} \PYGtrac{n}{i}\PYGtrac{p}{]}
+        \PYGtrac{n}{B}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{2}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{2}\PYGtrac{o}{*}\PYGtrac{n}{i}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{dhdx}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{,} \PYGtrac{n}{i}\PYGtrac{p}{]}
+        \PYGtrac{n}{B}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{2}\PYGtrac{p}{,} \PYGtrac{l+m+mi}{2}\PYGtrac{o}{*}\PYGtrac{n}{i}\PYGtrac{o}{+}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{dhdx}\PYGtrac{p}{[}\PYGtrac{l+m+mi}{0}\PYGtrac{p}{,} \PYGtrac{n}{i}\PYGtrac{p}{]}
+
+    \PYGtrac{k}{return} \PYGtrac{n}{B}
+
+
+\PYGtrac{c+c1}{\PYGtracZsh{} Assign symbols}
+\PYGtrac{n}{x} \PYGtrac{p}{,} \PYGtrac{n}{y} \PYGtrac{o}{=} \PYGtrac{n}{symbols}\PYGtrac{p}{(}\PYGtrac{l+s+s1}{\PYGtracZsq{}x y\PYGtracZsq{}}\PYGtrac{p}{)} 
+\PYGtrac{n}{nu}\PYGtrac{p}{,} \PYGtrac{n}{E} \PYGtrac{o}{=} \PYGtrac{n}{symbols}\PYGtrac{p}{(}\PYGtrac{l+s+s1}{\PYGtracZsq{}nu, E\PYGtracZsq{}}\PYGtrac{p}{)}
+\PYGtrac{n}{h}\PYGtrac{o}{=}\PYGtrac{n}{symbols}\PYGtrac{p}{(}\PYGtrac{l+s+s1}{\PYGtracZsq{}h\PYGtracZsq{}}\PYGtrac{p}{)}
+
+\PYGtrac{n}{K} \PYGtrac{o}{=} \PYGtrac{n}{zeros}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{8}\PYGtrac{p}{,}\PYGtrac{l+m+mi}{8}\PYGtrac{p}{)}
+
+\PYGtrac{c+c1}{\PYGtracZsh{} Symbolically compute matrices}
+\PYGtrac{n}{C} \PYGtrac{o}{=} \PYGtrac{n}{umat}\PYGtrac{p}{(}\PYGtrac{n}{nu}\PYGtrac{p}{,} \PYGtrac{n}{E}\PYGtrac{p}{)}
+\PYGtrac{n}{B} \PYGtrac{o}{=} \PYGtrac{n}{stdm4}\PYGtrac{p}{(}\PYGtrac{n}{x}\PYGtrac{p}{,} \PYGtrac{n}{y}\PYGtrac{p}{)}
+\PYGtrac{n}{K\PYGtracZus{}int} \PYGtrac{o}{=} \PYGtrac{n}{B}\PYGtrac{o}{.}\PYGtrac{n}{T}\PYGtrac{o}{*}\PYGtrac{n}{C}\PYGtrac{o}{*}\PYGtrac{n}{B}
+
+\PYGtrac{c+c1}{\PYGtracZsh{} Integrate final stiffness}
+\PYGtrac{k}{for} \PYGtrac{n}{i} \PYGtrac{o+ow}{in} \PYGtrac{n+nb}{range}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{8}\PYGtrac{p}{):}
+    \PYGtrac{k}{for} \PYGtrac{n}{j} \PYGtrac{o+ow}{in} \PYGtrac{n+nb}{range}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{8}\PYGtrac{p}{):}
+        \PYGtrac{n}{K}\PYGtrac{p}{[}\PYGtrac{n}{i}\PYGtrac{p}{,}\PYGtrac{n}{j}\PYGtrac{p}{]} \PYGtrac{o}{=} \PYGtrac{n}{integrate}\PYGtrac{p}{(}\PYGtrac{n}{K\PYGtracZus{}int}\PYGtrac{p}{[}\PYGtrac{n}{i}\PYGtrac{p}{,}\PYGtrac{n}{j}\PYGtrac{p}{],} \PYGtrac{p}{(}\PYGtrac{n}{x}\PYGtrac{p}{,}\PYGtrac{o}{\PYGtracZhy{}}\PYGtrac{n}{h}\PYGtrac{p}{,}\PYGtrac{n}{h}\PYGtrac{p}{),} \PYGtrac{p}{(}\PYGtrac{n}{y}\PYGtrac{p}{,}\PYGtrac{o}{\PYGtracZhy{}}\PYGtrac{n}{h}\PYGtrac{p}{,}\PYGtrac{n}{h}\PYGtrac{p}{))}
+
+\PYGtrac{n}{knum} \PYGtrac{o}{=} \PYGtrac{n}{K}\PYGtrac{o}{.}\PYGtrac{n}{subs}\PYGtrac{p}{([(}\PYGtrac{n}{E}\PYGtrac{p}{,} \PYGtrac{n}{S}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{)),} \PYGtrac{p}{(}\PYGtrac{n}{nu}\PYGtrac{p}{,} \PYGtrac{n}{S}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{1}\PYGtrac{p}{)}\PYGtrac{o}{/}\PYGtrac{l+m+mf}{3.0}\PYGtrac{p}{),} \PYGtrac{p}{(}\PYGtrac{n}{h}\PYGtrac{p}{,} \PYGtrac{n}{S}\PYGtrac{p}{(}\PYGtrac{l+m+mi}{2}\PYGtrac{p}{))])}
+
+\PYGtrac{k}{print} \PYGtrac{n}{knum}
+\end{Verbatim}

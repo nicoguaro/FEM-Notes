@@ -1341,6 +1341,7 @@ while a typical element of the resultant stiffness matrix takes the general form
 It should be noticed that for the considered perfectly square element the resulting stiffness matrix can be partitioned into factors which depend upon the material properties only and into a single factor which depends on the size $h$. This last contribution can be obtained analytically.
 
 Once the elemental matrices are obtained these are assembled into the final global system of equations. Details of the assembly process are discussed in \autoref{chap: Computational Aspects}. The following Python script computes the stiffness matrix for the 4-noded element.
+
 \inputminted[bgcolor=bg]{python}{src/stiff_4nodes.py}
 
 \subsubsection{Formulation in the natural space: the continuum mechanics analogy}
