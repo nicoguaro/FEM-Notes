@@ -445,7 +445,7 @@ where $\var{u_i}$ are the virtual displacements and $\var{ \varepsilon_{ij}}$ ar
 
 Comparing the virtual work principle with the weak formulation given in \cref{eq:weak} we identify $\var{u_i}$ with the test functions $w_i$. As such the PVW takes the form of a powerful tool to test if a body is in equilibrium for a given solution (represented by the trial functions). In what follows we illustrate the use of the principle through some examples corresponding to problems in Bathe's textbook.
 
-\subsubsection*{Problem 3.15 from Finite Element Procedures}
+\subsubsection*{Problem\footnote{3.15 from Finite Element Procedures}}
 Establish the differential equation of equilibrium of the problem shown and the boundary conditions. Determine whether the differential operator of the problem is symmetric and positive definite and prove your answer.\cite{book:bathe}
 
 \begin{figure}[H]
@@ -474,7 +474,7 @@ from which
 \end{align*}
 
 
-\subsubsection*{Problem 4.35-The Hu-Washizu Variational Principle}
+\subsubsection*{Problem-The Hu-Washizu Variational Principle\footnote{4.35 from Finite Element Procedures}}
 Consider the Hu-Washizu functional:
 \begin{equation}
 \Pi^* = \Pi  - \intL_V \lambda_{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}  - \intL_{S_u} \lambda_i^u(u_i^{S_u} - \bar{ u}_i)\dd{S}
@@ -645,7 +645,7 @@ the variational equation reads
 from which
 \[\frac{{\partial \Pi }}{{\partial {u^Q}}} = 0.\]
 
-\subsubsection*{Generalized parabolic equation.}
+\subsubsection*{Problem: Discretization of the generalized parabolic equation.}
 Let us consider the case of the generalized parabolic equation and its discretization following the Galerkin method
 \[\rho(\vb x) \pdv{u(\vb x,t)}{t} + \mathcal{L}u(\vb x, t) = 0\]
 which can also be written using indicial notation
@@ -664,7 +664,7 @@ which can be written in discrete form;
 
 
 
-\subsubsection*{Navier equations.}
+\subsubsection*{Problem: Discretization of Navier equations.}
 In this case the differential equations are written as
 \[(\lambda  + \mu ){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \enspace .\]
 
@@ -707,7 +707,7 @@ where
 
 \[{F^P} = \int\limits_S {N_i^Pt_i^{(\hat n)}dS + \int\limits_V {N_i^P{f_i}dV = 0} } \]
 
-\subsubsection*{The acoustic wave equation.}
+\subsubsection*{Problem: Discretization of the acoustic wave equation.}
 
 \[\vec \nabla  \cdot \left[ {\frac{1}{\rho }\vec \nabla p(\vb{x})} \right] - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial \rho }}{{\partial t}}} \right) - q(\vb{x}) = 0\]
 
@@ -809,14 +809,91 @@ which can be written in terms of displacements using \cref{eq:Kspring} like
 \label{fig:dclmass}
 \end{figure}
 
+
+Writing the elemental equilibrium equations in terms of $u_{j - 1}$, $u_j$ and $u_{j + 1}$ we have:
+
+\[\left\{ {\begin{array}{*{20}{c}}
+{f_1^i}\\
+{f_2^i}
+\end{array}} \right\} = \left[ {\begin{array}{*{20}{c}}
+{k_{11}^i}&{k_{12}^i}\\
+{k_{21}^i}&{k_{22}^i}
+\end{array}} \right]\left\{ {\begin{array}{*{20}{c}}
+{{u_{j - 1}}}\\
+{{u_j}}
+\end{array}} \right\}\]
+
+and
+
+\[\left\{ {\begin{array}{*{20}{c}}
+{f_1^{i + 1}}\\
+{f_2^{i + 1}}
+\end{array}} \right\} = \left[ {\begin{array}{*{20}{c}}
+{k_{11}^{i + 1}}&{k_{12}^{i + 1}}\\
+{k_{21}^{i + 1}}&{k_{22}^{i + 1}}
+\end{array}} \right]\left\{ {\begin{array}{*{20}{c}}
+{{u_j}}\\
+{{u_{j + 1}}}
+\end{array}} \right\}\]
+
+which gives for the equilibrium equation of the $m_j$ mass:
+
+\[k_{21}^i{u_{j - 1}} + (k_{22}^i + k_{11}^{i + 1}){u_j} + k_{12}^{i + 1}{u_{j + 1}} + {m_j}\frac{{d{V_j}}}{{dt}} = {P_j}.\]
+
+Considering also the contributions from the springs $K^i$ and $K^{i+1}$ to the equilibrium of masses $m_{j-1}$ and $m_{j+1}$ respectively we have the following matrix block:
+
+
+
+\[\left[ {\begin{array}{*{20}{c}}
+{}&{}&{}&{}\\
+{}&{k_{11}^i}&{k_{12}^i}&{}\\
+{}&{k_{21}^i}&{k_{22}^i + k_{11}^{i + 1}}&{k_{12}^{i + 1}}\\
+{}&{}&{k_{21}^{i + 1}}&{k_{22}^{i + 1}}
+\end{array}} \right]\]
+
+
 Considering now the complete system of masses and springs leads to a system of linear equations of the form
 \begin{equation}
 \left[ {{K_G}} \right]\left\{ {{U_G}} \right\} + \left[ M \right]\left\{ {{A_G}} \right\} = \left\{ {{F_G}} \right\}.
 \label{eq:global}
 \end{equation}
-where each equation represents the equilibrium of a given mass.
+where each equation represents the equilibrium of a given mass. The coefficient matrix in \cref{eq:global} can be assembled in a systematic way by establishing the connection between the global and local degrees of freedom. This can be accomplished through an operator storing in each row the global degrees of freedom corresponding to each element. For instance, \cref{fig:IBC} shows elements $K^i$ and $K^{i+1}$ and the global degrees of freedom corresponding to masses $m_{j-1}$, $m_j$ and $m_{j+1}$. The corresponding entries of the $DME$ operator for these elements are given by:
 
-The system given by \cref{eq:global} can be solved in the displacements $U_G$. The pseudo-code shown in \cref{algo:springs} presents all the steps required to solve the problem in the context of the finite element method. In that code the so-called DME operator is an equation assembly array indicating how each element contributes to the global stiffness and mass matrix.
+
+\[DME = \left[ {\begin{array}{*{20}{c}}
+{}&{}\\
+{j - 1}&j\\
+j&{j + 1}\\
+{}&{}
+\end{array}} \right]\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{ibc}
+\caption{Global degrees of freedom connected to the spring elements $K^i$ and $K^{i+1}$ respectively.}
+\label{fig:IBC}
+\end{figure}
+
+and the contribution from these elements to the global coefficient matrix for elements $i$ and $i+1$ reads respectively:
+
+
+\[\begin{array}{l}
+{K_{j - 1,j - 1}} \leftarrow {K_{j - 1,j - 1}} + k_{11}^i\\
+{K_{j - 1,j}} \leftarrow {K_{j - 1,j}} + k_{12}^i\\
+{K_{j,j - 1}} \leftarrow {K_{j,j - 1}} + k_{21}^i\\
+{K_{j,j}} \leftarrow {K_{j,j}} + k_{22}^i
+\end{array}\]
+
+and
+
+\[\begin{array}{l}
+{K_{j,j}} \leftarrow {K_{j,j}} + k_{11}^{i + 1}\\
+{K_{j,j + 1}} \leftarrow {K_{j,j + 1}} + k_{12}^{i + 1}\\
+{K_{j + 1,j}} \leftarrow {K_{j + 1,j}} + k_{21}^{i + 1}\\
+{K_{j + 1,j + 1}} \leftarrow {K_{j + 1,j + 1}} + k_{22}^{i + 1}
+\end{array}\]
+
+The system given by \cref{eq:global}, assembled with the aid of the $DME$ operator can be solved for the global displacements $U_G$. The pseudo-code shown in \cref{algo:springs} presents all the steps required to solve the problem in the context of the finite element method. In that code the so-called DME operator is an equation assembly array indicating how each element contributes to the global stiffness and mass matrix.
 
 \begin{algorithm}[H]\label{algo:springs}
     \SetAlgoLined
@@ -828,11 +905,16 @@ The system given by \cref{eq:global} can be solved in the displacements $U_G$. T
         $K^G \leftarrow K^G+K^i$\\
         $F^G \leftarrow F^G+F^i$\\
     }
-    Impose BCs\;
     Solve $[K^G]U=F^G$\\
     Find internal forces
     \caption{Springs Algorithm.}    
 \end{algorithm}
+
+\newpage
+
+\inputminted[bgcolor=bg]{python}{src/engine.py}
+
+\newpage
 
 
 \subsection{Basic elements of interpolation theory}
@@ -1188,12 +1270,6 @@ f_V^Q    & = \int\limits_V {N_i^Q{f_i}dV}
 \end{aligned}
 \end{equation}
 
-
-%\begin{align*}
-%{K^{QP}} & = \int\limits_V {{C_{ijkl}}B_{kl}^PB_{ij}^QdV} \\
-%f_c^Q    & = \int\limits_S {N_i^Qt_i^ndS} \\
-%f_V^Q    & = \int\limits_V {N_i^Q{f_i}dV}
-%\end{align*}
 
 allows us to write:
 
