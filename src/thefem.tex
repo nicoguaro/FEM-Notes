@@ -387,7 +387,6 @@ From the condition $u=0$ at $x=\ell\cos(\phi)$ we have that $A=-\dfrac{S}{E} K_{
 Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
 \[v=-\dfrac{S}{E} K_{2}(\nu , \phi)y\]
 
-%%
 \subsection{Variational formulation}
 In this section we formulate the boundary value problem using the approach of the calculus of variations in which the governing PDEs and boundary conditions are obtained after finding the minimum (or maximum) of a functional according to a variational principle\footnote{According to Wikipedia \cite{wiki:variational_principle}
 
@@ -396,7 +395,7 @@ A variational principle is a scientific principle used within the calculus of va
 
 According to Cornelius Lanczos, any physical law which can be expressed as a variational principle describes an expression which is self-adjoint. These expressions are also called Hermitian. Such an expression describes an invariant under a Hermitian transformation.
 \end{quotation}}.
-%%
+
 We will see that the weak form (and therefore also the strong form) can be obtained alternatively through the process of finding extreme values for a functional. We will illustrate this idea for the general case of theory of elasticity and then we will present particular examples.
 
 \subsubsection*{Some vague definitions in the calculus of variations}
@@ -474,7 +473,7 @@ from which
 \end{align*}
 
 
-\subsubsection*{Problem-The Hu-Washizu Variational Principle\footnote{4.35 from Finite Element Procedures}}
+\subsubsection*{Problem: The Hu-Washizu Variational Principle\footnote{4.35 from Finite Element Procedures}}
 Consider the Hu-Washizu functional:
 \begin{equation}
 \Pi^* = \Pi  - \intL_V \lambda_{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}  - \intL_{S_u} \lambda_i^u(u_i^{S_u} - \bar{ u}_i)\dd{S}
@@ -559,18 +558,18 @@ We will assume that the actual solution to the generalized BVP given by \cref{eq
 \label{basicsuper}
 \end{equation}
 
-where ${N^I}(\vb{x})$ are interpolating functions and $I$ denotes a superposition index  varying like $I=1,2,...,K$ with $K$ being the number of points where the solution is known. In what follows we will use $u(\vb{x})$ instead of $\tilde u (\vb{x})$ but will keep in mind that we are actually using the approximation given by \cref{basicsuper}. Similarly, in order to keep the discussion simple for the time being we will drop the time effects reducing the generailzed P.D.E to the simple form:
+where ${N^I}(\vb{x})$ are interpolating functions and $I$ denotes a superposition index  varying like $I=1,2,...,K$ with $K$ being the number of points where the solution is known. In what follows we will use $u(\vb{x})$ instead of $\tilde u (\vb{x})$ but will keep in mind that we are actually using the approximation given by \cref{basicsuper}. Similarly, in order to keep the discussion simple for the time being we will drop the time effects reducing the generailzed PDE to the simple form:
 
 \begin{equation}
-\mathcal{L}u(\vb x, t) = \rho (\vb x)F(\vb x, t) \enspace .
+\mathcal{L}u(\vb x) = \rho (\vb x)F(\vb x) \enspace .
 \label{eq:GenPDE3}
 \end{equation}
 
 
 
-Now, since we are using the approximation given by \cref{basicsuper} this equation is not strictly satisifed but instead we will have the following "unbalanced" condition
+Now, since we are using the approximation given by \cref{basicsuper} this equation is not strictly satisifed but instead we will have the following ``unbalanced" condition
 
-\[Lu(\vb{x},t) - \rho (\vb{x})F(\vb{x}, t) \equiv R \ne 0\]
+\[Lu(\vb{x}) - \rho (\vb{x})F(\vb{x}) \equiv R \ne 0\]
 
 where the term $R$ corresponds to a residual error which is to be distributed throughout the solution domain. The so-called weighted residual methods differ in the form in which they distribute the residual between the different $K$ points conforming the computational domain.
 
@@ -582,11 +581,11 @@ In what follows we will consider different strategies to distribute or weight th
 
 \subsubsection{Galerkin method}
 In the Galerkin scheme the interpolation functions are used also as weighting functions leading to:
-\[\int\limits_V {{N^Q}RdV = 0} \]
+\[\int\limits_V N^Q R\dd{V} = 0 \]
 or explicitly
 \begin{equation}
-\int\limits_V {{N^Q} \mathcal{L} ({N^P})dV} {u^P} = \int\limits_V {{N^Q}\rho FdV}
-\label{eq:Galer}
+  \int\limits_V N^Q \mathcal{L} (N^P)\dd{V} u^P = \int\limits_V N^Q\rho F\dd{V}
+  \label{eq:Galer}
 \end{equation}
 
 Imposing \cref{eq:Galer} in the $K$ points conforming the computational domain or equivalently ranging $Q$ from $1$ to $K$ leads to the following system of algebraic equation
