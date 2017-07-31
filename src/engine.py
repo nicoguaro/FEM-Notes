@@ -1,17 +1,6 @@
 """
-PROGRAM SOLIDS
---------------
-
 Computes the displacement solution for an assembly
 of 1D spring elements under point loads.
-
-Created by Juan Gomez as part of the courses:
-
-IC0283 COMPUTATIONAL MODELLING
-IC0602 INTRODUCTION TO THE FINITE ELEMENT METHOD
-Universidad EAFIT
-Departamento de Ingenieria Civil
-Last updated February 2017
 """
 import numpy as np
 import starter as sta
