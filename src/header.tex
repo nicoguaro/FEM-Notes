@@ -1,5 +1,5 @@
-\documentclass[12pt,oneside,openany]{book}
-\usepackage[english]{babel}
+\documentclass[12pt,oneside,openany, english]{book}
+\usepackage{babel}
 \usepackage{babelbib}
 \usepackage{etoolbox}
 \usepackage{mathtools}
@@ -19,7 +19,6 @@
 \usepackage{leftidx}
 \usepackage[ruled]{algorithm2e} % Include algorithms
 \usepackage{listings} % To include code
-%\usepackage{algorithmic}
 \usepackage{cite}  % Pretty citations
 \usepackage{bookmark} % Bookmarks in PDF
 \usepackage{cleveref}
@@ -28,7 +27,8 @@
 \usepackage{physics} % Extra operators and cool stuff
 \usepackage{minted}  % Include fancy code
 \usepackage{xcolor}
-
+\usepackage[nottoc]{tocbibind} % Add the references to the table of contents
+\usepackage{scalerel}  % To create the assembly operator
 
 %% Packages setup
 
@@ -37,11 +37,7 @@
 
 \geometry{
 	verbose,
-	letterpaper,
-	tmargin=3cm,
-	bmargin=2cm,
-	lmargin=2cm,
-	rmargin=2cm
+	letterpaper
 }
 
 \hypersetup{
@@ -51,6 +47,7 @@
 	citecolor=blue,
 	urlcolor=black,	
 	linktoc=all,
+	bookmarksopen=false,
 	pdftitle={Finite Element Methods},
 	pdfauthor={J. Gomez, N. Guarin-Zapata},
 	pdfkeywords={Computational Mechanics, Finite Element Methods},
@@ -65,9 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % New  commands
 
-\setlength{\parskip}{0.5cm}
 
-% Quotation marks:   ``''
 
 \newcommand{\urlbib}[1]{{\footnotesize{\url{#1}}}} % URL in references
 \newcommand{\fullref}[1]{\ref{#1} at page \pageref{#1}}
@@ -77,28 +72,28 @@
 {C\nolinebreak[4]\hspace{-.05em}\raisebox{.22ex}{\footnotesize\bf ++}}
 
 % Assembly operator
-\newcommand{\assem}[2]{
-	\overset{#2}{\underset{#1}{
-		\mathbb{A}}
-	}
-}
+%\newcommand{\assem}[2]{
+%	\overset{#2}{\underset{#1}{
+%		\mathbb{A}}
+%	}
+%}
+
+\DeclareMathOperator*{\assem}{\scalerel*{\mathbb{A}}{\sum‌​}} 
 
 %% Example:
-% \[\assem{k=1}{n} N_k(x)u_k\]
+% \[\assem_{k=1}^{n} N_k(x)u_k\]
 
 %%--- Math commands ---
 
 
 % Integrals
 \newcommand{\intL}{\int\limits}
-%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tweaks
+
+\setlength{\parskip}{0.5cm}
+
 \crefname{algocf}{alg.}{algs.}
 \Crefname{algocf}{Algorithm}{Algorithms}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%
-%\renewcommand{\tablename}{Tabla}
-%\renewcommand{\figurename}{Figura}
-%\renewcommand{\contentsname}{Table of Contents}
-%\renewcommand{\listtablename}{Lista de tablas}
-%\renewcommand{\listfigurename}{Lista de figuras}

@@ -500,7 +500,7 @@ the relation between the stress tensor and the unknown tractions vector (or reac
 \[t_i = \tilde{\sigma_{ij}} n_j\]
 and the essential boundary condition at $S_u$
 \[u_i = \tilde{u}_i\]
-We want to determine the so-called Euler equations resulting from the condition $\var{\Pi}^* = 0$. Applying the variational operator we have:
+We want to determine the Euler equations resulting from the condition $\var{\Pi}^* = 0$. Applying the variational operator we have
 \begin{equation}
 \begin{aligned}
 \var{\Pi}^*& = \var{\Pi}  - \intL_V \var{\lambda}_{ij}^{\varepsilon}  (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}- \intL_V \lambda_{ij}^\varepsilon (\var{\varepsilon}_{ij} - L_{ijk}\var{u}_k)\dd{V} \\
@@ -543,39 +543,34 @@ t_i &= \lambda_{ij}^\varepsilon \hat{n}_j\\
 \end{align}
 
 \subsection{Weighted residual methods}
-This section introduces the concept of residual or difference from zero in a differential equation once its solution is aproximated numerically. For that purpose we will take as prototype equation the one obtained as our general model of BVP (see \cref{eq:GenPDE}) and recalled here for completeness:
-
+This section introduces the concept of residual or difference from zero in a differential equation once its solution is approximated. For that purpose we will take as prototype equation the one obtained as our general model of BVP (see \cref{eq:GenPDE}) and recalled here for completeness
 \begin{equation}
 \rho(\vb x) \pdv{u(\vb x, t)}{t} + \mathcal{L}u(\vb x, t) = \rho (\vb x)F(\vb x, t) \enspace .
 \label{eq:GenPDE2}
 \end{equation}
 
-
-We will assume that the actual solution to the generalized BVP given by \cref{eq:GenPDE2} is approximated by the numerically derived solution $\tilde u(\vb{x})$ through a superposition like
-
+We will assume that the actual solution to the generalized BVP given by \cref{eq:GenPDE2} is approximated by $\tilde u(\vb{x})$ through a superposition like
 \begin{equation}
 \tilde u (\vb{x}) = {N^I}(\vb{x}){u^I}
 \label{basicsuper}
 \end{equation}
-
-where ${N^I}(\vb{x})$ are interpolating functions and $I$ denotes a superposition index  varying like $I=1,2,...,K$ with $K$ being the number of points where the solution is known. In what follows we will use $u(\vb{x})$ instead of $\tilde u (\vb{x})$ but will keep in mind that we are actually using the approximation given by \cref{basicsuper}. Similarly, in order to keep the discussion simple for the time being we will drop the time effects reducing the generailzed PDE to the simple form:
-
+where ${N^I}(\vb{x})$ are interpolating functions and $I$ denotes a superposition index  varying like $I=1,2,...,K$ with $K$ being the number of points where the solution is known. In what follows we will use $u(\vb{x})$ instead of $\tilde u (\vb{x})$ but will keep in mind that we are actually using the approximation given by \cref{basicsuper}. Similarly, in order to keep the discussion simple for the time being we will drop the time effects reducing the generalized PDE to the simple form:
 \begin{equation}
 \mathcal{L}u(\vb x) = \rho (\vb x)F(\vb x) \enspace .
 \label{eq:GenPDE3}
 \end{equation}
 
-
-
 Now, since we are using the approximation given by \cref{basicsuper} this equation is not strictly satisifed but instead we will have the following ``unbalanced" condition
-
-\[Lu(\vb{x}) - \rho (\vb{x})F(\vb{x}) \equiv R \ne 0\]
-
+\[\mathcal{L}u(\vb{x}) - \rho (\vb{x})F(\vb{x}) \equiv R \ne 0\]
 where the term $R$ corresponds to a residual error which is to be distributed throughout the solution domain. The so-called weighted residual methods differ in the form in which they distribute the residual between the different $K$ points conforming the computational domain.
 
-Using \cref{basicsuper} in \cref{eq:GenPDE2} and the linearity in the differential operator yields;
+Using \cref{basicsuper} in \cref{eq:GenPDE2} and the linearity in the differential operator yields
+\[R = \mathcal{L}({N^P}){u^P} - \rho F\, .\]
 
-\[R = \mathcal{L}({N^P}){u^P} - \rho F.\]
+We can see that the residual $R$ is a function defined over the domain of interest. The residual would be exactly zero for the solution of the differential equation, but it will not be zero in general. Thus, we want to make the function $R$ as close to zero as possible. To make $R$ as small as possible we need a function (a functional) where we can compare different approximation functions. After getting this functional we can minimize its value. For this minimization we could use the norm of the function, another option is to compute a weighted \emph{average} of the function over the domain. This is what we call a weighted residual
+\[\Pi[u, w] = \int\limits_V w R(u) \dd{V}\, ,\]
+and we want to minimize it by making
+\[\var{\Pi}[u, w] = 0\, ,\]
 
 In what follows we will consider different strategies to distribute or weight the residual $R$ over the computational domain.
 
@@ -584,7 +579,7 @@ In the Galerkin scheme the interpolation functions are used also as weighting fu
 \[\int\limits_V N^Q R\dd{V} = 0 \]
 or explicitly
 \begin{equation}
-  \int\limits_V N^Q \mathcal{L} (N^P)\dd{V} u^P = \int\limits_V N^Q\rho F\dd{V}
+  \int\limits_V N^Q \mathcal{L} (N^P)\dd{V} u^P = \int\limits_V N^Q\rho F\dd{V}\, .
   \label{eq:Galer}
 \end{equation}
 
@@ -600,9 +595,17 @@ where $U^P$ is a vector that stores the point values of the function $u$ along t
 In this method the integral of the square of the residual is minimized with respect to the $K$ point parameters or nodal values of the function. Accordingly,
 \begin{align*}
   &\pdv{u^I}\int\limits_V R^2 \dd{V} = 0\\
+  &\int\limits_V R \pdv{R}{u^I} \dd{V} = 0\, ,
+\end{align*}
+
+The least squares method is a special case of the weighted residual method for the weight functions
+\[w^I = \pdv{R}{u^I}\, .\]
+
+Expanding the residual, and considering the operator $\mathcal{L}$ as linear, we obtain
+\begin{align*}
   &\pdv{u^I}\int\limits_V [\mathcal{L}(N^P u^P) - \rho F]^2 \dd{V} = 0\\
   &\int\limits_V [\mathcal{L} N^P u^P - \rho F] \mathcal{L}(N^I) \dd{V} = 0\\
-  &\int\limits_V \mathcal{L}(N^I) \mathcal{L}(N^P) \dd{V} u^P - \rho \int\limits_V \mathcal{L}(N^I) F \dd{V} = 0
+ &\int\limits_V \mathcal{L}(N^I) \mathcal{L}(N^P) \dd{V} u^P - \rho \int\limits_V \mathcal{L}(N^I) F \dd{V} = 0
 \end{align*}
 which can be written like
 \begin{equation}
@@ -611,47 +614,47 @@ which can be written like
 \end{equation}
 
 \subsubsection{Collocation method}
-Zero values of the residual are directly imposed over the $K$ points of the computational domain;
+In the collocation method the coefficients of the approximation are determined by forcing the residual to be exactly zero at $K$ points over the computational domain, i.e.,
+\[\mathcal{L}(N^I) u^I - \rho F = 0\, ,\]
+or
+\[\mathcal{L}[N^I(x^J)] u^I - \rho F(x^J) = 0\, ,\]
+where $J$ ranges between $1$ and $K$. This equation can be rewritten as a weighted-residual if we consider the residual to be $\delta(x - x^I)$, the Dirac delta function over the selected points
 
-\[\mathcal{L}({N^I}){u^I} - \rho F = 0\]
-
-\[L[{N^I}({x^J})]{u^I} - \rho F({x^J}) = 0\]
-
-where $J$ ranges between $1$ and $K$ leading to the system;
-
+The resulting system of algebraic equation can be written as
 \begin{equation}
-{K^{IP}}{U^P} = {f^I}
+K^{IP} U^P = f^I\, .
 \label{eq:Colo}
 \end{equation}
 
 \subsubsection{Subdomain method}
-The zero value of the residual is imposed upon $K$ subdomains.
+The zero value of the residual is imposed upon $K$ subdomains
+\[\int\limits_{V^I} \mathcal{L}(N^P)\dd{V^I} u^P  - \rho \int\limits_{V^I}  F\dd{V^I}  = 0 \qquad I=1,\cdots,K\, .\]
 
-\[\int\limits_{{V^I}} {\mathcal{L}({N^P})d{V^I}{u^P}}  - \rho \int\limits_{{V^I}} {Fd{V^I}}  = 0 \quad \quad I=1,...,K.\] For instance, for the $N$-th element it follows that ;
-
-\[\int\limits_{{V^N}} {\mathcal{L}({N^P})d{V^N}{u^P}}  - \rho \int\limits_{{V^N}} {Fd{V^N}}  = 0 \quad \quad P=1,...,K.\]
+For instance, for the $N$-th element it follows that
+\[\int\limits_{V^N} \mathcal{L}(N^P)\dd{V^N} u^P  - \rho \int\limits_{V^N} F\dd{V^N}  = 0 \qquad P=1,\cdots,K\, .\]
 
 Applying the equation over the $K$ subdomains leads to the discrete system;
 \begin{equation}
-{K^{IP}}{U^P} = {f^I} \quad \quad I=1,...,K.
-\label{eq:Sundomain}
+K^{IP} U^P = f^I \quad \quad I=1,\cdots,K\, .
+\label{eq:Subdomain}
 \end{equation}
 
-\subsubsection{Ritz method} It operates directly upon the variational statement of the problem. For a given functional
-\[\Pi  = \Pi ({N^Q}{u^Q})\]
+\subsubsection{Ritz method}
+It operates directly upon the variational statement of the problem. For a given functional
+\[\Pi  = \Pi (N^Q u^Q)\]
 the variational equation reads
-\[\delta \Pi  \equiv \frac{{\partial \Pi }}{{\partial {u^Q}}}\delta {u^Q} = 0\]
+\[\var{\Pi}  \equiv \pdv{\Pi}{u^Q} \var{u^Q} = 0\]
 from which
-\[\frac{{\partial \Pi }}{{\partial {u^Q}}} = 0.\]
+\[\pdv{\Pi}{u^Q} = 0\, .\]
 
 \subsubsection*{Problem: Discretization of the generalized parabolic equation.}
 Let us consider the case of the generalized parabolic equation and its discretization following the Galerkin method
 \[\rho(\vb x) \pdv{u(\vb x,t)}{t} + \mathcal{L}u(\vb x, t) = 0\]
 which can also be written using indicial notation
-\[\frac{\partial }{{\partial {x_i}}}\left[ {p(x)\frac{{\partial u}}{{\partial {x_i}}}} \right] + q(x)u + \rho \frac{{\partial u}}{{\partial t}} = \rho F.\]
+\[\pdv{x_i}\left[{p(x)\pdv{u}{x_i} \right] + q(x)u + \rho \pdv{u}{t} = \rho F.\]
 
-Assuming for simplicity that $p(x)=1$ yields
-\[ - \int\limits_V {{N^P}N_{,ii}^Q} dV{u^Q} + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
+Assuming that $p(x)=1$ yields
+\[ - \int\limits_V N^P N_{,ii}^Q \dd{V} u^Q + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
 
 \[\int\limits_V {N_{,i}^PN_{,i}^Q} dV{u^Q} - \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
 
