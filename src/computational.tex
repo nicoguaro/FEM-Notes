@@ -1,6 +1,6 @@
 %Chapter "Computational aspects"
 %
-\graphicspath{ {./img/COMPU/} }
+\graphicspath{ {./img/Computational/} }
 \chapter{Computational aspects}
 \label{chap: Computational Aspects}
 \section{Global assembly}
@@ -9,7 +9,7 @@ In this section we will discuss the fundamental process of building the system o
 {K^G}=\assem_{i=1}^{Numel} k^i.
 \end{equation}
 
-In this section we will describe the fundamental algorithmic steps to perform that process. We first summarize the basic general steps and then illustrate the process through a simple example involving a $2D$ mesh of 4-noded elements. The section is complemented with the python scripts {\bf GLOBAL.py} and the secondary module {\bf assemutil.py}.
+In this section we will describe the fundamental algorithmic steps to perform that process. We first summarize the basic general steps and then illustrate the process through a simple example involving a $2D$ mesh of 4-noded elements. The section is complemented with the Python scripts {\bf GLOBAL.py} and the secondary module {\bf assemutil.py}.
 
 \subsection*{The assembly algorithm}
 The process of assembly of the elemental coefficient matrices into the global system involves (i) the identification of the active degrees of freedom (or equation numbers) assigned to each node in the mesh (ii) the identification of the relationship between the elemental degrees of freedom and the global degrees of freedom and (iii) the computation of the coefficient matrix for each element in the model.
@@ -115,7 +115,23 @@ K_{4,3}^G & \leftarrow  K_{4,3}^G + k_{5,8}^2
 
 In \cref{algo:overall} it must be noticed that the local stiffness matrix for each $i$ element is obtained by the call to the local element subroutine $UEL$. In the script GLOBAL.py these elemental routines produce a fictitious matrix filled out with ones and the actual computation of the elemental coefficient matrix is discussed later.
 
+
+\section{Sparse assembly}
+In Finite Elements is common to have stiffness and mass matrices that are sparse, i.e., matrices in which most of the elements are zero.
+
+
+For instance, in a regular mesh formed with bilinear quadrilaterals the number of nonzero entries is given by the expression
+\[\text{storage} = 9 n_x n_y - 9 n_x - 3 n_y + 4\, ,\]
+where $n_x$ is the number of nodes in the $x$ coordinate and $n_y$ is the number of nodes in the $y$ coordinate. Figure \ref{fig:sparse_storage} presents the needed storage for a mesh with $n_x=n_y$ for different sizes.
+\begin{figure}[H]
+\centering
+\includegraphics[width=6 in]{sparse_storage.pdf}
+\caption{Nonzero entries in a sparse matrix for a structured mesh of bilinear elements.}
+\label{fig:sparse_storage}
+\end{figure}
+
 \section{Python implementations}
+
 
 \section{Commercial codes and user subroutines}
 
