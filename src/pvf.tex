@@ -1,5 +1,7 @@
 \graphicspath{ {./img/TheFEM/} }
 \chapter{Review of Boundary Value Problems}
+
+
 \section{Boundary value problems}
 In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we formally re-state these equations in the so-called strong form. Subsequently we re-write and prove an equivalent form of the balance law in the form of an integral representation highly friendly for a numerical solution. Since in the integral description of the problem the order of the derivatives in the field functions decreases by one, the resulting statement is called a weak formulation. 
 %%
@@ -50,7 +52,7 @@ It can be shown that $\mathcal{L}$ satisfies the \emph{symmetry} condition
 and positive definiteness \cite{book:sepulveda_fismat, book:arfken}
 \[\int\limits_V \mathcal{L}(u)u\dd{V}  > 0, \quad \forall u \enspace .\]
 
-\subsection*{Strong form}
+\subsection{Strong form}
 Given $\rho(\vb x)$, $q(\vb x)$, $p(\vb x)$, $F(\vb x, t)$ and $\bar u$ find $u(\vb x , t):V \to \mathbb{R}$ such:
 \[\rho(\vb x) \pdv{u}{t} - \div \left[p(\vb x) \grad u\right] + q(\vb x) u(\vb x, t) - \rho(\vb x) F(\vb x, t) = 0 \quad \forall \vb x \in V \]
 and
@@ -76,13 +78,13 @@ and
 which corresponds to the functions being square integrable. The space of functions satisfying the above two conditions will be denoted by $\pounds$ and termed the space of test functions, formally defined like:
 \[\pounds  = \left\{w \mid w \in \mathbb{H},w = 0 \quad \forall \vb x \in S_u\right\}\]
 
-\subsection*{Weak form}
+\subsection{Weak form}
 Given $\rho(\vb x)$, $q(\vb x)$, $p(\vb x)$, $F(\vb x, t)$ and $\bar u$ find $u(\vb x , t):V \to \mathbb{R}$ and $\forall w \in \pounds$ such:
 \[\int\limits_V p(\vb x) u_{,i}\, w_{,i}\dd{V} - \int\limits_{S_t} B(\vb x, t)w \dd{S}  + \int\limits_V q(\vb x)u(\vb x, t)w\dd{V}  + \int\limits_V \rho(\vb x)\pdv{u}{t}w \dd{V} - \int\limits_V \rho(\vb x) F(\vb x, t)w\dd{V} = 0\]
 and
 \[u = \bar u\quad \forall\vb x \in S_u \enspace .\]
 
-\subsection*{Equivalence between the strong and weak forms}
+\subsection{Equivalence between the strong and weak forms}
 \begin{multline}
     -\int\limits_V [p(\vb x)u_{,i}]_{,i}w \dd{V} + \int\limits_{S_t} [p(\vb x)u_{,i}] \hat n_i w\dd{S} - \int\limits_{S_t} B(\vb x, t)w\dd{S}\\
     + \int\limits_V q(\vb x)u(\vb x, t)w \dd{V}  + \int\limits_V \rho(\vec x)\pdv{u}{t}w\dd{V} - \int\limits_V \rho(\vb x)F(\vb x, t)w\dd{V} = 0 
@@ -139,7 +141,7 @@ Substituting \cref{eq:kin} in \cref{eq:Hooke} and the result in \cref{eq:pde} yi
 
 Since \cref{eq:navier} ( simultaneously describing equilibrium, kinematic relations and constitutive response) is a second order equation governing the displacement field possible boundary conditions are in terms of the variable itself or its first oder derivatives. For a well-possed problem the following is a set of valid boundary conditions: 
 
-\begin{equation} \label{eq:Wellbcs}
+\begin{equation}\label{eq:Wellbcs}
 \begin{split}
 &t_i^{\hat n} = \sigma _{ij} \hat n_{ij} \quad \forall\ \vb{x} \in S_t\\
 & {u_i} = \bar{u}_i \quad \forall \vb x \in S_u
@@ -252,7 +254,7 @@ from which
 
 which is once again the strong form of the problem given in \cref{eq:pde}.
 
-\subsection*{Simple wedge under self-equilibrated loads}
+\subsection{Simple wedge under self-equilibrated loads}
 Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \cref{fig:WEDGE}. It is assumed to be contained in the $X-Y$ plane, with loading conditions satisfying a plane strain (or plane stress) idealization. The material is elastic with Lame constants $\lambda$ and $\mu$. The wedge is loaded by uniform tractions of intensity $S$ applied over its four faces in such a way that the wedge is self-equilibrated. We wish to find the closed-form elasticity solution for the stress, strain and displacement fields throughout the problem domain.
 %
 \begin{figure}[h]
@@ -664,8 +666,6 @@ which can be written in discrete form;
 
 \[{K^{PQ}}{U^Q} + {C^{PQ}}{V^Q} = {f^p}\]
 
-
-
 \subsubsection*{Problem: Discretization of Navier equations.}
 In this case the differential equations are written as
 \[(\lambda  + \mu ){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \enspace .\]
@@ -676,77 +676,57 @@ We can write the differential operator as
 \begin{align*}
 &r_i =  - f_i\\
 &u_i = N_i^Q u^Q\\
-&\mathcal{L}_{ij}(u_j) \equiv (\lambda  + \mu )(N_j^Q{u^Q})_{,ij} + \mu (N_j^Q{u^Q})_{,kk}\delta_{ij}\\
+&\mathcal{L}_{ij}(u_j) \equiv (\lambda  + \mu )(N_j^Q u^Q)_{,ij} + \mu (N_j^Q u^Q)_{,kk}\delta_{ij}\\
 &\mathcal{L}_{ij}(u_j) \equiv (\lambda  + \mu )N_{j,ij}^Q u^Q + \mu N_{i,kk}^Q u^Q\\
 &\mathcal{L}_{ij}(u_j) \equiv \mathcal{L}_{ij}(N_j^Q) u^Q \enspace .
 \end{align*}
 
 In the Galerkin scheme we use the trial function as weighting function.
 \[R_i \equiv L_{ij}(N_j^Q) u^Q + f_i\]
-and we state \dots
+and we state
+\[&\int\limits_V N_i^P R_i \dd{V} = 0 \qquad P=1,2,\cdots N\, .\]
 
-\[\int\limits_V {N_i^P{R_i}dV = 0} \quad \quad P=1,2,...,N. \]
-
-\[\int\limits_V {N_i^P{\mathcal{L}_{ij}}(N_j^K)dV{u^K}}  + \int\limits_V {N_i^P{f_i}dV = 0} \]
-
-\[(\lambda  + \mu )\int\limits_V {N_i^PN_{j,ij}^KdV{u^K}}  + \mu \int\limits_V {N_i^PN_{i,kk}^KdV{u^K}}  + \int\limits_V {N_i^P{f_i}dV = 0} \]
-
-integrating by parts;
-
+Thus
 \begin{align*}
-- (\lambda  + \mu )\int\limits_V {N_{i,j}^PN_{j,i}^KdV{u^K} + (\lambda  + \mu )\int\limits_S {N_i^PN_{j,i}^K{{\hat n}_j}dS{u^K} - \mu \int\limits_V {N_{i,k}^PN_{i,k}^KdV{u^K}} } } \\
-+ \mu \int\limits_S {N_i^PN_{i,k}^K{{\hat n}_k}dS{u^K}}  + \int\limits_V {N_i^P{f_i}dV = 0}
+&\int\limits_V N_i^P \mathcal{L}_{ij} (N_j^K)\dd{V} u^K  + \int\limits_V N_i^P f_i \dd{V} = 0 \\
+&(\lambda  + \mu )\int\limits_V N_i^PN_{j,ij}^K \dd{V} u^K  + \mu \int\limits_V N_i^PN_{i,kk}^K \dd{V} u^K  + \int\limits_V N_i^P f_i \dd{V} = 0
 \end{align*}
-
-which can be written like;
-
-
-\[{K^{PQ}}{U^Q} = {F^P}\]
-
+integrating by parts
+\begin{align*}
+- (\lambda  + \mu )\int\limits_V N_{i,j}^P N_{j,i}^K \dd{V} u^K + (\lambda  + \mu )\int\limits_S N_i^P N_{j,i}^K \hat{n}_j \dd{S} u^K - \mu \int\limits_V N_{i,k}^P N_{i,k}^K \dd{V} u^K \\
++ \mu \int\limits_S N_i^P N_{i,k}^K \hat{n}_k \dd{S} u^K  + \int\limits_V N_i^P f_i \dd{V} = 0
+\end{align*}
+which can be written like
+\[K^{PQ} U^Q = F^P\]
 where
-
-\[{K^{PQ}} = (\lambda  + \mu )\int\limits_V {N_{i,j}^PN_{j,i}^QdV}  + \mu \int\limits_V {N_{i,k}^PN_{i,k}^QdV} \]
-
-\[{F^P} = \int\limits_S {N_i^Pt_i^{(\hat n)}dS + \int\limits_V {N_i^P{f_i}dV = 0} } \]
+\[K^{PQ} = (\lambda  + \mu )\int\limits_V N_{i,j}^P N_{j,i}^Q \dd{V}  + \mu \int\limits_V N_{i,k}^P N_{i,k}^Q\dd{V} \]
+and
+\[F^P = \int\limits_S N_i^P t_i^{(\hat n)} \dd{S} + \int\limits_V N_i^P f_i \dd{V} = 0 \, .\]
 
 \subsubsection*{Problem: Discretization of the acoustic wave equation.}
-
-\[\vec \nabla  \cdot \left[ {\frac{1}{\rho }\vec \nabla p(\vb{x})} \right] - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial \rho }}{{\partial t}}} \right) - q(\vb{x}) = 0\]
-
-where we recognize;
-
-\[\mathcal{L}() \equiv \vec \nabla  \cdot \left( {\frac{1}{\rho }\vec \nabla } \right) - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{\partial }{{\partial t}}} \right)\]
+In this case the differential equation reads
+\[\div \left[ \frac{1}{\rho} \grad p(\vb{x})\right] - \pdv{t} \left(\frac{1}{\lambda} \pdv{\rho}{t}\right) - q(\vb{x}) = 0\]
+where we recognize that
+\[\mathcal{L} \equiv \div \left(\frac{1}{\rho} \grad \right) - \pdv{t}\left({\frac{1}{\lambda}\pdv{t}\right)\, .\]
 
 Let
-
-\[p(x) = {N^K}{p^K}\]
-
+\[p(x) = N^K p^K\]
 then
-
 \[\mathcal{L}(p) \equiv \vec \nabla  \cdot \left( {\frac{1}{\rho }\vec \nabla {N^K}{p^K}} \right) - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}{p^K}}}{{\partial t}}} \right)\]
-
 or in indicial notation
-
 \[\mathcal{L}(p) \equiv {\left( {\frac{1}{\rho }N_{,i}^K} \right)_{,i}}{p^K} - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right){p^K}\]
-
-which is equivalent to having;
-
+which is equivalent to
 \[\mathcal{L}(p) \equiv \mathcal{L}({N^K}){p^K}\]
-
-using the trial functions as weighting functios and recalling the definition of the residual which in this case reads;
-
-\[R = \mathcal{L}({N^K}){p^K} - q\]
-
-yields;
-
+using the trial functions as weighting function and recalling the definition of the residual which in this case reads
+\[R = \mathcal{L}({N^K}){p^K} - q\, ,\]
+and yields
 \[\int\limits_V {{N^J}RdV = 0} \quad \quad J=1,2,...,K \]
 
 \[\int\limits_V {{N^J}L({N^K})dV{p^K}}  - \int\limits_V {{N^J}qdV}  = 0\]
 
 \[\int\limits_V {{N^J}{{\left( {\frac{1}{\rho }N_{,i}^K} \right)}_{,i}}dV{p^K} - \int\limits_V {{N^J}\frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right)dV{p^K}} }  - \int\limits_V {{N^J}qdV}  = 0\]
 
-Integrating by parts the first term on the R.H.S gives us;
-
+Integrating by parts the first term on the right-hand-side gives us
 \[ - \int\limits_V {N_{,i}^J\frac{1}{\rho }N_{,i}^KdV} {p^K} + \int\limits_S {{N^J}\frac{1}{\rho }N_{,i}^K{{\hat n}_i}dS{p^K}}  = \int\limits_V {{N^J}\frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right)dV{p^K}}  + \int\limits_V {{N^J}qdV} \]
 
 \[\int\limits_V {N_{,i}^J\frac{1}{\rho }N_{,i}^KdV} {p^K} + \int\limits_V {{N^J}\frac{1}{\lambda }{N^K}dV{{\ddot p}^K}}  = \int\limits_S {{N^J}\frac{1}{\rho }N_{,i}^K{{\hat n}_i}dS{p^K}}  + \int\limits_V {{N^J}qdV} \]
