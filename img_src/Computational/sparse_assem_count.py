@@ -10,8 +10,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 anal_count = lambda nx, ny: 9*nx*ny - 9*nx - 3*ny + 4
-exponent = 8
-nodes_side = np.logspace(1, exponent, 100)
+exponent = 4
+nodes_side = np.logspace(0.31, exponent, 100)
 nnonzero = anal_count(nodes_side, nodes_side)
 total = nodes_side**4
 
@@ -25,8 +25,8 @@ plt.plot(nodes_side**2, total)
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Number of nodes")
-plt.ylabel("Number of nonzero entries")
-plt.legend(["Nonzero entries", "Total entries"],
+plt.ylabel("Elements to store")
+plt.legend(["Sparse matrix", "Dense matrix"],
            frameon=False)
 
 plt.subplot(122)

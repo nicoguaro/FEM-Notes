@@ -1,5 +1,7 @@
 \graphicspath{ {./img/TheFEM/} }
 \chapter{Review of Boundary Value Problems}
+
+
 \section{Boundary value problems}
 In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we formally re-state these equations in the so-called strong form. Subsequently we re-write and prove an equivalent form of the balance law in the form of an integral representation highly friendly for a numerical solution. Since in the integral description of the problem the order of the derivatives in the field functions decreases by one, the resulting statement is called a weak formulation. 
 %%
@@ -50,7 +52,7 @@ It can be shown that $\mathcal{L}$ satisfies the \emph{symmetry} condition
 and positive definiteness \cite{book:sepulveda_fismat, book:arfken}
 \[\int\limits_V \mathcal{L}(u)u\dd{V}  > 0, \quad \forall u \enspace .\]
 
-\subsection*{Strong form}
+\subsection{Strong form}
 Given $\rho(\vb x)$, $q(\vb x)$, $p(\vb x)$, $F(\vb x, t)$ and $\bar u$ find $u(\vb x , t):V \to \mathbb{R}$ such:
 \[\rho(\vb x) \pdv{u}{t} - \div \left[p(\vb x) \grad u\right] + q(\vb x) u(\vb x, t) - \rho(\vb x) F(\vb x, t) = 0 \quad \forall \vb x \in V \]
 and
@@ -76,13 +78,13 @@ and
 which corresponds to the functions being square integrable. The space of functions satisfying the above two conditions will be denoted by $\pounds$ and termed the space of test functions, formally defined like:
 \[\pounds  = \left\{w \mid w \in \mathbb{H},w = 0 \quad \forall \vb x \in S_u\right\}\]
 
-\subsection*{Weak form}
+\subsection{Weak form}
 Given $\rho(\vb x)$, $q(\vb x)$, $p(\vb x)$, $F(\vb x, t)$ and $\bar u$ find $u(\vb x , t):V \to \mathbb{R}$ and $\forall w \in \pounds$ such:
 \[\int\limits_V p(\vb x) u_{,i}\, w_{,i}\dd{V} - \int\limits_{S_t} B(\vb x, t)w \dd{S}  + \int\limits_V q(\vb x)u(\vb x, t)w\dd{V}  + \int\limits_V \rho(\vb x)\pdv{u}{t}w \dd{V} - \int\limits_V \rho(\vb x) F(\vb x, t)w\dd{V} = 0\]
 and
 \[u = \bar u\quad \forall\vb x \in S_u \enspace .\]
 
-\subsection*{Equivalence between the strong and weak forms}
+\subsection{Equivalence between the strong and weak forms}
 \begin{multline}
     -\int\limits_V [p(\vb x)u_{,i}]_{,i}w \dd{V} + \int\limits_{S_t} [p(\vb x)u_{,i}] \hat n_i w\dd{S} - \int\limits_{S_t} B(\vb x, t)w\dd{S}\\
     + \int\limits_V q(\vb x)u(\vb x, t)w \dd{V}  + \int\limits_V \rho(\vec x)\pdv{u}{t}w\dd{V} - \int\limits_V \rho(\vb x)F(\vb x, t)w\dd{V} = 0 
@@ -139,7 +141,7 @@ Substituting \cref{eq:kin} in \cref{eq:Hooke} and the result in \cref{eq:pde} yi
 
 Since \cref{eq:navier} ( simultaneously describing equilibrium, kinematic relations and constitutive response) is a second order equation governing the displacement field possible boundary conditions are in terms of the variable itself or its first oder derivatives. For a well-possed problem the following is a set of valid boundary conditions: 
 
-\begin{equation} \label{eq:Wellbcs}
+\begin{equation}\label{eq:Wellbcs}
 \begin{split}
 &t_i^{\hat n} = \sigma _{ij} \hat n_{ij} \quad \forall\ \vb{x} \in S_t\\
 & {u_i} = \bar{u}_i \quad \forall \vb x \in S_u
@@ -252,7 +254,7 @@ from which
 
 which is once again the strong form of the problem given in \cref{eq:pde}.
 
-\subsection*{Simple wedge under self-equilibrated loads}
+\subsection{Simple wedge under self-equilibrated loads}
 Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \cref{fig:WEDGE}. It is assumed to be contained in the $X-Y$ plane, with loading conditions satisfying a plane strain (or plane stress) idealization. The material is elastic with Lame constants $\lambda$ and $\mu$. The wedge is loaded by uniform tractions of intensity $S$ applied over its four faces in such a way that the wedge is self-equilibrated. We wish to find the closed-form elasticity solution for the stress, strain and displacement fields throughout the problem domain.
 %
 \begin{figure}[h]
@@ -542,6 +544,192 @@ t_i &= \lambda_{ij}^\varepsilon \hat{n}_j\\
 &u_i^{S_u} = \bar{u}_i \enspace .
 \end{align}
 
-\newpage
-\subsection*{Problems}
+\subsection{Weighted residual methods}
+This section introduces the concept of residual or difference from zero in a differential equation once its solution is approximated. For that purpose we will take as prototype equation the one obtained as our general model of BVP (see \cref{eq:GenPDE}) and recalled here for completeness
+\begin{equation}
+\rho(\vb x) \pdv{u(\vb x, t)}{t} + \mathcal{L}u(\vb x, t) = \rho (\vb x)F(\vb x, t) \enspace .
+\label{eq:GenPDE2}
+\end{equation}
+
+We will assume that the actual solution to the generalized BVP given by \cref{eq:GenPDE2} is approximated by $\tilde u(\vb{x})$ through a superposition like
+\begin{equation}
+\tilde u (\vb{x}) = {N^I}(\vb{x}){u^I}
+\label{basicsuper}
+\end{equation}
+where ${N^I}(\vb{x})$ are interpolating functions and $I$ denotes a superposition index  varying like $I=1,2,...,K$ with $K$ being the number of points where the solution is known. In what follows we will use $u(\vb{x})$ instead of $\tilde u (\vb{x})$ but will keep in mind that we are actually using the approximation given by \cref{basicsuper}. Similarly, in order to keep the discussion simple for the time being we will drop the time effects reducing the generalized PDE to the simple form:
+\begin{equation}
+\mathcal{L}u(\vb x) = \rho (\vb x)F(\vb x) \enspace .
+\label{eq:GenPDE3}
+\end{equation}
+
+Now, since we are using the approximation given by \cref{basicsuper} this equation is not strictly satisifed but instead we will have the following ``unbalanced" condition
+\[\mathcal{L}u(\vb{x}) - \rho (\vb{x})F(\vb{x}) \equiv R \ne 0\]
+where the term $R$ corresponds to a residual error which is to be distributed throughout the solution domain. The so-called weighted residual methods differ in the form in which they distribute the residual between the different $K$ points conforming the computational domain.
+
+Using \cref{basicsuper} in \cref{eq:GenPDE2} and the linearity in the differential operator yields
+\[R = \mathcal{L}({N^P}){u^P} - \rho F\, .\]
+
+We can see that the residual $R$ is a function defined over the domain of interest. The residual would be exactly zero for the solution of the differential equation, but it will not be zero in general. Thus, we want to make the function $R$ as close to zero as possible. To make $R$ as small as possible we need a function (a functional) where we can compare different approximation functions. After getting this functional we can minimize its value. For this minimization we could use the norm of the function, another option is to compute a weighted \emph{average} of the function over the domain. This is what we call a weighted residual
+\[\Pi[u, w] = \int\limits_V w R(u) \dd{V}\, ,\]
+and we want to minimize it by making
+\[\var{\Pi}[u, w] = 0\, ,\]
+
+In what follows we will consider different strategies to distribute or weight the residual $R$ over the computational domain.
+
+\subsubsection{Galerkin method}
+In the Galerkin scheme the interpolation functions are used also as weighting functions leading to:
+\[\int\limits_V N^Q R\dd{V} = 0 \]
+or explicitly
+\begin{equation}
+  \int\limits_V N^Q \mathcal{L} (N^P)\dd{V} u^P = \int\limits_V N^Q\rho F\dd{V}\, .
+  \label{eq:Galer}
+\end{equation}
+
+Imposing \cref{eq:Galer} in the $K$ points conforming the computational domain or equivalently ranging $Q$ from $1$ to $K$ leads to the following system of algebraic equation
+\begin{equation}
+{K^{QP}}{U^P} = {f^Q}
+\label{eq:DGaler}
+\end{equation}
+
+where $U^P$ is a vector that stores the point values of the function $u$ along te $K$ points of the computational domain, while $f^Q$ stores the corresponding point excitations.
+
+\subsubsection{Least squares method}
+In this method the integral of the square of the residual is minimized with respect to the $K$ point parameters or nodal values of the function. Accordingly,
+\begin{align*}
+  &\pdv{u^I}\int\limits_V R^2 \dd{V} = 0\\
+  &\int\limits_V R \pdv{R}{u^I} \dd{V} = 0\, ,
+\end{align*}
+
+The least squares method is a special case of the weighted residual method for the weight functions
+\[w^I = \pdv{R}{u^I}\, .\]
+
+Expanding the residual, and considering the operator $\mathcal{L}$ as linear, we obtain
+\begin{align*}
+  &\pdv{u^I}\int\limits_V [\mathcal{L}(N^P u^P) - \rho F]^2 \dd{V} = 0\\
+  &\int\limits_V [\mathcal{L} N^P u^P - \rho F] \mathcal{L}(N^I) \dd{V} = 0\\
+ &\int\limits_V \mathcal{L}(N^I) \mathcal{L}(N^P) \dd{V} u^P - \rho \int\limits_V \mathcal{L}(N^I) F \dd{V} = 0
+\end{align*}
+which can be written like
+\begin{equation}
+  K^{IP} U^P = f^I
+  \label{eq:Dsquares}
+\end{equation}
+
+\subsubsection{Collocation method}
+In the collocation method the coefficients of the approximation are determined by forcing the residual to be exactly zero at $K$ points over the computational domain, i.e.,
+\[\mathcal{L}(N^I) u^I - \rho F = 0\, ,\]
+or
+\[\mathcal{L}[N^I(x^J)] u^I - \rho F(x^J) = 0\, ,\]
+where $J$ ranges between $1$ and $K$. This equation can be rewritten as a weighted-residual if we consider the residual to be $\delta(x - x^I)$, the Dirac delta function over the selected points
+
+The resulting system of algebraic equation can be written as
+\begin{equation}
+K^{IP} U^P = f^I\, .
+\label{eq:Colo}
+\end{equation}
+
+\subsubsection{Subdomain method}
+The zero value of the residual is imposed upon $K$ subdomains
+\[\int\limits_{V^I} \mathcal{L}(N^P)\dd{V^I} u^P  - \rho \int\limits_{V^I}  F\dd{V^I}  = 0 \qquad I=1,\cdots,K\, .\]
+
+For instance, for the $N$-th element it follows that
+\[\int\limits_{V^N} \mathcal{L}(N^P)\dd{V^N} u^P  - \rho \int\limits_{V^N} F\dd{V^N}  = 0 \qquad P=1,\cdots,K\, .\]
+
+Applying the equation over the $K$ subdomains leads to the discrete system;
+\begin{equation}
+K^{IP} U^P = f^I \quad \quad I=1,\cdots,K\, .
+\label{eq:Subdomain}
+\end{equation}
+
+\subsubsection{Ritz method}
+It operates directly upon the variational statement of the problem. For a given functional
+\[\Pi  = \Pi (N^Q u^Q)\]
+the variational equation reads
+\[\var{\Pi}  \equiv \pdv{\Pi}{u^Q} \var{u^Q} = 0\]
+from which
+\[\pdv{\Pi}{u^Q} = 0\, .\]
+
+\subsubsection*{Problem: Discretization of the generalized parabolic equation.}
+Let us consider the case of the generalized parabolic equation and its discretization following the Galerkin method
+\[\rho(\vb x) \pdv{u(\vb x,t)}{t} + \mathcal{L}u(\vb x, t) = 0\]
+which can also be written using indicial notation
+\[\pdv{x_i}\left[{p(x)\pdv{u}{x_i} \right] + q(x)u + \rho \pdv{u}{t} = \rho F.\]
+
+Assuming that $p(x)=1$ yields
+\[ - \int\limits_V N^P N_{,ii}^Q \dd{V} u^Q + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
+
+\[\int\limits_V {N_{,i}^PN_{,i}^Q} dV{u^Q} - \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
+
+\[\int\limits_V {\left( {N_{,i}^PN_{,i}^Q + q{N^P}{N^Q}} \right)dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{V^Q}}  = \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \rho \int\limits_V {{N^P}FdV} \]
+
+which can be written in discrete form;
+
+\[{K^{PQ}}{U^Q} + {C^{PQ}}{V^Q} = {f^p}\]
+
+\subsubsection*{Problem: Discretization of Navier equations.}
+In this case the differential equations are written as
+\[(\lambda  + \mu ){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \enspace .\]
+
+We can write the differential operator as
+\[L_{ij} \equiv (\lambda  + \mu )\pdv[2]{}{x_i}{x_j} + \mu \pdv[2]{}{x_k}{x_k}\delta_{ij}\]
+
+\begin{align*}
+&r_i =  - f_i\\
+&u_i = N_i^Q u^Q\\
+&\mathcal{L}_{ij}(u_j) \equiv (\lambda  + \mu )(N_j^Q u^Q)_{,ij} + \mu (N_j^Q u^Q)_{,kk}\delta_{ij}\\
+&\mathcal{L}_{ij}(u_j) \equiv (\lambda  + \mu )N_{j,ij}^Q u^Q + \mu N_{i,kk}^Q u^Q\\
+&\mathcal{L}_{ij}(u_j) \equiv \mathcal{L}_{ij}(N_j^Q) u^Q \enspace .
+\end{align*}
+
+In the Galerkin scheme we use the trial function as weighting function.
+\[R_i \equiv L_{ij}(N_j^Q) u^Q + f_i\]
+and we state
+\[&\int\limits_V N_i^P R_i \dd{V} = 0 \qquad P=1,2,\cdots N\, .\]
+
+Thus
+\begin{align*}
+&\int\limits_V N_i^P \mathcal{L}_{ij} (N_j^K)\dd{V} u^K  + \int\limits_V N_i^P f_i \dd{V} = 0 \\
+&(\lambda  + \mu )\int\limits_V N_i^PN_{j,ij}^K \dd{V} u^K  + \mu \int\limits_V N_i^PN_{i,kk}^K \dd{V} u^K  + \int\limits_V N_i^P f_i \dd{V} = 0
+\end{align*}
+integrating by parts
+\begin{align*}
+- (\lambda  + \mu )\int\limits_V N_{i,j}^P N_{j,i}^K \dd{V} u^K + (\lambda  + \mu )\int\limits_S N_i^P N_{j,i}^K \hat{n}_j \dd{S} u^K - \mu \int\limits_V N_{i,k}^P N_{i,k}^K \dd{V} u^K \\
++ \mu \int\limits_S N_i^P N_{i,k}^K \hat{n}_k \dd{S} u^K  + \int\limits_V N_i^P f_i \dd{V} = 0
+\end{align*}
+which can be written like
+\[K^{PQ} U^Q = F^P\]
+where
+\[K^{PQ} = (\lambda  + \mu )\int\limits_V N_{i,j}^P N_{j,i}^Q \dd{V}  + \mu \int\limits_V N_{i,k}^P N_{i,k}^Q\dd{V} \]
+and
+\[F^P = \int\limits_S N_i^P t_i^{(\hat n)} \dd{S} + \int\limits_V N_i^P f_i \dd{V} = 0 \, .\]
+
+\subsubsection*{Problem: Discretization of the acoustic wave equation.}
+In this case the differential equation reads
+\[\div \left[ \frac{1}{\rho} \grad p(\vb{x})\right] - \pdv{t} \left(\frac{1}{\lambda} \pdv{\rho}{t}\right) - q(\vb{x}) = 0\]
+where we recognize that
+\[\mathcal{L} \equiv \div \left(\frac{1}{\rho} \grad \right) - \pdv{t}\left({\frac{1}{\lambda}\pdv{t}\right)\, .\]
+
+Let
+\[p(x) = N^K p^K\]
+then
+\[\mathcal{L}(p) \equiv \vec \nabla  \cdot \left( {\frac{1}{\rho }\vec \nabla {N^K}{p^K}} \right) - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}{p^K}}}{{\partial t}}} \right)\]
+or in indicial notation
+\[\mathcal{L}(p) \equiv {\left( {\frac{1}{\rho }N_{,i}^K} \right)_{,i}}{p^K} - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right){p^K}\]
+which is equivalent to
+\[\mathcal{L}(p) \equiv \mathcal{L}({N^K}){p^K}\]
+using the trial functions as weighting function and recalling the definition of the residual which in this case reads
+\[R = \mathcal{L}({N^K}){p^K} - q\, ,\]
+and yields
+\[\int\limits_V {{N^J}RdV = 0} \quad \quad J=1,2,...,K \]
+
+\[\int\limits_V {{N^J}L({N^K})dV{p^K}}  - \int\limits_V {{N^J}qdV}  = 0\]
+
+\[\int\limits_V {{N^J}{{\left( {\frac{1}{\rho }N_{,i}^K} \right)}_{,i}}dV{p^K} - \int\limits_V {{N^J}\frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right)dV{p^K}} }  - \int\limits_V {{N^J}qdV}  = 0\]
+
+Integrating by parts the first term on the right-hand-side gives us
+\[ - \int\limits_V {N_{,i}^J\frac{1}{\rho }N_{,i}^KdV} {p^K} + \int\limits_S {{N^J}\frac{1}{\rho }N_{,i}^K{{\hat n}_i}dS{p^K}}  = \int\limits_V {{N^J}\frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right)dV{p^K}}  + \int\limits_V {{N^J}qdV} \]
+
+\[\int\limits_V {N_{,i}^J\frac{1}{\rho }N_{,i}^KdV} {p^K} + \int\limits_V {{N^J}\frac{1}{\lambda }{N^K}dV{{\ddot p}^K}}  = \int\limits_S {{N^J}\frac{1}{\rho }N_{,i}^K{{\hat n}_i}dS{p^K}}  + \int\limits_V {{N^J}qdV} \]
+
+\[{K^{JK}}{P^K} + {M^{JK}}{{\ddot P}^K} + {f^J} = 0\]
 
