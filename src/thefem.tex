@@ -1,8 +1,218 @@
 \graphicspath{ {./img/TheFEM/} }
 \chapter{The Finite Element Method}
-\section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
+\section{Weighted residual methods}
+This section introduces the concept of residual or difference from zero in a differential equation once its solution is approximated. For that purpose we will take as prototype equation the one obtained as our general model of BVP (see \cref{eq:GenPDE}) and recalled here for completeness
+\begin{equation}
+\rho(\vb x) \pdv{u(\vb x, t)}{t} + \mathcal{L}u(\vb x, t) = \rho (\vb x)F(\vb x, t) \enspace .
+\label{eq:GenPDE2}
+\end{equation}
 
-\subsection*{A simple spring-mass system}
+We will assume that the actual solution to the generalized BVP given by \cref{eq:GenPDE2} is approximated by $\tilde u(\vb{x})$ through a superposition like
+\begin{equation}
+\tilde u (\vb{x}) = {N^I}(\vb{x}){u^I}
+\label{basicsuper}
+\end{equation}
+where ${N^I}(\vb{x})$ are interpolating functions and $I$ denotes a superposition index  varying like $I=1,2,...,K$ with $K$ being the number of points where the solution is known. In what follows we will use $u(\vb{x})$ instead of $\tilde u (\vb{x})$ but will keep in mind that we are actually using the approximation given by \cref{basicsuper}. Similarly, in order to keep the discussion simple for the time being we will drop the time effects reducing the generalized PDE to the simple form:
+\begin{equation}
+\mathcal{L}u(\vb x) = \rho (\vb x)F(\vb x) \enspace .
+\label{eq:GenPDE3}
+\end{equation}
+
+Now, since we are using the approximation given by \cref{basicsuper} this equation is not strictly satisifed but instead we will have the following ``unbalanced" condition
+\[\mathcal{L}u(\vb{x}) - \rho (\vb{x})F(\vb{x}) \equiv R \ne 0\]
+where the term $R$ corresponds to a residual error which is to be distributed throughout the solution domain. The so-called weighted residual methods differ in the form in which they distribute the residual between the different $K$ points conforming the computational domain.
+
+Using \cref{basicsuper} in \cref{eq:GenPDE2} and the linearity in the differential operator yields
+\[R = \mathcal{L}({N^P}){u^P} - \rho F\, .\]
+
+We can see that the residual $R$ is a function defined over the domain of interest. The residual would be exactly zero for the solution of the differential equation, but it will not be zero in general. Thus, we want to make the function $R$ as close to zero as possible. To make $R$ as small as possible we need a function (a functional) where we can compare different approximation functions. After getting this functional we can minimize its value. For this minimization we could use the norm of the function, another option is to compute a weighted \emph{average} of the function over the domain. This is what we call a weighted residual
+\[\Pi[u, w] = \int\limits_V w R(u) \dd{V}\, ,\]
+and we want to minimize it by making
+\[\var{\Pi}[u, w] = 0\, ,\]
+
+In what follows we will consider different strategies to distribute or weight the residual $R$ over the computational domain.
+
+\subsubsection{Galerkin method}
+In the Galerkin scheme the interpolation functions are used also as weighting functions leading to:
+\[\int\limits_V N^Q R\dd{V} = 0 \]
+or explicitly
+\begin{equation}
+  \int\limits_V N^Q \mathcal{L} (N^P)\dd{V} u^P = \int\limits_V N^Q\rho F\dd{V}\, .
+  \label{eq:Galer}
+\end{equation}
+
+Imposing \cref{eq:Galer} in the $K$ points conforming the computational domain or equivalently ranging $Q$ from $1$ to $K$ leads to the following system of algebraic equation
+\begin{equation}
+{K^{QP}}{U^P} = {f^Q}
+\label{eq:DGaler}
+\end{equation}
+
+where $U^P$ is a vector that stores the point values of the function $u$ along te $K$ points of the computational domain, while $f^Q$ stores the corresponding point excitations.
+
+\subsubsection{Least squares method}
+In this method the integral of the square of the residual is minimized with respect to the $K$ point parameters or nodal values of the function. Accordingly,
+\begin{align*}
+  &\pdv{u^I}\int\limits_V R^2 \dd{V} = 0\\
+  &\int\limits_V R \pdv{R}{u^I} \dd{V} = 0\, ,
+\end{align*}
+
+The least squares method is a special case of the weighted residual method for the weight functions
+\[w^I = \pdv{R}{u^I}\, .\]
+
+Expanding the residual, and considering the operator $\mathcal{L}$ as linear, we obtain
+\begin{align*}
+  &\pdv{u^I}\int\limits_V [\mathcal{L}(N^P u^P) - \rho F]^2 \dd{V} = 0\\
+  &\int\limits_V [\mathcal{L} N^P u^P - \rho F] \mathcal{L}(N^I) \dd{V} = 0\\
+ &\int\limits_V \mathcal{L}(N^I) \mathcal{L}(N^P) \dd{V} u^P - \rho \int\limits_V \mathcal{L}(N^I) F \dd{V} = 0
+\end{align*}
+which can be written like
+\begin{equation}
+  K^{IP} U^P = f^I
+  \label{eq:Dsquares}
+\end{equation}
+
+\subsubsection{Collocation method}
+In the collocation method the coefficients of the approximation are determined by forcing the residual to be exactly zero at $K$ points over the computational domain, i.e.,
+\[\mathcal{L}(N^I) u^I - \rho F = 0\, ,\]
+or
+\[\mathcal{L}[N^I(x^J)] u^I - \rho F(x^J) = 0\, ,\]
+where $J$ ranges between $1$ and $K$. This equation can be rewritten as a weighted-residual if we consider the residual to be $\delta(x - x^I)$, the Dirac delta function over the selected points
+
+The resulting system of algebraic equation can be written as
+\begin{equation}
+K^{IP} U^P = f^I\, .
+\label{eq:Colo}
+\end{equation}
+
+\subsubsection{Subdomain method}
+The zero value of the residual is imposed upon $K$ subdomains
+\[\int\limits_{V^I} \mathcal{L}(N^P)\dd{V^I} u^P  - \rho \int\limits_{V^I}  F\dd{V^I}  = 0 \qquad I=1,\cdots,K\, .\]
+
+For instance, for the $N$-th element it follows that
+\[\int\limits_{V^N} \mathcal{L}(N^P)\dd{V^N} u^P  - \rho \int\limits_{V^N} F\dd{V^N}  = 0 \qquad P=1,\cdots,K\, .\]
+
+Applying the equation over the $K$ subdomains leads to the discrete system;
+\begin{equation}
+K^{IP} U^P = f^I \quad \quad I=1,\cdots,K\, .
+\label{eq:Subdomain}
+\end{equation}
+
+\subsubsection{Ritz method}
+It operates directly upon the variational statement of the problem. For a given functional
+\[\Pi  = \Pi (N^Q u^Q)\]
+the variational equation reads
+\[\var{\Pi}  \equiv \pdv{\Pi}{u^Q} \var{u^Q} = 0\]
+from which
+\[\pdv{\Pi}{u^Q} = 0\, .\]
+
+\subsubsection*{Problem: Discretization of the generalized parabolic equation.}
+Let us consider the case of the generalized parabolic equation and its discretization following the Galerkin method
+\[\rho(\vb x) \pdv{u(\vb x,t)}{t} + \mathcal{L}u(\vb x, t) = 0\]
+which can also be written using indicial notation
+\[\pdv{x_i}\left[{p(x)\pdv{u}{x_i} \right] + q(x)u + \rho \pdv{u}{t} = \rho F.\]
+
+Assuming that $p(x)=1$ yields
+\[ - \int\limits_V N^P N_{,ii}^Q \dd{V} u^Q + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
+
+\[\int\limits_V {N_{,i}^PN_{,i}^Q} dV{u^Q} - \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
+
+\[\int\limits_V {\left( {N_{,i}^PN_{,i}^Q + q{N^P}{N^Q}} \right)dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{V^Q}}  = \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \rho \int\limits_V {{N^P}FdV} \]
+
+which can be written in discrete form;
+
+\[{K^{PQ}}{U^Q} + {C^{PQ}}{V^Q} = {f^p}\]
+
+
+
+\subsubsection*{Problem: Discretization of Navier equations.}
+In this case the differential equations are written as
+\[(\lambda  + \mu ){u_{j,ij}} + \mu {u_{i,jj}} + {f_i} = 0 \enspace .\]
+
+We can write the differential operator as
+\[L_{ij} \equiv (\lambda  + \mu )\pdv[2]{}{x_i}{x_j} + \mu \pdv[2]{}{x_k}{x_k}\delta_{ij}\]
+
+\begin{align*}
+&r_i =  - f_i\\
+&u_i = N_i^Q u^Q\\
+&\mathcal{L}_{ij}(u_j) \equiv (\lambda  + \mu )(N_j^Q{u^Q})_{,ij} + \mu (N_j^Q{u^Q})_{,kk}\delta_{ij}\\
+&\mathcal{L}_{ij}(u_j) \equiv (\lambda  + \mu )N_{j,ij}^Q u^Q + \mu N_{i,kk}^Q u^Q\\
+&\mathcal{L}_{ij}(u_j) \equiv \mathcal{L}_{ij}(N_j^Q) u^Q \enspace .
+\end{align*}
+
+In the Galerkin scheme we use the trial function as weighting function.
+\[R_i \equiv L_{ij}(N_j^Q) u^Q + f_i\]
+and we state \dots
+
+\[\int\limits_V {N_i^P{R_i}dV = 0} \quad \quad P=1,2,...,N. \]
+
+\[\int\limits_V {N_i^P{\mathcal{L}_{ij}}(N_j^K)dV{u^K}}  + \int\limits_V {N_i^P{f_i}dV = 0} \]
+
+\[(\lambda  + \mu )\int\limits_V {N_i^PN_{j,ij}^KdV{u^K}}  + \mu \int\limits_V {N_i^PN_{i,kk}^KdV{u^K}}  + \int\limits_V {N_i^P{f_i}dV = 0} \]
+
+integrating by parts;
+
+\begin{align*}
+- (\lambda  + \mu )\int\limits_V {N_{i,j}^PN_{j,i}^KdV{u^K} + (\lambda  + \mu )\int\limits_S {N_i^PN_{j,i}^K{{\hat n}_j}dS{u^K} - \mu \int\limits_V {N_{i,k}^PN_{i,k}^KdV{u^K}} } } \\
++ \mu \int\limits_S {N_i^PN_{i,k}^K{{\hat n}_k}dS{u^K}}  + \int\limits_V {N_i^P{f_i}dV = 0}
+\end{align*}
+
+which can be written like;
+
+
+\[{K^{PQ}}{U^Q} = {F^P}\]
+
+where
+
+\[{K^{PQ}} = (\lambda  + \mu )\int\limits_V {N_{i,j}^PN_{j,i}^QdV}  + \mu \int\limits_V {N_{i,k}^PN_{i,k}^QdV} \]
+
+\[{F^P} = \int\limits_S {N_i^Pt_i^{(\hat n)}dS + \int\limits_V {N_i^P{f_i}dV = 0} } \]
+
+\subsubsection*{Problem: Discretization of the acoustic wave equation.}
+
+\[\vec \nabla  \cdot \left[ {\frac{1}{\rho }\vec \nabla p(\vb{x})} \right] - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial \rho }}{{\partial t}}} \right) - q(\vb{x}) = 0\]
+
+where we recognize;
+
+\[\mathcal{L}() \equiv \vec \nabla  \cdot \left( {\frac{1}{\rho }\vec \nabla } \right) - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{\partial }{{\partial t}}} \right)\]
+
+Let
+
+\[p(x) = {N^K}{p^K}\]
+
+then
+
+\[\mathcal{L}(p) \equiv \vec \nabla  \cdot \left( {\frac{1}{\rho }\vec \nabla {N^K}{p^K}} \right) - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}{p^K}}}{{\partial t}}} \right)\]
+
+or in indicial notation
+
+\[\mathcal{L}(p) \equiv {\left( {\frac{1}{\rho }N_{,i}^K} \right)_{,i}}{p^K} - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right){p^K}\]
+
+which is equivalent to having;
+
+\[\mathcal{L}(p) \equiv \mathcal{L}({N^K}){p^K}\]
+
+using the trial functions as weighting functios and recalling the definition of the residual which in this case reads;
+
+\[R = \mathcal{L}({N^K}){p^K} - q\]
+
+yields;
+
+\[\int\limits_V {{N^J}RdV = 0} \quad \quad J=1,2,...,K \]
+
+\[\int\limits_V {{N^J}L({N^K})dV{p^K}}  - \int\limits_V {{N^J}qdV}  = 0\]
+
+\[\int\limits_V {{N^J}{{\left( {\frac{1}{\rho }N_{,i}^K} \right)}_{,i}}dV{p^K} - \int\limits_V {{N^J}\frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right)dV{p^K}} }  - \int\limits_V {{N^J}qdV}  = 0\]
+
+Integrating by parts the first term on the R.H.S gives us;
+
+\[ - \int\limits_V {N_{,i}^J\frac{1}{\rho }N_{,i}^KdV} {p^K} + \int\limits_S {{N^J}\frac{1}{\rho }N_{,i}^K{{\hat n}_i}dS{p^K}}  = \int\limits_V {{N^J}\frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right)dV{p^K}}  + \int\limits_V {{N^J}qdV} \]
+
+\[\int\limits_V {N_{,i}^J\frac{1}{\rho }N_{,i}^KdV} {p^K} + \int\limits_V {{N^J}\frac{1}{\lambda }{N^K}dV{{\ddot p}^K}}  = \int\limits_S {{N^J}\frac{1}{\rho }N_{,i}^K{{\hat n}_i}dS{p^K}}  + \int\limits_V {{N^J}qdV} \]
+
+\[{K^{JK}}{P^K} + {M^{JK}}{{\ddot P}^K} + {f^J} = 0\]
+
+
+\section{A simple discrete system}
 The simple problem of a spring-mass system considered next resembles most of the algorithmic aspects of a finite element code with the advantage that the problem is already a discrete mechanical system. The problem consists of an assemblage of masses joined by different springs submitted to time varying loads. Each spring plays the role of a finite element and each mass is analogous to a nodal point in a finite element algorithm. For instance the full system may be like the one shown in \cref{fig:bathe}
 \begin{figure}[h]
 \centering
@@ -165,7 +375,7 @@ The system given by \cref{eq:global}, assembled with the aid of the $DME$ operat
 \newpage
 
 
-\subsection{Basic elements of interpolation theory}
+\section{Basic elements of interpolation theory}
 Let $f(x)$ be a function whose values are known at n discrete points ${x_1, x_2,...,x_n}$. We want to know (interpolate) the value of $f(x)$ at an arbitrary point $x \in \left[ {{x_1},{x_n}} \right]$.
 
 \begin{figure}[h]
@@ -442,6 +652,7 @@ See Figure \ref{fig:nine-nodes-interp} for the shape functions of a 9-nodes elem
 \caption{Shape functions for a 9-nodes element. (Continued)}
 \end{figure}
 
+\section[Discretization of the PVW using FEM]{Discretization of the PVW via the FEM}
 \subsection{Formulation of the finite element matrices}
 We now discretize the principle of virtual work repeated below for completeness:
 \begin{equation} \label{pvw_2}
@@ -538,7 +749,7 @@ K^{QP} u^P = f_V^Q + f_c^Q.
 \label{Discreta}
 \end{equation}
 
-\subsubsection{Formulation for square elements}
+\subsubsection{Formulation of the stiffness matrix in perfectly square elements}
 In the previous section we recognized:
 
 \begin{equation}
@@ -668,7 +879,7 @@ Once the elemental matrices are obtained these are assembled into the final glob
 
 \inputminted[]{python}{src/stiff_4nodes.py}
 
-\subsubsection{Formulation in the natural space: the continuum mechanics analogy}
+\subsubsection{Formulation of the stiffness matrix for distorted elements: the continuum mechanics analogy}
 In typical finite element equilibrium equations we need to perform integration over the reference element domain $V_0(\vb{x})$ corresponding to originally arbitrarily shaped sub-domains as created during the meshing process.  In order to proceed with this integration it is useful to consider the following continuum mechanics analogy.
 
 First assume that the actual physical domain $V_0(\vb{x})$ is the result of a deformation process imparted upon the natural domain as shown in \cref{fig:natural domain}. In this analogy, the physical domain $V_0(\vb{x})$ is regarded like a ``deformed'' configuration at an imaginary time $t=t$, while the natural ``undeformed'' domain $V(\vb{r})$   is treated like a reference undeformed configurations at time $t=0$. Both configurations are assumed to be connected through a deformation process
@@ -873,6 +1084,8 @@ v^Q\\
     Assemble $B_{ij}^Q = \frac{1}{2}\left( {L_{ij}^Q + L_{ji}^Q} \right)$ 
     \caption{Strain-displacement interpolator}
 \end{algorithm}
+\newpage
+\subsection*{Problems}
 
 
 
