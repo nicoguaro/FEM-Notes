@@ -10,10 +10,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import rcParams
-import seaborn
+#import seaborn
 rcParams['font.family'] = 'serif'
 rcParams['font.size'] = 14
 
+plt.close("all")
 def make_plot(x, y, N):
     x_cords = [-1, 1, 1, -1]
     y_cords = [-1, -1, 1, 1]
@@ -43,6 +44,6 @@ N4 = 0.25*(1 - x)*(1 + y)
 cont = 0
 for N in [N1, N2, N3, N4]:
     cont = cont + 1
-    make_plot(x, y, N)    
+    make_plot(x, y, N)
 
 plt.show()
