@@ -3,13 +3,12 @@
 \begin{document}
 
 \usemintedstyle{trac}
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%% Portada %%%%%%%%%%
-\include{src/portada}
+
+%%%%%%%%%% Cover %%%%%%%%%%
+\include{src/cover}
 
 \frontmatter
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Table of contents
 \pdfbookmark[0]{Table of contents}{Table of contents}
 \tableofcontents
@@ -17,21 +16,21 @@
 \listoftodos
 
 \mainmatter
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%% Introduction %%%%%%%%%%
-\include{src/resumen}
+\include{src/summary}
 \include{src/intro}
-%
-\include{src/pvf}
+\include{src/bvp}
 \include{src/thefem}
 \include{src/computational}
 \include{src/wavestime}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+\include{src/elem_matrices}
+
 %%%%%% References %%%%%%%%%%
 \nocite{gmsh2009}
 
 \include{src/references}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}

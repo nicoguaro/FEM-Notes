@@ -1,44 +1,44 @@
-\documentclass[12pt,oneside,openany, english]{book}
+\documentclass[12pt, oneside, openany, english]{book}
 \usepackage{babel}
 \usepackage{babelbib}
 \usepackage{etoolbox}
 \usepackage{mathtools}
-\usepackage{cancel}
 \usepackage{amstext, amssymb, amsthm, amsmath, amsbsy}
 \usepackage{tabularx}
-\usepackage[ansinew]{inputenc}
-\usepackage[margin=20pt,font=small,labelfont=bf,labelsep=period]{caption} % Modify caption format
+\usepackage{cancel}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\usepackage{url}
-\usepackage{geometry}
 \usepackage{enumerate}
-\usepackage{subcaption}  %% To include subgraphics
-                         %% subfig is deprecated
+\usepackage{caption} % Modify caption format
+\usepackage{subcaption}  %% subfig is deprecated
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{leftidx}
-\usepackage[ruled]{algorithm2e} % Include algorithms
-\usepackage{listings} % To include code
 \usepackage{cite}  % Pretty citations
-\usepackage{bookmark} % Bookmarks in PDF
 \usepackage{cleveref}
+\usepackage{url}
 \usepackage{hyperref} % Nice details for pdf
+\usepackage{bookmark} % Bookmarks in PDF
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{physics} % Extra operators and cool stuff
 \usepackage{minted}  % Include fancy code
+\usepackage[ruled]{algorithm2e} % Include algorithms
+\usepackage{listings} % To include code
 \usepackage{xcolor}
-\usepackage[nottoc]{tocbibind} % Add the references to the table of contents
 \usepackage{scalerel}  % To create the assembly operator
 
-%% Packages setup
+%%%%% Packages setup %%%%%
 
 % For babelbib
 \patchcmd\btxselectlanguage{\csname}{\csname TEMPPATCH}{}{} 
 
-\geometry{
-	verbose,
-	letterpaper
+\captionsetup{
+    margin=20pt,
+    font=small,
+    labelfont=bf,
+    labelsep=period
 }
+
 
 \hypersetup{
 	bookmarksopen=true,

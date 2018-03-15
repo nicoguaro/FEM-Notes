@@ -1,20 +1,8 @@
-\documentclass[12pt,letterpaper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\chapter{Elemental matrices}
 
-\title{\textbf{Deformation modes of four-nodes finite elements}}
-\author{Nicolás Guarín-Zapata}
+\section{Deformation modes of four-nodes finite elements}
 
-
-\begin{document}
-\maketitle
-
-\section{Plane stress}
+\subsection{Plane stress}
 For plane-stress conditions the stiffness matrix of a four-nodes element reads
 \begin{equation}
   K = \frac{E}{24(1 - \nu^2)} \hat{K}
@@ -67,7 +55,7 @@ And the corresponding eigenvectors are
 \end{array}
 \end{equation}
 
-\section{Plane strain}
+\subsection{Plane strain}
 In the case of plane strain the stiffness matrix of a four-nodes element reads
 \begin{equation}
   K = \frac{E}{24(1 - 2\nu)(1 + \nu)} \hat{K}
@@ -117,5 +105,3 @@ And the corresponding eigenvectors are
 
 As expected, the eigenvectors are the same while the eigenvalues differ.
 
-
-\end{document}

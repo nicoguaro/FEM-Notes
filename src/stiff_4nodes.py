@@ -1,12 +1,11 @@
 """
 Compute the stiffness matrix for a 4-noded square element
 """
-from __future__ import division
-import numpy as np
+from __future__ import division, print_function
 from sympy import *
 
 
-def umat(nu,E):
+def umat(nu, E):
     """2D Elasticity constitutive matrix"""
     C = zeros(3, 3)
     G = E/(1 - nu**2)
@@ -20,19 +19,19 @@ def umat(nu,E):
     return C
 
 
-def stdm4(x,y):
+def stdm4(x, y):
     """Four noded element strain-displacement matrix"""
     N = zeros(4)
-    B = zeros(3,8)
+    B = zeros(3, 8)
     N = S(1)/4*Matrix([
          (1 - x)*(1 - y),
          (1 + x)*(1 - y),
          (1 + x)*(1 + y),
          (1 - x)*(1 + y)])
-    dhdx=zeros(2,4)
+    dhdx=zeros(2, 4)
     for i in range(4):
-        dhdx[0,i]=diff(N[i],x)
-        dhdx[1,i]=diff(N[i],y)
+        dhdx[0,i]=diff(N[i], x)
+        dhdx[1,i]=diff(N[i], y)
 
     for i in range(4):
         B[0, 2*i] = dhdx[0, i]
@@ -44,16 +43,16 @@ def stdm4(x,y):
 
 
 # Assign symbols
-x , y = symbols('x y') 
-nu, E = symbols('nu, E')
-h=symbols('h')
+x, y = symbols('x y') 
+nu, E = symbols('nu E')
+h = symbols('h')
 
-K = zeros(8,8)
+K = zeros(8, 8)
 
 # Symbolically compute matrices
 C = umat(nu, E)
 B = stdm4(x, y)
-K_int = B.T*C*B
+K_int = B.T * C * B
 
 # Integrate final stiffness
 for i in range(8):
@@ -62,4 +61,4 @@ for i in range(8):
 
 knum = K.subs([(E, S(1)), (nu, S(1)/3.0), (h, S(2))])
 
-print knum
+print(knum)
