@@ -80,7 +80,9 @@ which corresponds to the functions being square integrable. The space of functio
 
 \subsection{Weak form}
 Given $\rho(\vb x)$, $q(\vb x)$, $p(\vb x)$, $F(\vb x, t)$ and $\bar u$ find $u(\vb x , t):V \to \mathbb{R}$ and $\forall w \in \pounds$ such:
-\[\int\limits_V p(\vb x) u_{,i}\, w_{,i}\dd{V} - \int\limits_{S_t} B(\vb x, t)w \dd{S}  + \int\limits_V q(\vb x)u(\vb x, t)w\dd{V}  + \int\limits_V \rho(\vb x)\pdv{u}{t}w \dd{V} - \int\limits_V \rho(\vb x) F(\vb x, t)w\dd{V} = 0\]
+\begin{align*}
+\int\limits_V p(\vb x) u_{,i}\, w_{,i}\dd{V} - \int\limits_{S_t} B(\vb x, t)w \dd{S}  + \int\limits_V q(\vb x)u(\vb x, t)w\dd{V}  &+ \int\limits_V \rho(\vb x)\pdv{u}{t}w \dd{V} \\& - \int\limits_V \rho(\vb x) F(\vb x, t)w\dd{V} = 0
+\end{align*}
 and
 \[u = \bar u\quad \forall\vb x \in S_u \enspace .\]
 
@@ -91,7 +93,10 @@ and
 \end{multline}
 
 Grouping together common terms yields
-\[\int\limits_V \left\{\rho(\vb x)\pdv{u}{t} - [p(\vb x)u_{,i}]_{,i} + q(\vb x)u(\vb x, t) - \rho(\vb x)F(\vb x, t)\right\} w\dd{V} + \int \limits_{S_t} \left\{[p(\vb x)u_{,i}]\hat n_i - B(\vb x, t) \right\} w\dd{S} = 0\]
+\begin{align*}
+&\int\limits_V \left\{\rho(\vb x)\pdv{u}{t} - [p(\vb x)u_{,i}]_{,i} + q(\vb x)u(\vb x, t) - \rho(\vb x)F(\vb x, t)\right\} w\dd{V}\\
+&+ \int \limits_{S_t} \left\{[p(\vb x)u_{,i}]\hat n_i - B(\vb x, t) \right\} w\dd{S} = 0
+\end{align*}
 from which
 \[\rho(\vb x)\pdv{u}{t} - [p(\vb x)u_{,i}]_{,i} + q(\vb x)u(\vb x, t) - \rho(\vb x)F(\vb x, t) = 0\]
 and
@@ -370,20 +375,19 @@ which for the particular case yields;
 \end{equation}
 
 \subsubsection*{Displacement field}
-The displacement field is obtained after direct integration of the strains after using the fact that:
-
+The displacement field is obtained after direct integration of the strains after using the fact that
 \[du_i=\epsilon_{ij}dx_j + \omega_{ij}dx_j\]
 
-and the condition $\omega_{xy}=0$ also due to symmetries , as follows:
-
+and the condition $\omega_{xy}=0$ also due to symmetries , as follows
 \begin{align*}
 u &= +\dfrac{S}{E} K_{1}(\nu , \phi)x + A\\
 v &= -\dfrac{S}{E} K_{2}(\nu , \phi)y + B
 \end{align*}
-
 and where $A$ and $B$ are integration constants.
 
-From the condition $u=0$ at $x=\ell\cos(\phi)$ we have that $A=-\dfrac{S}{E} K_{1}(\nu , \phi)\ell\cos(\phi)$ then it follows that
+From the condition $u=0$ at $x=\ell\cos(\phi)$ we have that
+\[A=-\dfrac{S}{E} K_{1}(\nu , \phi)\ell\cos(\phi)\]
+then it follows that
 \[u=\dfrac{S}{E} K_{1}(\nu , \phi)(x-\ell\cos(\phi)).\]
 
 Similarly, from the condition $v=0$ at $y=0$ we have that $B=0$ from which
@@ -476,12 +480,12 @@ from which
 
 
 \subsubsection*{Problem: The Hu-Washizu Variational Principle\footnote{4.35 from Finite Element Procedures}}
+
 Consider the Hu-Washizu functional:
 \begin{equation}
 \Pi^* = \Pi  - \intL_V \lambda_{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}  - \intL_{S_u} \lambda_i^u(u_i^{S_u} - \bar{ u}_i)\dd{S}
 \label{eq:Hu}
 \end{equation}
-
 where
 \begin{itemize}
 \item $\Pi$: is the potential energy functional.
@@ -512,8 +516,9 @@ We want to determine the Euler equations resulting from the condition $\var{\Pi}
 and
 \begin{equation}
 \begin{aligned}
-\var{\Pi}^* &= \intL_V C_{ijkl} \varepsilon_{kl} \var{ \varepsilon}_{ij}\dd{V} - \intL_{S_t} t_i \var{u_i} \dd{S}  - \intL_V f_i \var{u_i}\dd{V} - \intL_V \lambda_{ij}^{\varepsilon} \var{\varepsilon}_{ij}\dd{V}  + \intL_V \lambda_{ij}^{\varepsilon} L_{ijk}\var{u_k}\dd{V}\\
-&- \intL_V \delta \lambda_{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V} - \intL_S \var{\lambda}_i^u (u_i^{S_u} - \bar {u}_i)\dd{S} - \intL_{S_u} \lambda _i^u\var{u_i}\dd{S} = 0
+\var{\Pi}^* =& \intL_V C_{ijkl} \varepsilon_{kl} \var{ \varepsilon}_{ij}\dd{V} - \intL_{S_t} t_i \var{u_i} \dd{S}  - \intL_V f_i \var{u_i}\dd{V}\\
+  &- \intL_V \lambda_{ij}^{\varepsilon} \var{\varepsilon}_{ij}\dd{V}  + \intL_V \lambda_{ij}^{\varepsilon} L_{ijk}\var{u_k}\dd{V} - \intL_V \delta \lambda_{ij}^\varepsilon (\varepsilon_{ij}\\
+  &- L_{ijk} u_k)\dd{V} - \intL_S \var{\lambda}_i^u (u_i^{S_u} - \bar {u}_i)\dd{S} - \intL_{S_u} \lambda _i^u\var{u_i}\dd{S} = 0
 \end{aligned}
 \end{equation}
 using
@@ -526,13 +531,14 @@ In the above we can write
 \end{align*}
 therefore
 \begin{align*}
-\delta \Pi^* &= \intL_V (C_{ijkl}\varepsilon_{kl} - \lambda_{ij}^\varepsilon) \var{\varepsilon}_{ij}\dd{V} - \intL_{S_t} t_i \var{u}_i\dd{S} - \intL_V f_i \var{u}_i\dd{V} + \intL_{S_t} \lambda_{ij}^\varepsilon \var{u_i}\hat{n}_j\dd{S}  - \intL_V \lambda_{ij,j}^\varepsilon \delta {u_i}\dd{V}\\
-&- \intL_V \delta \lambda _{ij}^\varepsilon (\varepsilon_{ij} - L_{ijk} u_k)\dd{V}  - \intL_{S_u} \var{\lambda}_i^u (u_i^{S_u} - \bar{u}_i)\dd{S} - \intL_{S_u} \lambda_i^u \var{u_i} \dd{S}  = 0\\
-&= \intL_V (C_{ijkl}\varepsilon_{kl} - \lambda_{ij}^\varepsilon) \var{\varepsilon}_{ij}\dd{V}
+\delta \Pi^* =& \intL_V (C_{ijkl}\varepsilon_{kl} - \lambda_{ij}^\varepsilon) \var{\varepsilon}_{ij}\dd{V} - \intL_{S_t} t_i \var{u}_i\dd{S} - \intL_V f_i \var{u}_i\dd{V}\\
+  &+ \intL_{S_t} \lambda_{ij}^\varepsilon \var{u_i}\hat{n}_j\dd{S}  - \intL_V \lambda_{ij,j}^\varepsilon \delta {u_i}\dd{V} - \intL_V \delta \lambda _{ij}^\varepsilon (\varepsilon_{ij}\\
+  &- L_{ijk} u_k)\dd{V}  - \intL_{S_u} \var{\lambda}_i^u (u_i^{S_u} - \bar{u}_i)\dd{S} - \intL_{S_u} \lambda_i^u \var{u_i} \dd{S}  = 0\\
+=& \intL_V (C_{ijkl}\varepsilon_{kl} - \lambda_{ij}^\varepsilon) \var{\varepsilon}_{ij}\dd{V}
 + \intL_{S_t} (\lambda_{ij}^\varepsilon \hat{n}_j - t_i)\delta {u_i}\dd{S}\\
-&- \intL_V (\lambda_{ij,j}^\varepsilon  + f_i) \var{u_i}\dd{V}
-- \intL_V (\varepsilon_{ij} - L_{ijk} u_k) \var{\lambda} _{ij}^\varepsilon\dd{V}
-- \intL_{S_u} (u_i^{S_u} - \bar{u}_i) \var{\lambda}_i^u\dd{S}  - \cancel{\intL_{S_u} \lambda _i^u \var{u}_i^{S_u}\dd{S}} = 0
+  &- \intL_V (\lambda_{ij,j}^\varepsilon  + f_i) \var{u_i}\dd{V}
+- \intL_V (\varepsilon_{ij}- L_{ijk} u_k) \var{\lambda} _{ij}^\varepsilon\dd{V}\\
+  &- \intL_{S_u} (u_i^{S_u} - \bar{u}_i) \var{\lambda}_i^u\dd{S}  - \cancel{\intL_{S_u} \lambda _i^u \var{u}_i^{S_u}\dd{S}} = 0
 \end{align*}
 
 Now, imposing the conditions $\var{\varepsilon}_{ij} \neq 0$, $\var{\lambda}_{ij}^\varepsilon  \neq 0$, $var{u}_i \neq 0$ in $S_t$, $\var{u}_i \neq 0$ in $V$ and $\var{\lambda}_i^u \neq 0$ in $S_u$ we have
@@ -656,15 +662,16 @@ which can also be written using indicial notation
 \[\pdv{x_i}\left[{p(x)\pdv{u}{x_i} \right] + q(x)u + \rho \pdv{u}{t} = \rho F.\]
 
 Assuming that $p(x)=1$ yields
-\[ - \int\limits_V N^P N_{,ii}^Q \dd{V} u^Q + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
-
-\[\int\limits_V {N_{,i}^PN_{,i}^Q} dV{u^Q} - \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \int\limits_V {q{N^P}{N^Q}dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{v^Q}}  - \rho \int\limits_V {{N^P}FdV = 0} \]
-
-\[\int\limits_V {\left( {N_{,i}^PN_{,i}^Q + q{N^P}{N^Q}} \right)dV{u^Q}}  + \rho \int\limits_V {{N^P}{N^Q}dV{V^Q}}  = \int\limits_S {{N^P}N_{,i}^Q{{\hat n}_i}} dS{u^Q} + \rho \int\limits_V {{N^P}FdV} \]
-
-which can be written in discrete form;
-
-\[{K^{PQ}}{U^Q} + {C^{PQ}}{V^Q} = {f^p}\]
+\begin{align*}
+  &-\int\limits_V N^P N_{,ii}^Q \dd{V} u^Q + \int\limits_V q N^P N^Q\dd{V} u^Q  + \rho \int\limits_V N^P N^Q \dd{V} v^Q\\
+     &- \rho \int\limits_V N^P F \dd{V} = 0\\
+  &\int\limits_V N_{,i}^P N_{,i}^Q \dd{V} u^Q - \int\limits_S N^P N_{,i}^Q \hat{n}_i \dd{S} u^Q + \int\limits_V q N^P N^Q \dd{V} u^Q\\
+    &+ \rho \int\limits_V N^P N^Q \dd{V} v^Q  - \rho \int\limits_V N^P F \dd{V} = 0 \\
+  &\int\limits_V \left(N_{,i}^P N_{,i}^Q + q N^PN^Q \right)\dd{V} u^Q  + \rho \int\limits_V N^P N^Q \dd{V} V^Q  =\\
+      &\int\limits_S N^P N_{,i}^Q \hat{n}_i \dd{S} u^Q + \rho \int\limits_V N^P F \dd{V}
+\end{align*}
+which can be written in discrete form as
+\[K^{PQ} U^Q + C^{PQ} V^Q = f^p\, .\]
 
 \subsubsection*{Problem: Discretization of Navier equations.}
 In this case the differential equations are written as
@@ -672,7 +679,7 @@ In this case the differential equations are written as
 
 We can write the differential operator as
 \[L_{ij} \equiv (\lambda  + \mu )\pdv[2]{}{x_i}{x_j} + \mu \pdv[2]{}{x_k}{x_k}\delta_{ij}\]
-
+\todo{Where was defined $r_i$. Some cohesion is missing here.}
 \begin{align*}
 &r_i =  - f_i\\
 &u_i = N_i^Q u^Q\\
@@ -703,17 +710,17 @@ where
 and
 \[F^P = \int\limits_S N_i^P t_i^{(\hat n)} \dd{S} + \int\limits_V N_i^P f_i \dd{V} = 0 \, .\]
 
-\subsubsection*{Problem: Discretization of the acoustic wave equation.}
+\subsubsection*{Problem: Discretization of the wave equation.}
 In this case the differential equation reads
 \[\div \left[ \frac{1}{\rho} \grad p(\vb{x})\right] - \pdv{t} \left(\frac{1}{\lambda} \pdv{\rho}{t}\right) - q(\vb{x}) = 0\]
 where we recognize that
-\[\mathcal{L} \equiv \div \left(\frac{1}{\rho} \grad \right) - \pdv{t}\left({\frac{1}{\lambda}\pdv{t}\right)\, .\]
+\[\mathcal{L} \equiv \div \left(\frac{1}{\rho} \grad \right) - \pdv{t}\left(\frac{1}{\lambda}\pdv{t}\right)\, .\]
 
 Let
 \[p(x) = N^K p^K\]
 then
 \[\mathcal{L}(p) \equiv \vec \nabla  \cdot \left( {\frac{1}{\rho }\vec \nabla {N^K}{p^K}} \right) - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}{p^K}}}{{\partial t}}} \right)\]
-or in indicial notation
+or in index notation
 \[\mathcal{L}(p) \equiv {\left( {\frac{1}{\rho }N_{,i}^K} \right)_{,i}}{p^K} - \frac{\partial }{{\partial t}}\left( {\frac{1}{\lambda }\frac{{\partial {N^K}}}{{\partial t}}} \right){p^K}\]
 which is equivalent to
 \[\mathcal{L}(p) \equiv \mathcal{L}({N^K}){p^K}\]
