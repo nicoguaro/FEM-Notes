@@ -1,13 +1,11 @@
 \graphicspath{ {./img/TheFEM/} }
 \chapter{Review of Boundary Value Problems}
 
-
 \section{Boundary value problems}
 In this section we will define a general initial boundary value problem (I-BVP). In the first part we will introduce the differential formulation given in terms of a set of governing equations and properly specified boundary conditions. The resulting equations are obtained after using a generalized balance law. Following this classical and well known approach we formally re-state these equations in the so-called strong form. Subsequently we re-write and prove an equivalent form of the balance law in the form of an integral representation highly friendly for a numerical solution. Since in the integral description of the problem the order of the derivatives in the field functions decreases by one, the resulting statement is called a weak formulation. 
-%%
+
 \subsection{Differential formulation-Generalized balance law}
-Let $ds$ be a differential surface element; $\dd{V}$ a differential volume element; $u(\vb{x},t)$ a scalar (or vector) function of space and time.
-The flux or rate of flow of the quantity $u(\vb x, t)$ through $\dd{S}$ at time $t$ is defined like
+Let $\dd{S}$ be a differential surface element, $\dd{V}$ a differential volume element, $u(\vb{x},t)$ a scalar (or vector) function of space and time. The flux or rate of flow of the quantity $u(\vb x, t)$ through $\dd{S}$ at time $t$ is defined like
 \[p(\vb x)\grad u \cdot \hat n \dd{S} \enspace ,\]
 where $p(\vb x)$ is a positive function, assumed known and time independent. Similarly, the time rate of change of $u(\vb x, t)$ in an element $\dd{V}$ is given by
 \[\rho (\vb x)\pdv{u}{t} \dd{V} \enspace ,\]
@@ -107,7 +105,6 @@ and
 Here we present a brief description of the boundary value problem governing the response of an elastic body. For a full discussion of the model and its mathematical aspects the reader is referred to \cite{shames1997elastic}.
 
 The governing equations (in terms of stresses) stem from the principle of conservation of linear momentum and conservation of moment of linear momentum. The former leads to a set of 3 partial differential equations in the components of the stress tensor while the latter leads to the symmetries in the stress tensor.
-
 \begin{equation} \label{eq:pde}
 \begin{aligned}
 &\sigma_{ij,j} + {f_i} = \rho\ddot{u}_i \quad \forall\ \vb{x} \in V,\, t \in \mathbb{R}^{+}\\
@@ -117,8 +114,7 @@ The governing equations (in terms of stresses) stem from the principle of conser
 
 In \cref{eq:pde} $\sigma_{ij}$ is the stress tensor; $f_i$ is the vector of body forces; and $u_i$ is the displacements vector.
 
-Denoting the tractions vector associated with a surface with normal direction $\hat{n}_{j}$ by $t_i^{\hat n}$ we have the complete BVP as follows:
-
+Denoting the tractions vector associated with a surface with normal direction $\hat{n}_{j}$ by $t_i^{\hat n}$ we have the complete BVP as follows
 \begin{equation} \label{eq:bcs}
 t_i^{\hat n} = \sigma_{ij} \hat{n}_{j} \quad \forall \in \vb{x} \in S.
 \end{equation}
@@ -130,7 +126,6 @@ t_i^{\hat n} = \sigma_{ij} \hat{n}_{j} \quad \forall \in \vb{x} \in S.
 \end{equation}
 
 where the term $\epsilon_{ij}$ is the symmetric component of the displacements gradient tensor. The components of the strain tensor describe the distortions and changes in magnitude (volumetric changes) of the material point in the continuum model. Now the simplest stress-strain (constitutive) relationship is given by Hooke's law\footnote{Despite the name of \emph{law} used, this relation is not always valid, but is a good approximation for small strains.}
-
 \begin{equation} \label{eq:Hooke}
 \sigma_{ij} = 2\mu \varepsilon_{ij} + \lambda \varepsilon_{kk}\delta_{ij} \enspace .
 \end{equation}
@@ -139,13 +134,11 @@ where $\mu$ and $\lambda$ are material constants. The problem involves now a tot
 
 \subsection*{Displacement formulation}
 Substituting \cref{eq:kin} in \cref{eq:Hooke} and the result in \cref{eq:pde} yields after some manipulation:
-
 \begin{equation} \label{eq:navier}
 (\lambda  + \mu)u_{j,ij} + \mu u_{i,jj} + {f_i} = \rho \ddot{u}_i \quad \forall \vb{x} \in V,\, t \in \mathbb{R}^{+}.
 \end{equation}
 
 Since \cref{eq:navier} ( simultaneously describing equilibrium, kinematic relations and constitutive response) is a second order equation governing the displacement field possible boundary conditions are in terms of the variable itself or its first oder derivatives. For a well-possed problem the following is a set of valid boundary conditions: 
-
 \begin{equation}\label{eq:Wellbcs}
 \begin{split}
 &t_i^{\hat n} = \sigma _{ij} \hat n_{ij} \quad \forall\ \vb{x} \in S_t\\
@@ -169,14 +162,12 @@ Notice that the tractions BC
 \[t_i^{\hat n} = \mu (u_{i,j} + u_{j,i}) \hat{n}_j + \lambda u_{k,k} \delta_{ij}\hat{n}_j \enspace ,\]
 
 actually involves first order displacements derivative and as such it is a Neumann boundary condition on $u_i$.
-%
 
 \subsection{Equivalence between strong and weak forms}
 \subsubsection{Strong form}
 The strong form corresponds to the differential formulation of the problem, it is denoted by $\{ S \}$ and it reads:
 
 Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \mathbb{R}$ such:
-%
 \begin{equation} \label{eq:navier_2}
 \begin{split}
 &(\lambda  + \mu)u_{j,ij} + \mu u_{i,jj} + f_i = 0 \quad \forall \vb{x} \in V \\
@@ -193,47 +184,40 @@ In \cref{eq:navier_2} the boundary conditions specified by the traction vector $
 \item We will look for solutions $u_i$ subject to the following conditions:
 \begin{align*}
 &u_i = \bar u_i \qquad \text{in} \qquad S_u\\
-&\intL_S \left(\pdv{u_i}{x_j} \right)^2 dS < \infty
+&\intL_S \left(\pdv{u_i}{x_j} \right)^2 \dd{S} < \infty
 \end{align*}
 
 \end{itemize}
 
 The first condition corresponds to the satisfaction of the essential boundary condition, while the second corresponds to the functions being square integrable. The space of functions satisfying the above two conditions is denoted by $\varsigma$ and formally defined like
-%
 \[\varsigma = \left\{u_i\left| {u_i} \in H, {u_i} = \bar{u}_i \in S_u \right. \right\} \enspace .\]
-%
+
 On the other hand, in order to validate the introduced trial functions we also need testing functions $w_i$ also called in the FEM literature weighting or distribution functions. These functions are arbitrary apart from having to satisfy the following conditions:
-%
 \begin{align*}
 &w_i = 0 \quad in \quad {S_u}\\
-&\intL_S \left(\pdv{w_i}{x_j}\right)^2 dS < \infty
+&\intL_S \left(\pdv{w_i}{x_j}\right)^2 \dd{S} < \infty
 \end{align*}
-%
+
 In what follows we formally denote the space of these functions by $V$ and define it like
-%
 \[V = \left\{ w_i\left| w_i \in H, u_i = w_i=0 \in S_u \right. \right\} \enspace .\]
 
 \subsubsection{Weak form}
 Here we will show that the equilibrium statement represented in the differential formulation can be described in alternative forms. In such description the continuity requirement for the trial functions is weaker than in the strong form leading to the term "weak" statement. Here this alternative representation will be denoted like $\{W\}$ and it reads;
 
 Given $f_i$, $t_i^{\hat n}$ and ${\bar u_i}$ find ${u_i}:V \to \mathbb{R}$ and $\forall {w_i} \in V$ such:
-
-\[\intL_V \sigma _{ij} w_{i,j}\, dV - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, dS = 0\]
+\[\intL_V \sigma_{ij} w_{i,j}\, \dd{V} - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, \dd{S} = 0\]
 
 \subsubsection*{Proof 1:}
 Let $u_i \in \varsigma $ be a solution to $\{S\}$ and let $w_i \in V $. Forming the inner product of the equilibrium statement given in \cref{eq:pde} with $w_i$ and forcing the integral over the domain to be zero we have
-%
 \[\intL_V (\sigma_{ij,j} + f_i ){w_i}\, dV = 0 \enspace ,\]
-%
 expanding the terms in the integrand and integrating by parts the first term on the left we have
-%
-\[\intL_V \sigma _{ij,j} w_i\, dV + \intL_V f_i w_i\, dV = 0 \enspace .\]
-\[ - \intL_V w_{i,j} \sigma _{ij}\, dV  + \intL_S \sigma _{ij} \hat{n}_j w_i\, dS  + \intL\limits_V w_i f_i\, dV = 0 \]
-
+\begin{align*}
+&\intL_V \sigma _{ij,j} w_i\, \dd{V} + \intL_V f_i w_i\, \dd{V} = 0 \, ,\\
+& -\intL_V w_{i,j} \sigma _{ij}\, \dd{V}  + \intL_S \sigma _{ij} \hat{n}_j w_i\, \dd{S}  + \intL\limits_V w_i f_i\, \dd{V} = 0\, ,
+\end{align*}
 since $w_i \in V$ it follows that $w_i = 0$ in $S_u$ from which
-
 \begin{equation}\label{eq:weak}
-\intL_V \sigma _{ij} w_{i,j}\, dV - \intL_V f_i w_i\, dV  - \intL_{S_t} t_i^{\hat n} w_i\, dS = 0
+\intL_V \sigma_{ij} w_{i,j}\, \dd{V} - \intL_V f_i w_i\, \dd{V}  - \intL_{S_t} t_i^{\hat n} w_i\, \dd{S} = 0\, .
 \end{equation}
 
 Now, considering that $u_i$ is solution of the strong form $\{S\}$ it must satisfy $u_i = \bar u_{i} \quad \in \quad S_u$ and as a result $u_i \in \varsigma$. On the other hand, since $u_i$ satisfies \cref{eq:weak} $\forall {w_i} \in V$ we have that $u_i$ satisfies the definition of weak solution specified in $\{ W \}$.
@@ -242,12 +226,12 @@ Now, considering that $u_i$ is solution of the strong form $\{S\}$ it must satis
 Let $u_i$ be a solution of $\{W\}$ and thus $u_i \in \varsigma$ which means that
 \[u_i = \bar u_{i} \quad \in \quad S_u\]
 and that it satisfies
-\[\intL_V \sigma _{ij} w_{i,j}\, dV - \intL_V f_i w_i\, dV - \intL_{S_t} t_i^n w_i\, dS = 0 \enspace ,\]
+\[\intL_V \sigma _{ij} w_{i,j}\, \dd{V} - \intL_V f_i w_i\, \dd{V} - \intL_{S_t} t_i^n w_i\, \dd{S} = 0 \enspace ,\]
 integrating by parts,
-\[-\intL_V \sigma_{ij,j} w_idV + \intL_S \sigma_{ij} n_j w_i dS  - \intL_V f_i w_i dV - \intL_{S_t} {t_i^n} w_i dS = 0\]
+\[-\intL_V \sigma_{ij,j} w_i \dd{V} + \intL_S \sigma_{ij} n_j w_i \dd{S}  - \intL_V f_i w_i \dd{V} - \intL_{S_t} {t_i^n} w_i \dd{S} = 0\]
 
-Since ${w_i} \in V$ we have that ${w_i}=0$ in $S_u$ and therefore
-\[\intL_V w_i(\sigma_{ij,j} + f_i)dV + \intL_{S_t} w_i( \sigma_{ij} n_j - t_i^n )dS = 0 \]
+Since $w_i \in V$ we have that $w_i=0$ in $S_u$ and therefore
+\[\intL_V w_i(\sigma_{ij,j} + f_i) \dd{V} + \intL_{S_t} w_i( \sigma_{ij} n_j - t_i^n ) \dd{S} = 0 \]
 from which
 \begin{equation} \label{equil_2}
 \begin{split}
@@ -261,7 +245,6 @@ which is once again the strong form of the problem given in \cref{eq:pde}.
 
 \subsection{Simple wedge under self-equilibrated loads}
 Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \cref{fig:WEDGE}. It is assumed to be contained in the $X-Y$ plane, with loading conditions satisfying a plane strain (or plane stress) idealization. The material is elastic with Lame constants $\lambda$ and $\mu$. The wedge is loaded by uniform tractions of intensity $S$ applied over its four faces in such a way that the wedge is self-equilibrated. We wish to find the closed-form elasticity solution for the stress, strain and displacement fields throughout the problem domain.
-%
 \begin{figure}[h]
 \centering
 \includegraphics[width=7cm]{wedge.pdf}
@@ -272,19 +255,17 @@ Consider the double wedge of side $\ell$ and internal angle $2 \phi$ shown in \c
 Under plane strain conditions the general 3D stress equilibrium equations (see \cref{eq:pde}) reduce to:
 \begin{equation}
 \begin{aligned}
-&\pdv{\sigma_{xx}}{x}+\pdv{\tau_{xy}}{y}=0\\
-&\pdv{\tau_{xy}}{x}+\pdv{\sigma_{yy}}{y}=0
+&\pdv{\sigma_{xx}}{x} + \pdv{\tau_{xy}}{y}=0\\
+&\pdv{\tau_{xy}}{x} + \pdv{\sigma_{yy}}{y}=0
 \end{aligned}
 \label{eq:equilibrium}
 \end{equation}
-
 while the kinematic relation (\cref{eq:kin}) reads
-
 \begin{equation}
 \begin{aligned}
-\epsilon_{xx}&=\pdv{u}{x}\\
-\epsilon_{yy}&=\pdv{v}{y}\\
-\gamma_{xy}&=\pdv{u}{y} + \pdv{v}{x}
+\epsilon_{xx}& = \pdv{u}{x}\\
+\epsilon_{yy}& = \pdv{v}{y}\\
+\gamma_{xy}& = \pdv{u}{y} + \pdv{v}{x}
 \end{aligned}
 \label{eq:strain}
 \end{equation}
@@ -292,20 +273,17 @@ where $u$ and $v$ are the horizontal and vertical displacements respectively.
 
 \subsubsection*{Stress field}
 
-The stress field can be obtained by simple inspection from the traction boundary conditions prescribed over the inclined surfaces yielding;
-
+The stress field can be obtained by simple inspection from the traction boundary conditions prescribed over the inclined surfaces yielding
 \begin{align*}
 \sum F_x &= 0 \longrightarrow - \ell S\cos(\phi)  + \sigma_{xx}\ell \sin(\phi) = 0\\
 \sum F_y &= 0 \longrightarrow - \ell S\sin(\phi) - \sigma_{yy}\ell \cos(\phi)=0
 \end{align*}
-
 and the following stress solution:
-
 \begin{equation}
 \begin{aligned}
 \sigma_{xx}& = S \cot(\phi)\\
 \sigma_{yy}& = -S\tan(\phi)\\
-\tau_{xy}& = 0.
+\tau_{xy}& = 0\, .
 \end{aligned}
 \label{eq:solution}
 \end{equation}
@@ -314,21 +292,17 @@ In \cref{eq:solution} the condition $\tau_{xy}=0$ is due to the symmetries in th
 
 \subsubsection*{Traction boundary conditions}
 Let us verify that the above stress solution satisfies the traction BC using the expression:
+\[t_i^{\hat n} = \sigma_{ij} \hat n_{ij}.\]
 
-\[t_i^{\hat n} = \sigma _{ij} \hat n_{ij}.\]
-
-Denoting the outward normals to the inclined surfaces of the wedge by $\hat{n}^1$,  $\hat{n}^2$, $\hat{n}^3$, $\hat{n}^4$ these are given by;
+Denoting the outward normals to the inclined surfaces of the wedge by $\hat{n}^1$,  $\hat{n}^2$, $\hat{n}^3$, $\hat{n}^4$ these are given by:
 \begin{align*}
 \hat{n}^1 &= -\sin(\phi)\hat{e}_{x}+\cos(\phi)\hat{e}_{y}\\
 \hat{n}^2 &= -\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y}\\
 \hat{n}^3 &= +\sin(\phi)\hat{e}_{x}+\cos(\phi)\hat{e}_{y}\\
-\hat{n}^4 &= +\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y} \enspace
+\hat{n}^4 &= +\sin(\phi)\hat{e}_{x}-\cos(\phi)\hat{e}_{y} \enspace ,
 \end{align*}
-
 where $\hat{e}_{x}$ and $\hat{e}_{y}$ are the reference unit vectors. Now, the components of the traction vector follow directly like
-
-\[t_{i} = \sigma_{ij}\hat{n}_{j}\]
-
+\[t_i = \sigma_{ij}\hat{n}_j\]
 then over the face with normal $\hat{n}^1$ we have
 \begin{align*}
 t_{x} &= -S\cos(\phi)\\
@@ -352,7 +326,6 @@ t_{y} &= +S\sin(\phi) \enspace .
 
 \subsubsection*{Strain field}
 The strain field can be obtained after using the stress solution found in \cref{eq:solution} together with the constitutive law given by \cref{eq:Hooke} which for a plane strain idealization takes the form:
-
 \begin{equation}
 \begin{aligned}
 \epsilon_{xx}& = \frac{1}{E}(\sigma_{xx} - \nu \sigma_{yy}) \\
@@ -361,10 +334,7 @@ The strain field can be obtained after using the stress solution found in \cref{
 \end{aligned}
 \label{eq:cons model}
 \end{equation}
-
-which for the particular case yields;
-
-
+which for the particular case yields
 \begin{equation}
 \begin{aligned}
 \epsilon_{xx}& = +\dfrac{S}{E}\left[\cot(\phi)+\nu \tan(\phi)\right] = +\dfrac{S}{E}K_{1}(\nu , \phi)\\
@@ -376,8 +346,7 @@ which for the particular case yields;
 
 \subsubsection*{Displacement field}
 The displacement field is obtained after direct integration of the strains after using the fact that
-\[du_i=\epsilon_{ij}dx_j + \omega_{ij}dx_j\]
-
+\[\dd{u}_i = \epsilon_{ij} \dd{x}_j + \omega_{ij}\dd{x}_j\]
 and the condition $\omega_{xy}=0$ also due to symmetries , as follows
 \begin{align*}
 u &= +\dfrac{S}{E} K_{1}(\nu , \phi)x + A\\
@@ -432,7 +401,7 @@ in the unknown function $u_i$.
 
 In the particular case of the total potential energy functional $\Pi$ this yields
 \begin{equation}\label{eq:ClaPVW}
-    \int\limits_V \sigma _{ij}\var{\varepsilon_{ij}}\dd{V}  - \int\limits_V f_i var{u_i} \dd{V}  - \int\limits_{S_t} t_i^{(n)} \var{u_i}\dd{S}  = 0
+    \int\limits_V \sigma _{ij}\var{\varepsilon_{ij}}\dd{V}  - \int\limits_V f_i \var{u_i} \dd{V}  - \int\limits_{S_t} t_i^{(n)} \var{u_i}\dd{S}  = 0
 \end{equation}
 where we recognize the weak form of the BVP stated previously. It becomes evident that the functions $\delta {u_i}$ in \cref{eq:ClaPVW} play the role of the test functions $w_i$ introduced in the weak form. On the other hand, since we have already shown that the weak and strong forms are equivalent we conclude that having the functional and the essential boundary conditions is equivalent to having the strong form of the problem.
 
@@ -443,7 +412,7 @@ In the theory of elasticity the total potential energy $\Pi$ is the result of ad
     \delta \Pi  = 0.
 \end{equation}
 
-The above principle leads to the so-called principle of virtual displacements stated as follows\footnote{see Bathe pp 156}:
+The above principle leads to the so-called principle of virtual displacements stated as follows\footnote{See Bathe pp 156.}:
 ``The equilibrium of the body requires that for any compatible small virtual displacements satisfying the condition of being zero at $S_u$, imposed on the body in its state of equilibrium, the total internal virtual work is equal to the total external virtual work"
 \[\int\limits_V \sigma _{ij}\var{\varepsilon_{ij}}\dd{V}  - \int\limits_V f_i\delta u_i\dd{V}  - \int\limits_{S_t} t_i^{(n)}\var{u_i}\dd{S}  = 0\]
 where $\var{u_i}$ are the virtual displacements and $\var{ \varepsilon_{ij}}$ are the corresponding virtual strains.
@@ -452,7 +421,6 @@ Comparing the virtual work principle with the weak formulation given in \cref{eq
 
 \subsubsection*{Problem\footnote{3.15 from Finite Element Procedures}}
 Establish the differential equation of equilibrium of the problem shown and the boundary conditions. Determine whether the differential operator of the problem is symmetric and positive definite and prove your answer.\cite{book:bathe}
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{{Bathe3.15}.pdf}
